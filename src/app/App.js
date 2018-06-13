@@ -3,6 +3,8 @@ import './App.css';
 import { Header } from './partials/Header';
 import M from 'materialize-css'
 import { Footer } from './partials/Footer';
+import { NewPost } from './posts/NewPost';
+import { OptionsSidebar } from './posts/OptionsSidebar';
 
 class App extends Component {
 
@@ -16,7 +18,8 @@ class App extends Component {
       <Fragment>
         <Header />
         <main className='container'>
-          <h1>Nothing in feed</h1>
+          {/* <NewPost /> */}
+          <OptionsSidebar />
         </main>
         <Footer />
       </Fragment>
