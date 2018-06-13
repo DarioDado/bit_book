@@ -1,9 +1,15 @@
 import React, { Fragment } from 'react';
+import { Switch, Route, Redirect} from "react-router-dom";
+import { FeedPage } from './FeedPage';
 import './App.css';
 
 const App = () => {
   return (
-    <div className="App">Hello</div>
+    <Fragment>
+        <Switch>
+          <Route exact path='/feed' component={FeedPage} />
+        </Switch>
+    </Fragment>
   );
 }
 
