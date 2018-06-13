@@ -16,17 +16,24 @@ export class FeedPage extends Component {
     componentDidMount = () => {
         postService.getPosts()
             .then(posts => {
-                console.log(posts);
+                this.setState({posts, loading: false})
             })
-            .catch(e=> {
-                console.log(e);
-            })
+            
     }
+
+    renderPosts = () => {
+        const {loading, posts} = this.state;
+        if (loading) {
+            return <div className="loading">Loading</div>
+        }
+        return <PostList posts={posts} />
+    }
+    
 
     render() {
         return (
         <div className='container'>
-            <PostList />
+            {this.renderPosts()}
         </div>
         )
     }
