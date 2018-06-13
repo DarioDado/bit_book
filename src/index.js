@@ -4,5 +4,7 @@ import './index.css';
 import App from './app/App';
 import registerServiceWorker from './registerServiceWorker';
 
+import 'materialize-css/dist/css/materialize.min.css';
+
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
