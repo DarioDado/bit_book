@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { FilterForm } from './FilterForm';
-import NewPostButton from './NewPostButton';
+import NewPostButton from './newPost/NewPostButton';
 
 const OptionsSidebar = () => {
     return (

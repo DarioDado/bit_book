@@ -4,7 +4,7 @@ class FilterForm extends Component {
     render() {
         return (
 
-            <div class="input-field col s6 right">
+            <div className="input-field col s6 right">
                 <select>
                     <option value="" disabled selected>All posts</option>
                     <option value="1">Videos</option>
