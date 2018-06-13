@@ -18,7 +18,7 @@ export class ImagePost extends Post {
 export class VideoPost extends Post {
     constructor(postData) {
         super(postData);
-        this.videoUrl = postData.videoUrl;
+        this.videoUrl = postData.videoUrl.replace("watch?v=", "embed/");
     }
 }
 export class TextPost extends Post {

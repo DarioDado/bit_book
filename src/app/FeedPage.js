@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './FeedPage.css';
 import {PostList} from './posts/PostList';
 import { postService } from '../services/postService';
@@ -18,7 +18,7 @@ export class FeedPage extends Component {
             .then(posts => {
                 this.setState({posts, loading: false})
             })
-            
+
     }
 
     renderPosts = () => {
@@ -32,11 +32,9 @@ export class FeedPage extends Component {
 
     render() {
         return (
-        <div className='container'>
-            {this.renderPosts()}
-        </div>
+        <Fragment>
+          {this.renderPosts()}
+        </Fragment>
         )
     }
 }
-
-
