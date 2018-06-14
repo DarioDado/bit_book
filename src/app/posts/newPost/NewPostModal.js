@@ -9,7 +9,8 @@ class NewPostModal extends Component {
         this.state = {
             inputValue: "",
             hideClass: "hide",
-            disable: null
+            disable: null,
+            hideModal: null
         }
     }
 
@@ -97,25 +98,19 @@ class NewPostModal extends Component {
         }
     }
 
-    // onCloseModal = (event) => {
-    //     console.log(event.target)
-    //     if (!event.target.classList.contains("modal")) {
-    //        this.setState({
-    //         hideClass:"hide"
-    //        })
-    //     }   
-    // }
 
     render() {
-        const { modalBtn, onCloseModal } = this.props
+        const { modalBtn,  hideModal, onCloseModal} = this.props
+        const { inputValue, disable, hideClass } = this.state;
         if (!modalBtn) {
             return null;
         }
 
         return (
-            <div className="overlay" onClick={this.onCloseModal}>
+            <div className={`overlay ${hideModal}`}>
                 <div className="modal" style={{ display: 'block' }}>
                     <form>
+                        <button className="waves-effect waves-light btn right" onClick={onCloseModal}>x</button>
                         <div className="modal-content">
                             <div className="input-field col s12">
                                 <h3>New {modalBtn} post</h3>
@@ -124,12 +119,12 @@ class NewPostModal extends Component {
                                 <label htmlFor="icon_prefix">{modalBtn} post</label>
                             </div>
                             <div className="input-field col s12">
-                                <input id="icon_prefix" name="textInputValue" type="text" className="validate" value={this.state.inputValue} onChange={(event) => this.callChangeHandler(event, modalBtn)} />
+                                <input id="icon_prefix" name="textInputValue" type="text" className="validate" value={inputValue} onChange={(event) => this.callChangeHandler(event, modalBtn)} />
                             </div>
-                            <h5 className={this.state.hideClass}>Wrong input!</h5>
+                            <h5 className={hideClass}>Wrong input!</h5>
                         </div>
                         <div className="modal-footer">
-                            <button className={`waves-effect waves-light btn right ${this.state.disable}`} onClick={(event) => {
+                            <button className={`waves-effect waves-light btn right ${disable}`} onClick={(event) => {
                                 event.preventDefault();
                                 this.callSubmitHandler(modalBtn)
                             }}>Post</button>

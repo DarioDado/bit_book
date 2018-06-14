@@ -14,6 +14,7 @@ export class FeedPage extends Component {
             posts: null,
             loading: true,
             modalBtn: null,
+            hideModal: null
         }
     }
 
@@ -35,8 +36,16 @@ export class FeedPage extends Component {
 
     onNewPostClick = (event) => {
         this.setState({
-            modalBtn: event.target.parentElement.getAttribute("data-target")
+            modalBtn: event.target.parentElement.getAttribute("data-target"),
+            hideModal: null
         })
+    }
+
+    onCloseModal = (event) => {
+        this.setState({
+            hideModal: "hide"
+        })
+
     }
 
    
@@ -46,7 +55,7 @@ export class FeedPage extends Component {
             <div className="row">
                 <OptionsSidebar />
                 {this.renderPosts()}
-                <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} />
+                <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal}/>
                 <NewPostButton onClick={this.onNewPostClick} />
             </div>
         )
