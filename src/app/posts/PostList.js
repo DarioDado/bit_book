@@ -21,7 +21,7 @@ export const PostList = props => {
     }
 
     return (
-        <div className='row'>
+        <div className='col s12 m9'>
             {renderPosts()}
         </div>
     )

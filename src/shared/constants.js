@@ -8,7 +8,6 @@ export const endpoints = {
     profile: "http://bitbookapi.azurewebsites.net/api/profile",
     editProfileEndpoint: "http://bitbookapi.azurewebsites.net/api/Profiles",
     users: "http://bitbookapi.azurewebsites.net/api/users",
-    users: "http://bitbookapi.azurewebsites.net/api/users",
     textPosts: "http://bitbookapi.azurewebsites.net/api/TextPosts",
     upload: "http://bitbookapi.azurewebsites.net/api/upload",
     videoPosts: "http://bitbookapi.azurewebsites.net/api/VideoPosts",

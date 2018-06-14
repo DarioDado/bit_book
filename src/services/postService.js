@@ -21,6 +21,11 @@ class PostService {
                 });
             });
     }
+
+    submitTextPosts(data) {
+        const url = endpoints.textPosts;
+        return postData(url, data)
+    }
 }
 
 export const postService = new PostService();

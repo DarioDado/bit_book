@@ -1,7 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import './FeedPage.css';
 import {PostList} from './posts/PostList';
 import { postService } from '../services/postService';
+import { OptionsSidebar } from './posts/OptionsSidebar';
+import { NewPost } from './posts/newPost/NewPost';
 
 
 export class FeedPage extends Component {
@@ -32,9 +34,11 @@ export class FeedPage extends Component {
 
     render() {
         return (
-        <Fragment>
+        <div className="row">
+          <OptionsSidebar />
           {this.renderPosts()}
-        </Fragment>
+          <NewPost />
+        </div>
         )
     }
 }

@@ -11,7 +11,7 @@ export const ImagePost = props => {
         <div className="col s12 ">
             <div className="card post-card">
                 <div className="card-content">
-                    <img src={imageUrl} alt="post image" />
+                    <img src={imageUrl} alt="post" />
                     <div className="post-details">
                         <span>Image post</span>
                         <span>{commentsNum} Comments</span>
