@@ -7,7 +7,9 @@ class NewPostModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputValue: ""
+            inputValue: "",
+            hideClass: "hide",
+            disable: null
         }
     }
 
@@ -21,13 +23,36 @@ class NewPostModal extends Component {
         this.setState({
             inputValue: event.target.value
         })
+        const inputValue = event.target.value;
+        if (!inputValue.includes(".jpg") || !inputValue.includes(".png") || !inputValue.includes(".svg")) {
+            this.setState({
+                hideClass: "show",
+                disable: "disabled"
+            })
+        } else {
+            this.setState({
+                hideClass: "hide",
+                disable: null
+            })
+        }
     }
-
 
     onVideoInputChange = (event) => {
         this.setState({
             inputValue: event.target.value
         })
+        const inputValue = event.target.value;
+        if (!inputValue.includes("https//") && !inputValue.includes("youtube")) {
+            this.setState({
+                hideClass: null,
+                disable: "disabled"
+            })
+        } else {
+            this.setState({
+                hideClass: "hide",
+                disable: null
+            })
+        }
     }
 
     callChangeHandler(event, modalBtn) {
@@ -40,9 +65,7 @@ class NewPostModal extends Component {
         }
     }
 
-
-    onPostSubmit = (event) => {
-        event.preventDefault();
+    onPostSubmit = () => {
         const textPost = this.state.inputValue;
         postService.submitTextPosts(textPost)
             .then((response) => {
@@ -50,31 +73,38 @@ class NewPostModal extends Component {
             })
     }
 
-    onImageSubmit = (event) => {
-        event.preventDefault();
+    onImageSubmit = () => {
         const imgUrl = this.state.inputValue;
         postService.submitImagePosts(imgUrl)
-        .then((response) => console.log(response))
+            .then((response) => console.log(response))
     }
 
-    onVideoSubmit = (event) => {
-        event.preventDefault();
-       const videoUrl = this.state.inputValue;
+    onVideoSubmit = () => {
+        const videoUrl = this.state.inputValue;
         postService.submitVideoPosts(videoUrl)
             .then((response) => {
                 console.log(response)
             })
     }
 
-    callSubmitHandler(event, modalBtn) {
+    callSubmitHandler(modalBtn) {
         if (modalBtn === "text") {
-            return this.onPostSubmit(event)
+            return this.onPostSubmit()
         } else if (modalBtn === "image") {
-            return this.onImageSubmit(event)
+            return this.onImageSubmit()
         } else {
-            return this.onVideoSubmit(event)
+            return this.onVideoSubmit()
         }
     }
+
+    // onCloseModal = (event) => {
+    //     console.log(event.target)
+    //     if (!event.target.classList.contains("modal")) {
+    //        this.setState({
+    //         hideClass:"hide"
+    //        })
+    //     }   
+    // }
 
     render() {
         const { modalBtn, onCloseModal } = this.props
@@ -83,7 +113,7 @@ class NewPostModal extends Component {
         }
 
         return (
-            <div className="overlay" onClick={onCloseModal}>
+            <div className="overlay" onClick={this.onCloseModal}>
                 <div className="modal" style={{ display: 'block' }}>
                     <form>
                         <div className="modal-content">
@@ -96,9 +126,13 @@ class NewPostModal extends Component {
                             <div className="input-field col s12">
                                 <input id="icon_prefix" name="textInputValue" type="text" className="validate" value={this.state.inputValue} onChange={(event) => this.callChangeHandler(event, modalBtn)} />
                             </div>
+                            <h5 className={this.state.hideClass}>Wrong input!</h5>
                         </div>
                         <div className="modal-footer">
-                            <button className="waves-effect waves-light btn right" onClick={(event) => this.callSubmitHandler(event, modalBtn)}>Post</button>
+                            <button className={`waves-effect waves-light btn right ${this.state.disable}`} onClick={(event) => {
+                                event.preventDefault();
+                                this.callSubmitHandler(modalBtn)
+                            }}>Post</button>
                         </div>
                     </form>
                 </div>

@@ -39,11 +39,7 @@ export class FeedPage extends Component {
         })
     }
 
-    // onCloseModal = (event) => {
-    //     if (!event.target.classList.contains("modal")) {
-    //         document.querySelector(".overlay").classList.toggle("hide");
-    //     }   
-    // }
+   
 
     render() {
         return (
