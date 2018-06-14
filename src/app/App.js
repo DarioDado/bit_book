@@ -6,10 +6,6 @@ import './App.css';
 import { Header } from './partials/Header';
 import M from 'materialize-css'
 import { Footer } from './partials/Footer';
-import { NewPost } from './posts/newPost/NewPost';
-
-
-
 
 
 class App extends Component {
