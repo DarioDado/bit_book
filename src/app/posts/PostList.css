@@ -1,0 +1,22 @@
+.video-frame {
+    width: 100%;
+    height: 30vh;
+}
+
+
+.post-card {
+    border-radius: 10px !important;
+    background-color: #C1C7D4 !important;
+}
+
+.post-details {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold
+}
+
+.card-content img {
+    width: 100%;
+}
