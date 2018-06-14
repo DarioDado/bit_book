@@ -11,11 +11,11 @@ export const PostList = props => {
     const renderPosts = () => {
         return posts.map(post => {
             if (post.type === "image") {
-                return <ImagePost post={post} />
+                return <ImagePost post={post}  key={post.id}/>
             } else if (post.type === "video") {
-                return <VideoPost post={post} />
+                return <VideoPost post={post} key={post.id}/>
             } else {
-                return <TextPost post={post} />
+                return <TextPost post={post} key={post.id}/>
             }
         })
     }

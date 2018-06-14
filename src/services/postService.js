@@ -1,4 +1,4 @@
-import { getData, postData } from "./fetchServices";
+import { getData } from "./fetchServices";
 import { endpoints } from "../shared/constants";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
 
@@ -21,6 +21,7 @@ class PostService {
                 });
             });
     }
+
 
     submitTextPosts(textPost) {
         const url = endpoints.textPosts;
@@ -53,6 +54,31 @@ class PostService {
             type: "video"
         }
         return postData(url, data)
+    }
+
+    getVideoPost(id) {
+        const url = `${endpoints.videoPosts}/${id}`;
+        return getData(url)
+            .then(postData => {
+                return new VideoPost(postData);
+            })
+    }
+
+    getImagePost(id) {
+        const url = `${endpoints.imagePosts}/${id}`;
+        return getData(url)
+            .then(postData => {
+                return new ImagePost(postData);
+            })
+    }
+
+    getTextPost(id) {
+        const url = `${endpoints.textPosts}/${id}`;
+        return getData(url)
+            .then(postData => {
+                return new TextPost(postData);
+            })
+
     }
 }
 

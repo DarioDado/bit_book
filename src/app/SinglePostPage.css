@@ -1,0 +1,13 @@
+.text-post-body {
+    background-color: #F8F5FE;
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+
+.post-body iframe {
+    height: 50vh;
+}
+
+.post-body img {
+    width: 100%;
+}

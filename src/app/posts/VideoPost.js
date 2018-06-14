@@ -1,19 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 
 
 export const VideoPost = props => {
 
-    const {videoUrl, commentsNum} = props.post
+    const {id, videoUrl, commentsNum, type} = props.post;
 
     return (
         <div className="col s12 ">
             <div className="card post-card">
                 <div className="card-content">
-                    <iframe className="video-frame" src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
+                    <iframe title="video" className="video-frame" src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
                     <div className="post-details">
-                        <span>Video post</span>
+                        <Link to={`/feed/${type}/${id}`}>Video post</Link>
                         <span>{commentsNum} Comments</span>
                     </div>
                 </div>
