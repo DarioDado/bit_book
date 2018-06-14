@@ -1,0 +1,28 @@
+.comment-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.author-details {
+    display: flex;
+    flex-direction: column;
+    width: 5%;
+    align-items: center;
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.author-details img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.comment-text {
+    width: 90%;
+}
+
+.card-panel {
+    border-radius: 10px !important;
+}

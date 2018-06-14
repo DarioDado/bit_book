@@ -70,7 +70,7 @@ App decomposition:
 
 <SinglePostPage>
     <PostDetails>
-        <Post />
+        <PostBody />
         <AddCommentForm />
         <ListOfComments>
             <CommentItem />

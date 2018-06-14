@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 
 
 export const TextPost = props => {
 
-    const {text, commentsNum} = props.post
+    const { text, commentsNum, id, type } = props.post
 
 
     return (
@@ -14,7 +15,7 @@ export const TextPost = props => {
                 <div className="card-content">
                     <p className="post-text-body">{text}</p>
                     <div className="post-details">
-                        <span>Text post</span>
+                        <Link to={`/feed/${type}/${id}`} >Text post</Link>
                         <span>{commentsNum} Comments</span>
                     </div>
                 </div>
