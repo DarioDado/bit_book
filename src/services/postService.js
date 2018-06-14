@@ -1,4 +1,4 @@
-import { getData } from "./fetchServices";
+import { getData, postData } from "./fetchServices";
 import { endpoints } from "../shared/constants";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
 
