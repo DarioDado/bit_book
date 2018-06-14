@@ -1,19 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 
-const NewPostButton = () => {
+const NewPostButton = (props) => {
+    const onClick = props.onClick;
     return (
         <div className="fixed-action-btn">
             <a className="btn-floating btn-large red">
                 <i className="large material-icons">mode_edit</i>
             </a>
             <ul>
-                <li><Link to="/posts/new/text" className="btn-floating blue"><i className="material-icons">text_format</i> Post</Link></li>
-                <li><Link to="/posts/new/image" className="btn-floating green"><i className="material-icons">image</i>Image</Link></li>
-                <li><Link to="/posts/new/video" className="btn-floating red"><i className="material-icons">ondemand_video</i>Video</Link></li>
+                <li><button data-target="text" className="btn modal-trigger btn-floating  blue" onClick={onClick}><i className="material-icons">text_format</i> Post</button></li>
+                <li><button data-target="image" className="btn modal-trigger btn-floating  green"  onClick={onClick}><i className="material-icons">image</i>Image</button></li>
+                <li><button data-target="video" className="btn modal-trigger btn-floating  red"  onClick={onClick}><i className="material-icons">ondemand_video</i>Video</button></li>
             </ul>
         </div>
     );
 };
 
-export default NewPostButton;
+export { NewPostButton };

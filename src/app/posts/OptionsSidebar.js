@@ -1,13 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { FilterForm } from './FilterForm';
-import NewPostButton from './newPost/NewPostButton';
 
 const OptionsSidebar = () => {
     return (
-        <Fragment>
+        <div className="col s12 m3 right">
             <FilterForm />
-            <NewPostButton />
-        </Fragment>
+        </div>
     );
 };
 

@@ -22,6 +22,40 @@ class PostService {
             });
     }
 
+
+    submitTextPosts(textPost) {
+        const url = endpoints.textPosts;
+        const data = {
+            text: textPost,
+            userId: 747,
+            userDisplayName: "Pera Peric",
+            type: "text"
+        }
+        return postData(url, data)
+    }
+
+    submitImagePosts(imgUrl) {
+        const url = endpoints.imagePosts;
+        const data = {
+            imageUrl: imgUrl,
+            userId: 747,
+            userDisplayName: "Pera Peric",
+            type: "image"
+        }
+        return postData(url, data)
+    }
+
+    submitVideoPosts(videoUrl) {
+        const url = endpoints.videoPosts;
+        const data = {
+            videoUrl: videoUrl,
+            userId: 747,
+            userDisplayName: "Pera Peric",
+            type: "video"
+        }
+        return postData(url, data)
+    }
+
     getVideoPost(id) {
         const url = `${endpoints.videoPosts}/${id}`;
         return getData(url)
@@ -44,6 +78,7 @@ class PostService {
             .then(postData => {
                 return new TextPost(postData);
             })
+
     }
 }
 
