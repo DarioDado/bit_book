@@ -18,12 +18,17 @@ export class FeedPage extends Component {
         }
     }
 
-    componentDidMount = () => {
+    loadData = () => {
         postService.getPosts()
             .then(posts => {
                 this.setState({ posts, loading: false })
             })
     }
+
+    componentDidMount = () => {
+        this.loadData();
+    }
+
 
     renderPosts = () => {
         const { loading, posts } = this.state;
@@ -32,7 +37,6 @@ export class FeedPage extends Component {
         }
         return <PostList posts={posts} />
     }
-
 
     onNewPostClick = (event) => {
         this.setState({
@@ -48,14 +52,12 @@ export class FeedPage extends Component {
 
     }
 
-   
-
     render() {
         return (
             <div className="row">
                 <OptionsSidebar />
                 {this.renderPosts()}
-                <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal}/>
+                <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData}/>
                 <NewPostButton onClick={this.onNewPostClick} />
             </div>
         )

@@ -17,6 +17,18 @@ class NewPostModal extends Component {
         this.setState({
             inputValue: event.target.value
         })
+        const inputValue = event.target.value;
+        if(inputValue !== ""){
+            this.setState({
+                hideClass: "hide",
+                disable: null,
+            })
+        }else {
+            this.setState({
+                hideClass: "show",
+                disable: "disabled",
+            })
+        }
     }
 
     onImageInputChange = (event) => {
@@ -24,15 +36,15 @@ class NewPostModal extends Component {
             inputValue: event.target.value
         })
         const inputValue = event.target.value;
-        if (!inputValue.includes(".jpg") || !inputValue.includes(".png") || !inputValue.includes(".svg")) {
+        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
             this.setState({
-                hideClass: "show",
-                disable: "disabled"
+                hideClass: "hide",
+                disable: null,
             })
         } else {
             this.setState({
-                hideClass: "hide",
-                disable: null
+                hideClass: "show",
+                disable: "disabled",
             })
         }
     }
@@ -42,15 +54,16 @@ class NewPostModal extends Component {
             inputValue: event.target.value
         })
         const inputValue = event.target.value;
-        if (!inputValue.includes("https//") && !inputValue.includes("youtube")) {
+        if (inputValue.includes("https://") && inputValue.includes("youtube")) {
             this.setState({
-                hideClass: null,
-                disable: "disabled"
+                hideClass: "hide",
+                disable: null,
+
             })
         } else {
             this.setState({
-                hideClass: "hide",
-                disable: null
+                hideClass: "show",
+                disable: "disabled",
             })
         }
     }
@@ -66,28 +79,46 @@ class NewPostModal extends Component {
     }
 
     onPostSubmit = () => {
+        const { onCloseModal, loadData } = this.props;
         const textPost = this.state.inputValue;
         postService.submitTextPosts(textPost)
             .then((response) => {
-                console.log(response)
+                this.setState({
+                    inputValue: ""
+                });
+                loadData();
+                onCloseModal();
             })
     }
 
     onImageSubmit = () => {
+        const { onCloseModal, loadData } = this.props;
         const imgUrl = this.state.inputValue;
         postService.submitImagePosts(imgUrl)
-            .then((response) => console.log(response))
-    }
-
-    onVideoSubmit = () => {
-        const videoUrl = this.state.inputValue;
-        postService.submitVideoPosts(videoUrl)
             .then((response) => {
-                console.log(response)
+                this.setState({
+                    inputValue: ""
+                });
+                loadData();
+                onCloseModal();
             })
     }
 
-    callSubmitHandler(modalBtn) {
+    onVideoSubmit = () => {
+        const { onCloseModal, loadData } = this.props;
+        const videoUrl = this.state.inputValue;
+        postService.submitVideoPosts(videoUrl)
+            .then((response) => {
+                this.setState({
+                    inputValue: ""
+                });
+                loadData();
+                onCloseModal();
+            })
+    }
+
+    callSubmitHandler(event, modalBtn) {
+        event.preventDefault();
         if (modalBtn === "text") {
             return this.onPostSubmit()
         } else if (modalBtn === "image") {
@@ -95,11 +126,12 @@ class NewPostModal extends Component {
         } else {
             return this.onVideoSubmit()
         }
+
     }
 
 
     render() {
-        const { modalBtn,  hideModal, onCloseModal} = this.props
+        const { modalBtn, hideModal, onCloseModal } = this.props
         const { inputValue, disable, hideClass } = this.state;
         if (!modalBtn) {
             return null;
@@ -118,15 +150,12 @@ class NewPostModal extends Component {
                                 <label htmlFor="icon_prefix">{modalBtn} post</label>
                             </div>
                             <div className="input-field col s12">
-                                <input id="icon_prefix" name="textInputValue" type="text" className="validate" value={inputValue} onChange={(event) => this.callChangeHandler(event, modalBtn)} />
+                                <input id="icon_prefix" name="textInputValue" type="text" value={inputValue} onChange={(event) => this.callChangeHandler(event, modalBtn)} />
                             </div>
                             <h5 className={hideClass}>Wrong input!</h5>
                         </div>
                         <div className="modal-footer">
-                            <button className={`waves-effect waves-light btn right ${disable}`} onClick={(event) => {
-                                event.preventDefault();
-                                this.callSubmitHandler(modalBtn)
-                            }}>Post</button>
+                            <button className={`waves-effect waves-light btn right ${disable}`} onClick={(event) => { this.callSubmitHandler(event, modalBtn) }}>Post</button>
                         </div>
                     </form>
                 </div>
