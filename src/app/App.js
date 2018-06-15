@@ -10,10 +10,6 @@ import { SinglePostPage } from './SinglePostPage';
 import { MyProfilePage } from './user/MyProfilePage';
 
 
-
-
-
-
 class App extends Component {
 
   componentDidMount() {

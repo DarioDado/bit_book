@@ -2,16 +2,32 @@ import React, { Component, Fragment } from 'react';
 
 import './MyProfilePage.css'
 import { userService } from '../../services/userService';
+import { EditProfileLink } from './EditProfileLink';
+import { EditProfileModal } from './EditProfileModal';
 
 class MyProfilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
             myProfileData: null,
-            loading: true
+            loading: true,
+            hideModal: null
         }
     }
 
+    
+    onCloseModal = () => {
+        this.setState({
+            hideModal: "hide"
+        })
+
+    }
+
+    onOpenModal = () => {
+        this.setState({
+            hideModal: null
+        })
+    }
 
     componentDidMount = () => {
         userService.getMyProfile()
@@ -23,7 +39,6 @@ class MyProfilePage extends Component {
                 })
             })
     }
-
 
     render() {
         const { myProfileData, loading } = this.state;
@@ -38,6 +53,8 @@ class MyProfilePage extends Component {
                 </div>
                 <div className="col s12 center">
                     <h2 className="profile-name">{myProfileData.name}</h2>
+                    <EditProfileModal onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} />
+                    <EditProfileLink onOpenModal={this.onOpenModal}/>
                 </div>
                 <div className="col s12 center">
                     <p>{myProfileData.aboutShort}</p>
@@ -48,7 +65,7 @@ class MyProfilePage extends Component {
                             <div className="blue-circle">
                                 <p>C</p>
                             </div>
-                            <p>{myProfileData.postsCount}</p>
+                            <p>{myProfileData.postsCount} posts</p>
                         </div>
                     </div>
                     <div className="col s6">
@@ -56,7 +73,7 @@ class MyProfilePage extends Component {
                             <div className="blue-circle">
                                 <p>C</p>
                             </div>
-                            <p>{myProfileData.commentsCount}s</p>
+                            <p>{myProfileData.commentsCount} comments</p>
                         </div>
                     </div>
                 </div>
