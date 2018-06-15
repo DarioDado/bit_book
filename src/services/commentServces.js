@@ -1,4 +1,4 @@
-import { getData } from "./fetchServices";
+import { getData, postData } from "./fetchServices";
 import { endpoints } from "../shared/constants";
 import { Comment } from "../entities/Comment";
 
@@ -13,6 +13,12 @@ class CommentService {
             .then(commentsData => {
                 return commentsData.map(commentData => new Comment(commentData));
             });
+    }
+
+    postComment(data) {
+        const url = endpoints.comments;
+        return postData(url,data)
+            .then(commentData => new Comment(commentData));
     }
     
 
