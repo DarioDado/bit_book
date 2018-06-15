@@ -12,9 +12,12 @@ class UserService {
         return getData(url)
             .then(userData => new User(userData));
     }
-    
 
-
+    getMyProfile() {
+        const url = endpoints.profile;
+        return getData(url)
+            .then(myProfileData => new User(myProfileData))
+    }
 }
 
 export const userService = new UserService();

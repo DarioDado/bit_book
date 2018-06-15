@@ -1,0 +1,36 @@
+.gray-bar {
+    background-color: rgb(206, 203, 203);
+    border-radius: 25px;
+    height:40px;
+    display: inline-block;
+    line-height: 40px;
+}
+
+.gray-bar p{
+    display: inline;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.blue-circle{
+    background-color: rgb(94, 94, 196);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    float: left;
+}
+
+.blue-circle p{
+    display: inline;
+}
+
+.profile-img{
+    max-height: 300px;
+}
+
+.profile-name {
+    font-size: 45px;
+}
