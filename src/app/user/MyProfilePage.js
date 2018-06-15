@@ -11,7 +11,7 @@ class MyProfilePage extends Component {
         this.state = {
             myProfileData: null,
             loading: true,
-            hideModal: null
+            hideModal: "hide"
         }
     }
 
@@ -32,7 +32,6 @@ class MyProfilePage extends Component {
     componentDidMount = () => {
         userService.getMyProfile()
             .then(myProfileData => {
-                console.log(myProfileData)
                 this.setState({
                     myProfileData,
                     loading: false

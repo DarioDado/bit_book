@@ -8,17 +8,29 @@ class EditProfileModal extends Component {
         this.state = {
             hideClass: "show",
             disable: null,
-            
+            name: "",
+            about: "",
+            photoUrl: ""
+
         }
+    }
+
+    onChange = (event) => {
+        const inputName = event.target.name;
+        const inputValue = event.target.value;
+        this.setState({
+            [inputName]: inputValue
+        })
+        console.log(inputValue)
     }
 
     render() {
 
         const { onCloseModal, hideModal } = this.props;
+        const { name, about, photoUrl } = this.state;
         return (
             <div className={`overlay ${hideModal}`}>
                 <div className="modal" style={{ display: 'block' }}>
-                    <button className="waves-effect waves-light btn right">x</button>
                     <form>
                         <div className="container">
                             <div className="modal-content row">
@@ -28,26 +40,36 @@ class EditProfileModal extends Component {
                                 <div className="row">
                                     <div className="col s4">
                                         <img src="https://www.indra.fr/userfiles/empty.png" className="upload-placeholder-img" />
-                                        <button className="waves-effect waves-light btn left upload-photo-btn">Upload photo</button>
-
+                                        <button className="waves-effect waves-light btn left upload-photo-btn">Add photo</button>
                                     </div>
                                     <div className="input-field col s8">
-                                        <input id="name" name="textInputValue" type="text" />
+                                        <input id="name" name="name" type="text" onChange={this.onChange} value={name} />
                                         <label htmlFor="name">Name</label>
                                     </div>
                                 </div>
+                                <div className="row add-photo">
+                                    <div className="col s5">
+                                        <input type="text" name="photoUrl" value={photoUrl} onChange={this.onChange} placeholder="Insert photo url" />
+                                    </div>
+                                    <div className="col s2">
+                                        <p>OR</p>
+                                    </div>
+                                    <div className="col s5">
+                                        <input type="file" />
+                                    </div>
+                                </div>
                                 <div className="row">
-                                    <div class="input-field col s12">
-                                        <textarea id="textarea1" class="materialize-textarea"></textarea>
-                                        <label for="textarea1">Textarea</label>
+                                    <div className="input-field col s12">
+                                        <textarea id="textarea1" className="materialize-textarea" name="about" onChange={this.onChange} value={about}></textarea>
+                                        <label htmlFor="textarea1">Textarea</label>
                                     </div>
                                 </div>
                             </div>
                             <div className="modal-footer row">
-                                <div class="input-field col s2 right">
+                                <div className="input-field col s2 right">
                                     <button className={`waves-effect waves-light btn close-btn`}>Upload</button>
                                 </div>
-                                <div class="input-field col s2 right">
+                                <div className="input-field col s2 right">
                                     <button className={`waves-effect waves-light btn`} onClick={onCloseModal}>Close</button>
                                 </div>
                             </div>

@@ -18,6 +18,18 @@ class UserService {
         return getData(url)
             .then(myProfileData => new User(myProfileData))
     }
+
+    updateMyProfile(nameInputValue, aboutInputValue, photoUrl){
+        const data = {
+            name: nameInputValue,
+            email: "blabla@bla.com",
+            aboutShort: "",
+            about: aboutInputValue,
+            avatarUrl: photoUrl,
+            postsCount: 0,
+            commentsCount:0
+        }
+    }
 }
 
 export const userService = new UserService();
