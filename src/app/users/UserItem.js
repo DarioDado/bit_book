@@ -3,6 +3,7 @@ import './UserItem.css';
 
 
 export const UserItem = props => {
+    const {user} = props;
 
     return (
         <div class="row">
@@ -10,13 +11,11 @@ export const UserItem = props => {
                 <div class="card-panel ">
                     <div className="user-item-wrap">
                         <div className="user-avatar">
-                            <img src="https://sidekickmag.com/wp-content/themes/sidekick-2017/images/no-profile.png" alt="avatar" />
+                            <img src={user.avatarUrl} alt="avatar" />
                         </div>
                         <div className="user-details">
-                            <h2 className="user-name">Dario Stamenkovic</h2>
-                            <p className="user-about">
-                            pden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undo
-                            </p>
+                            <h2 className="user-name">{user.name}</h2>
+                            <p className="user-about">{user.aboutShort}</p>
                         </div>
                         <div className="last-post-info">
                             <p>Last post</p>

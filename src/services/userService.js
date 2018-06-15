@@ -7,6 +7,14 @@ import { User } from "../entities/User";
 
 class UserService {
 
+    getUsers = () => {
+        const url = endpoints.users;
+        return getData(url)
+            .then(usersData => {
+                return usersData.map(userData => new User(userData))
+            })
+    }
+
     getSingleUser(userId) {
         const url = `${endpoints.users}/${userId}`;
         return getData(url)

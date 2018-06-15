@@ -3,12 +3,10 @@ import { UserItem } from './UserItem';
 
 
 export const UserList = props => {
+    const {users} = props;
+    const renderUserItems = () => {
+        return users.map(user => <UserItem user={user} />)
+    }
 
-    return (
-        [
-            <UserItem />,
-            <UserItem />,
-            <UserItem />
-        ]
-    )
+    return renderUserItems();
 }
