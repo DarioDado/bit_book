@@ -10,7 +10,6 @@ class NewPostModal extends Component {
             inputValue: "",
             hideClass: "hide",
             disable: null,
-            hideModal: null
         }
     }
 
