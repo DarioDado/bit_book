@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './EditProfileModal.css'
+import { AddPhotoModal } from './AddPhotoModal';
 
 class EditProfileModal extends Component {
     constructor(props) {
@@ -10,8 +11,8 @@ class EditProfileModal extends Component {
             disable: null,
             name: "",
             about: "",
-            photoUrl: ""
-
+            photoUrl: "",
+            hideAddModal: "hide"
         }
     }
 
@@ -21,13 +22,29 @@ class EditProfileModal extends Component {
         this.setState({
             [inputName]: inputValue
         })
-        console.log(inputValue)
+    }
+
+    onAddPhoto = (event) => {
+        const photoUrl = this.state.photoUrl;
+        
+    }
+
+    onOpenAddModal = () => {
+        this.setState({
+            hideAddModal: null
+        })
+    }
+
+    onCloseAddModal = () => {
+        this.setState({
+            hideAddModal: "hide"
+        })
     }
 
     render() {
 
         const { onCloseModal, hideModal } = this.props;
-        const { name, about, photoUrl } = this.state;
+        const { name, about, photoUrl, hideAddModal } = this.state;
         return (
             <div className={`overlay ${hideModal}`}>
                 <div className="modal" style={{ display: 'block' }}>
@@ -40,22 +57,11 @@ class EditProfileModal extends Component {
                                 <div className="row">
                                     <div className="col s4">
                                         <img src="https://www.indra.fr/userfiles/empty.png" className="upload-placeholder-img" />
-                                        <button className="waves-effect waves-light btn left upload-photo-btn">Add photo</button>
+                                        <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={this.onOpenAddModal}>Add photo</button>
                                     </div>
                                     <div className="input-field col s8">
                                         <input id="name" name="name" type="text" onChange={this.onChange} value={name} />
                                         <label htmlFor="name">Name</label>
-                                    </div>
-                                </div>
-                                <div className="row add-photo">
-                                    <div className="col s5">
-                                        <input type="text" name="photoUrl" value={photoUrl} onChange={this.onChange} placeholder="Insert photo url" />
-                                    </div>
-                                    <div className="col s2">
-                                        <p>OR</p>
-                                    </div>
-                                    <div className="col s5">
-                                        <input type="file" />
                                     </div>
                                 </div>
                                 <div className="row">
@@ -76,6 +82,7 @@ class EditProfileModal extends Component {
                         </div>
                     </form>
                 </div>
+                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal}/>
             </div>
         );
     }
