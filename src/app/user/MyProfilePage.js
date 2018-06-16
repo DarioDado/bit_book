@@ -16,7 +16,8 @@ class MyProfilePage extends Component {
     }
 
     
-    onCloseModal = () => {
+    onCloseModal = (event) => {
+        event.preventDefault()
         this.setState({
             hideModal: "hide"
         })
@@ -48,7 +49,7 @@ class MyProfilePage extends Component {
         return (
             <Fragment>
                 <div className="col s12 center">
-                    <img src={myProfileData.avatarUrl} className="responsive-img circle profile-img" />
+                    <img src={myProfileData.avatarUrl} className="responsive-img circle profile-img" alt=""/>
                 </div>
                 <div className="col s12 center">
                     <h2 className="profile-name">{myProfileData.name}</h2>

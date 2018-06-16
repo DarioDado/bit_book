@@ -1,8 +1,6 @@
 import { getData, postData } from "./fetchServices";
-import { endpoints } from "../shared/constants";
+import { endpoints, requestHeader } from "../shared/constants";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
-
-
 
 
 class PostService {
@@ -11,9 +9,9 @@ class PostService {
         return getData(url)
             .then(postsData => {
                 return postsData.map(postData => {
-                    if(postData.type === "text") {
+                    if (postData.type === "text") {
                         return new TextPost(postData);
-                    } else if(postData.type === "image") {
+                    } else if (postData.type === "image") {
                         return new ImagePost(postData);
                     } else {
                         return new VideoPost(postData);
@@ -29,7 +27,7 @@ class PostService {
             userId: 747,
             userDisplayName: "Pera Peric",
             type: "text",
-            commentsNum:0
+            commentsNum: 0
         }
         return postData(url, data)
     }
@@ -42,7 +40,7 @@ class PostService {
             userId: 747,
             userDisplayName: "Pera Peric",
             type: "image",
-            commentsNum:0
+            commentsNum: 0
         }
         return postData(url, data)
     }
@@ -55,7 +53,7 @@ class PostService {
             userId: 747,
             userDisplayName: "Pera Peric",
             type: "video",
-            commentsNum:0
+            commentsNum: 0
         }
         return postData(url, data)
     }
@@ -83,6 +81,18 @@ class PostService {
                 return new TextPost(postData);
             })
 
+    }
+
+    uploadImage(imgFile) {
+        return  fetch(endpoints.upload, {
+            body:imgFile,
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: requestHeader,
+            method: 'POST',
+            mode: 'cors'
+        })
+            .then(response => response.json())
     }
 }
 

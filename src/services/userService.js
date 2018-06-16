@@ -1,4 +1,4 @@
-import { getData } from "./fetchServices";
+import { getData, putData } from "./fetchServices";
 import { endpoints } from "../shared/constants";
 import { User } from "../entities/User";
 
@@ -29,6 +29,8 @@ class UserService {
             postsCount: 0,
             commentsCount:0
         }
+        return putData(endpoints.editProfileEndpoint, data)
+        .then(response => console.log(response))
     }
 }
 
