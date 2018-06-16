@@ -11,17 +11,20 @@ class MyProfilePage extends Component {
         this.state = {
             myProfileData: null,
             loading: true,
-            hideModal: "hide"
+            hideModal: "hide",
+            nameInputValue: "",
+            aboutInputValue: "",
+            photoUrl: "",
+            hideValidationClass: "hide",
+            disable: null,
         }
     }
 
-    
     onCloseModal = (event) => {
         event.preventDefault()
         this.setState({
             hideModal: "hide"
         })
-
     }
 
     onOpenModal = () => {
@@ -30,7 +33,7 @@ class MyProfilePage extends Component {
         })
     }
 
-    componentDidMount = () => {
+    loadMyProfile = () => {
         userService.getMyProfile()
             .then(myProfileData => {
                 this.setState({
@@ -40,8 +43,48 @@ class MyProfilePage extends Component {
             })
     }
 
+    onChangeInputs = (event) => {
+        const inputName = event.target.name;
+        this.setState({
+            [inputName]: event.target.value
+        })
+    }
+
+    onImageInputChange = (event) => {
+        this.setState({
+            photoUrl: event.target.value
+        })
+        const inputValue = event.target.value;
+        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
+            this.setState({
+                hideValidationClass: "hide",
+                disable: null,
+            })
+        } else {
+            this.setState({
+                hideValidationClass: "show",
+                disableButton: "disabled",
+            })
+        }
+    }
+
+    updateMyProfile = (event) => {
+        event.preventDefault()
+        const { nameInputValue, aboutInputValue, photoUrl } = this.state;
+        userService.updateMyProfile(nameInputValue, aboutInputValue, photoUrl)
+            .then(response => {
+                console.log(response)
+                this.loadMyProfile();
+            })
+
+    }
+
+    componentDidMount = () => {
+        this.loadMyProfile();
+    }
+
     render() {
-        const { myProfileData, loading } = this.state;
+        const { myProfileData, loading, nameInputValue, aboutInputValue, photoUrl, hideValidationClass, disable } = this.state;
 
         if (loading) {
             return <div className="loading">Loading</div>
@@ -49,12 +92,15 @@ class MyProfilePage extends Component {
         return (
             <Fragment>
                 <div className="col s12 center">
-                    <img src={myProfileData.avatarUrl} className="responsive-img circle profile-img" alt=""/>
+                    <img src={myProfileData.avatarUrl} className="responsive-img circle profile-img" alt="" />
                 </div>
                 <div className="col s12 center">
                     <h2 className="profile-name">{myProfileData.name}</h2>
-                    <EditProfileModal onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} />
-                    <EditProfileLink onOpenModal={this.onOpenModal}/>
+                    <EditProfileModal onCloseModal={this.onCloseModal} hideModal={this.state.hideModal}
+                        nameInputValue={nameInputValue} aboutInputValue={aboutInputValue} photoUrl={photoUrl} onChangeInputs={this.onChangeInputs}
+                        onImageInputChange={this.onImageInputChange} updateMyProfile={this.updateMyProfile}
+                        hideValidationClass={hideValidationClass} disable={disable} />
+                    <EditProfileLink onOpenModal={this.onOpenModal} />
                 </div>
                 <div className="col s12 center">
                     <p>{myProfileData.aboutShort}</p>

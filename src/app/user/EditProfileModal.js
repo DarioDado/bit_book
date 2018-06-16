@@ -9,20 +9,10 @@ class EditProfileModal extends Component {
         this.state = {
             hideClass: "show",
             disable: null,
-            name: "",
-            about: "",
             photoUrl: "",
             hideAddModal: "hide",
             imgUrl: null
         }
-    }
-
-    onChange = (event) => {
-        const inputName = event.target.name;
-        const inputValue = event.target.value;
-        this.setState({
-            [inputName]: inputValue
-        })
     }
 
     // onAddPhoto = (event) => {
@@ -31,7 +21,8 @@ class EditProfileModal extends Component {
 
     // }
 
-    onOpenAddModal = () => {
+    onOpenAddModal = (event) => {
+        event.preventDefault();
         this.setState({
             hideAddModal: null
         })
@@ -44,16 +35,15 @@ class EditProfileModal extends Component {
         })
     }
 
-    onUploadImg =(url) =>{
+    onUploadImg = (url) => {
         this.setState({
             imgUrl: url
         })
     }
 
     render() {
-
-        const { onCloseModal, hideModal } = this.props;
-        const { name, about, photoUrl, hideAddModal, imgUrl} = this.state;
+        const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, disable, hideValidationClass } = this.props;
+        const { hideAddModal, imgUrl } = this.state;
         return (
             <Fragment>
                 <div className={`overlay ${hideModal}`}>
@@ -70,20 +60,20 @@ class EditProfileModal extends Component {
                                             <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={this.onOpenAddModal}>Add photo</button>
                                         </div>
                                         <div className="input-field col s8">
-                                            <input id="name" name="name" type="text" onChange={this.onChange} value={name} />
+                                            <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} />
                                             <label htmlFor="name">Name</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <textarea id="textarea1" className="materialize-textarea" name="about" onChange={this.onChange} value={about}></textarea>
+                                            <textarea id="textarea1" className="materialize-textarea" name="aboutInputValue" value={aboutInputValue} onChange={onChangeInputs} ></textarea>
                                             <label htmlFor="textarea1">Textarea</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="modal-footer row">
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn close-btn`}>Upload</button>
+                                        <button className={`waves-effect waves-light btn close-btn`} onClick={updateMyProfile}>Upload</button>
                                     </div>
                                     <div className="input-field col s2 right">
                                         <button className={`waves-effect waves-light btn`} onClick={onCloseModal}>Close</button>
@@ -93,7 +83,7 @@ class EditProfileModal extends Component {
                         </form>
                     </div>
                 </div>
-                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onUploadImg={this.onUploadImg}/>
+                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl} hideValidationClass={hideValidationClass} disable={disable}/>
             </Fragment>
         );
     }

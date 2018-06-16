@@ -33,7 +33,9 @@ export const putData = (url, data) => {
         method: 'PUT',
         mode: 'cors'
     })
-        .then(response => response.json())
+        .then(response => {
+            console.log(response.json())
+            })
 }
 
 

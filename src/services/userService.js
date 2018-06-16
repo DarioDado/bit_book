@@ -23,14 +23,13 @@ class UserService {
         const data = {
             name: nameInputValue,
             email: "blabla@bla.com",
-            aboutShort: "",
+            aboutShort: "Traders and brothers Rodney and Derek Trotter work from the streets of London buying what they can from the auctions and flogging it down it the market",
             about: aboutInputValue,
             avatarUrl: photoUrl,
             postsCount: 0,
             commentsCount:0
         }
         return putData(endpoints.editProfileEndpoint, data)
-        .then(response => console.log(response))
     }
 }
 

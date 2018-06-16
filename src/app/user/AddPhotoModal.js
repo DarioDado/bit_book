@@ -8,30 +8,12 @@ class AddPhotoModal extends Component {
         super(props);
         this.state = {
             inputFileValue: null,
-            hideValidationClass: "hide",
-            disableButton: null,
         }
 
     }
 
     
-    onImageInputChange = (event) => {
-        this.setState({
-            inputValue: event.target.value
-        })
-        const inputValue = event.target.value;
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
-            this.setState({
-                hideValidationClass: "hide",
-                disable: null,
-            })
-        } else {
-            this.setState({
-                hideValidationClass: "show",
-                disableButton: "disabled",
-            })
-        }
-    }
+  
 
     onImgFileChange = (event) => {
         this.setState({
@@ -49,16 +31,13 @@ class AddPhotoModal extends Component {
         .then(response => {
             console.log(response)
         })
-        .catch(err => {
-            console.log(err)
-        })
     }
 
 
 
     render() {
-        const { disableButton, hideValidationClass, inputValue } = this.state;
-        const { hideAddModal, onCloseAddModal } = this.props;
+        const { inputFileValue } = this.state;
+        const { hideAddModal, onCloseAddModal, onImageInputChange,hideValidationClass, disable, photoUrl } = this.props;
         return (
             <div className={`overlay ${hideAddModal}`}>
                 <div className="modal" style={{ display: 'block' }}>
@@ -68,7 +47,7 @@ class AddPhotoModal extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="input-field url-input-col col s6">
-                                        <input id="icon_prefix" name="urlInputValue" value={inputValue} type="text" onChange={this.onImageInputChange} />
+                                        <input id="icon_prefix" name="photoUrl" value={photoUrl} type="text" onChange={onImageInputChange} />
                                         <label htmlFor="icon_prefix">Image URL</label>
                                         <h5 className={hideValidationClass}>Wrong input!</h5>
                                     </div>
@@ -78,7 +57,7 @@ class AddPhotoModal extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="col s12">
-                                        <button className={`waves-effect waves-light btn right ${disableButton}`} onClick={this.onImgFileUpload}>Upload</button>
+                                        <button className={`waves-effect waves-light btn right ${disable}`} onClick={this.onImgFileUpload}>Upload</button>
                                     </div>
                                 </div>
                             </div>
