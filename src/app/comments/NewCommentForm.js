@@ -41,7 +41,7 @@ export class NewCommentForm extends Component {
             <div className="form-wrap">
                 <form onSubmit={this.onFormSubmitHandler} className="comment-form">
                     <div className="input-field">
-                        <input id="email" type="email" value={this.state.inputVal} onChange={this.onChangeInputHandler}  />
+                        <input id="email" type="text" value={this.state.inputVal} onChange={this.onChangeInputHandler}  />
                         <label htmlFor="email">Add your comment</label>
                     </div>
                 </form>

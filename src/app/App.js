@@ -8,6 +8,7 @@ import M from 'materialize-css'
 import { Footer } from './partials/Footer';
 import { SinglePostPage } from './SinglePostPage';
 import { MyProfilePage } from './user/MyProfilePage';
+import { PeoplePage } from './PeoplePage';
 
 
 
@@ -28,6 +29,7 @@ class App extends Component {
         <main className='container'>
           <Switch>
             <Route exact path='/feed' component={FeedPage} />
+            <Route exact path='/people' component={PeoplePage} />
             <Route exact path='/feed/:type/:id' component={SinglePostPage} />
             <Route exact path='/profile' component={MyProfilePage} />
           </Switch>
