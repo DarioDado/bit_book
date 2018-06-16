@@ -1,5 +1,3 @@
-import Moment from 'moment';
-
 export class User {
     constructor(userData) {
         this.userId = userData.userId;
@@ -14,6 +12,19 @@ export class User {
     }
 
     getTimeFromLastPost = () => {
-        
+      if (!this.lastPostDate) {
+        return "No Posts"
+      }
+      const milsecFromLastPost = Date.now() - this.lastPostDate.getTime();
+      const numOfMilsecInDay = 1000*60*60*24;
+      const min = ('0'+this.lastPostDate.getMinutes()).slice(-2);
+      const hour = ('0'+this.lastPostDate.getHours()).slice(-2);
+      const day = ('0'+this.lastPostDate.getDate()).slice(-2);
+      const month = ('0'+(this.lastPostDate.getMonth() + 1)).slice(-2);
+      const year = this.lastPostDate.getFullYear();
+      if (milsecFromLastPost>numOfMilsecInDay) {
+        return `${day}.${month}.${year} ${min}:${hour}`;
+      }
+      return `at ${hour}:${min}`;
     }
 }

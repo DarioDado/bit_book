@@ -18,8 +18,8 @@ export const UserItem = props => {
                             <p className="user-about">{user.aboutShort}</p>
                         </div>
                         <div className="last-post-info">
-                            <p>Last post</p>
-                            <p className="last-post-time">at 07:53</p>
+                            <p style={{fontWeight: 'bolder'}}>Last post</p>
+                            <p className="last-post-time">{user.getTimeFromLastPost()}</p>
                         </div>
                     </div>
                 </div>
