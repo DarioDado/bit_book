@@ -14,7 +14,8 @@ export class FeedPage extends Component {
             posts: null,
             loading: true,
             modalBtn: null,
-            hideModal: null
+            hideModal: null,
+            filteredPosts: null
         }
     }
 
@@ -31,11 +32,16 @@ export class FeedPage extends Component {
 
 
     renderPosts = () => {
-        const { loading, posts } = this.state;
+        const { loading, posts, filteredPosts } = this.state;
         if (loading) {
             return <div className="loading">Loading</div>
         }
-        return <PostList posts={posts} />
+        if (filteredPosts) {
+            return <PostList posts={filteredPosts} />
+        } else {
+
+            return <PostList posts={posts} />
+        }
     }
 
     onNewPostClick = (event) => {
@@ -52,12 +58,29 @@ export class FeedPage extends Component {
 
     }
 
+    onFilterPosts = (event) => {
+        const allPosts = this.state.posts;
+        if (event.target.value === "all") {
+            this.setState({
+                filteredPosts: null
+            })
+        } else {
+
+            const filteredPosts = allPosts.filter(post => {
+                return post.type === event.target.value;
+            })
+            this.setState({
+                filteredPosts
+            })
+        }
+    }
+
     render() {
         return (
             <div className="row">
-                <OptionsSidebar />
+                <OptionsSidebar onFilterPosts={this.onFilterPosts} loadData={this.loadData} />
                 {this.renderPosts()}
-                <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData}/>
+                <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData} />
                 <NewPostButton onClick={this.onNewPostClick} />
             </div>
         )
