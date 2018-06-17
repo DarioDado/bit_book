@@ -1,24 +1,25 @@
 import React, { Component, Fragment } from 'react';
 
-import './MyProfilePage.css'
-import { userService } from '../../services/userService';
+import './user/MyProfilePage.css'
+import { userService } from '../services/userService';
 
-class MyProfilePage extends Component {
+class UserProfilePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            myProfileData: null,
+            user: null,
             loading: true
         }
     }
 
 
     componentDidMount = () => {
-        userService.getMyProfile()
-            .then(myProfileData => {
-                console.log(myProfileData)
+        const { id } = this.props.match.params;
+        console.log(id);
+        userService.getUser(id)
+            .then(user => {
                 this.setState({
-                    myProfileData,
+                    user,
                     loading: false
                 })
             })
@@ -26,7 +27,7 @@ class MyProfilePage extends Component {
 
 
     render() {
-        const { myProfileData, loading } = this.state;
+        const { user, loading } = this.state;
 
         if (loading) {
             return <div className="loading">Loading</div>
@@ -34,13 +35,13 @@ class MyProfilePage extends Component {
         return (
             <Fragment>
                 <div className="col s12 center">
-                    <img src={myProfileData.avatarUrl} className="responsive-img circle profile-img" />
+                    <img src={user.avatarUrl} className="responsive-img circle profile-img" />
                 </div>
                 <div className="col s12 center">
-                    <h2 className="profile-name">{myProfileData.name}</h2>
+                    <h2 className="profile-name">{user.name}</h2>
                 </div>
                 <div className="col s12 center">
-                    <p>{myProfileData.aboutShort}</p>
+                    <p>{user.about}</p>
                 </div>
                 <div className="row">
                     <div className="col s6">
@@ -48,7 +49,7 @@ class MyProfilePage extends Component {
                             <div className="blue-circle">
                                 <p>P</p>
                             </div>
-                            <p>{myProfileData.postsCount} Posts</p>
+                            <p>{user.postsCount} Posts</p>
                         </div>
                     </div>
                     <div className="col s6">
@@ -56,7 +57,7 @@ class MyProfilePage extends Component {
                             <div className="blue-circle">
                                 <p>C</p>
                             </div>
-                            <p>{myProfileData.commentsCount} Comments</p>
+                            <p>{user.commentsCount} Comments</p>
                         </div>
                     </div>
                 </div>
@@ -65,4 +66,4 @@ class MyProfilePage extends Component {
     }
 }
 
-export { MyProfilePage };
+export { UserProfilePage };

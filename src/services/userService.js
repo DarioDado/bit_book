@@ -15,6 +15,12 @@ class UserService {
             })
     }
 
+    getUser = (id) => {
+        const url = `${endpoints.users}/${id}`;
+        return getData(url)
+            .then(userData => new User(userData))
+    }
+
     getSearchedUsers = (inputString) => {
       const url = endpoints.users;
       return getData(url)
