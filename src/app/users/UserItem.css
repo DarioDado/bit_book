@@ -34,6 +34,10 @@
     font-size: 30px;
 }
 
+.user-details a {
+  color: black;
+}
+
 .user-item-wrap p {
     margin: 0;
 }
