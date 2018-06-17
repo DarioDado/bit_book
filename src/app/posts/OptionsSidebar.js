@@ -1,10 +1,10 @@
 import React from 'react';
 import { FilterForm } from './FilterForm';
 
-const OptionsSidebar = () => {
+const OptionsSidebar = (props) => {
     return (
         <div className="col s12 m3 right">
-            <FilterForm />
+            <FilterForm onFilterPosts={props.onFilterPosts}/>
         </div>
     );
 };
