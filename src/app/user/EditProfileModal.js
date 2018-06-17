@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react';
 
 import './EditProfileModal.css'
 import { AddPhotoModal } from './AddPhotoModal';
+import { userService } from '../../services/userService';
+
 
 class EditProfileModal extends Component {
     constructor(props) {
@@ -11,7 +13,8 @@ class EditProfileModal extends Component {
             disable: null,
             photoUrl: "",
             hideAddModal: "hide",
-            imgUrl: null
+            imgUrl: null,
+            inputFileValue: null
         }
     }
 
@@ -35,15 +38,35 @@ class EditProfileModal extends Component {
         })
     }
 
-    onUploadImg = (url) => {
+    onUploadImg = (event, url) => {
         this.setState({
             imgUrl: url
         })
     }
 
+    onImgFileChange = (event) => {
+        this.setState({
+            inputFileValue: event.target.files[0]
+        })
+    }
+
+    onImgFileUpload = (event) => {
+        const imgFile = this.state.inputFileValue;
+        const formData = new FormData();
+        formData.append('file', imgFile);
+        console.log(formData)
+
+        userService.uploadImage(formData)
+            .then(response => {
+                this.setState({
+                    imgUrl: response
+                })
+            })
+    }
+
     render() {
         const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, disable, hideValidationClass } = this.props;
-        const { hideAddModal, imgUrl } = this.state;
+        const { hideAddModal, imgUrl, inputFileValue } = this.state;
         return (
             <Fragment>
                 <div className={`overlay ${hideModal}`}>
@@ -83,7 +106,9 @@ class EditProfileModal extends Component {
                         </form>
                     </div>
                 </div>
-                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl} hideValidationClass={hideValidationClass} disable={disable}/>
+                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl}
+                    hideValidationClass={hideValidationClass} disable={disable} inputFileValue={inputFileValue}
+                    onImgFileChange={this.onImgFileChange} onImgFileUpload={this.onImgFileUpload} onUploadImg={this.onUploadImg} />
             </Fragment>
         );
     }

@@ -1,6 +1,7 @@
 import { getData, putData } from "./fetchServices";
-import { endpoints } from "../shared/constants";
+import { endpoints, requestHeader } from "../shared/constants";
 import { User } from "../entities/User";
+
 
 
 
@@ -30,6 +31,18 @@ class UserService {
             commentsCount:0
         }
         return putData(endpoints.editProfileEndpoint, data)
+    }
+
+    uploadImage(imgFile) {
+        return  fetch(endpoints.upload, {
+            body:imgFile,
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: requestHeader,
+            method: 'POST',
+            mode: 'cors'
+        })
+            .then(response => response.json())
     }
 }
 

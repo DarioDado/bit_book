@@ -1,43 +1,21 @@
 import React, { Component } from 'react';
 import "./AddPhotoModal.css"
-import { postService } from '../../services/postService';
 
 class AddPhotoModal extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputFileValue: null,
-        }
-
-    }
-
-    
-  
-
-    onImgFileChange = (event) => {
-        this.setState({
-            inputFileValue: event.target.files[0]
-        })
-    }
-    
-    onImgFileUpload = (event) => {
+    onImageUpload = (event) => {
         event.preventDefault();
-        const imgFile = this.state.inputFileValue;
-        const formData = new FormData();
-        formData.append('file', imgFile);
-        
-       postService.uploadImage(formData)
-        .then(response => {
-            console.log(response)
-        })
+        const { onUploadImg, photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue} = this.props;
+        if (inputFileValue) {
+             onImgFileUpload(event)
+        } else {
+           onUploadImg(event, photoUrl);
+        }
+        onCloseAddModal(event)
     }
-
-
 
     render() {
-        const { inputFileValue } = this.state;
-        const { hideAddModal, onCloseAddModal, onImageInputChange,hideValidationClass, disable, photoUrl } = this.props;
+        const { hideAddModal, onCloseAddModal, onImageInputChange, hideValidationClass, disable, photoUrl, onImgFileChange } = this.props;
         return (
             <div className={`overlay ${hideAddModal}`}>
                 <div className="modal" style={{ display: 'block' }}>
@@ -52,12 +30,12 @@ class AddPhotoModal extends Component {
                                         <h5 className={hideValidationClass}>Wrong input!</h5>
                                     </div>
                                     <div className="input-field col s6 ">
-                                        <input id="icon_prefix"  type="file" onChange={this.onImgFileChange}/>
+                                        <input id="icon_prefix" type="file" onChange={onImgFileChange} />
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col s12">
-                                        <button className={`waves-effect waves-light btn right ${disable}`} onClick={this.onImgFileUpload}>Upload</button>
+                                        <button className={`waves-effect waves-light btn right ${disable}`} onClick={this.onImageUpload}>Upload</button>
                                     </div>
                                 </div>
                             </div>

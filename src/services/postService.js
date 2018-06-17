@@ -1,5 +1,5 @@
 import { getData, postData } from "./fetchServices";
-import { endpoints, requestHeader } from "../shared/constants";
+import { endpoints } from "../shared/constants";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
 
 
@@ -81,18 +81,6 @@ class PostService {
                 return new TextPost(postData);
             })
 
-    }
-
-    uploadImage(imgFile) {
-        return  fetch(endpoints.upload, {
-            body:imgFile,
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: requestHeader,
-            method: 'POST',
-            mode: 'cors'
-        })
-            .then(response => response.json())
     }
 }
 
