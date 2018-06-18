@@ -12,7 +12,7 @@ import { MyProfilePage } from './user/MyProfilePage';
 import { PeoplePage } from './PeoplePage';
 import { UserProfilePage } from './UserProfilePage';
 import { LoginRegisterPage } from './LoginRegisterPage';
-import { userService } from '../services/userService';
+import { authService } from '../services/authService';
 
 
 
@@ -32,7 +32,7 @@ class App extends Component {
         <Header />
         <main className='container'>
           {
-            userService.isUserLoggedIn()
+            authService.isUserLoggedIn()
               ? (
                 <Switch>
                   <Route exact path='/feed' component={FeedPage} />

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './LoginRegisterPage.css';
-import { userService } from '../services/userService';
+import { authService } from '../services/authService';
 
 export class LoginRegisterPage extends Component {
     constructor(props) {
@@ -13,7 +13,8 @@ export class LoginRegisterPage extends Component {
             registerPassword: "",
             registerEmail: "",
             error: "",
-            showError: false
+            showError: false,
+            registrationComplete: false
         }
     }
 
@@ -42,7 +43,7 @@ export class LoginRegisterPage extends Component {
             username: loginUsername,
             password: loginPassword 
         }
-        userService.login(data)
+        authService.login(data)
             .then(data => {
                 if (data.error) {
                     console.log(data)
@@ -55,7 +56,7 @@ export class LoginRegisterPage extends Component {
 
 
     render() {
-        const { login, error, showError } = this.state;
+        const { login, error, showError, registrationComplete } = this.state;
         return (
             <div className="row">
                 <div className="col s12 l6 intro-msg">
@@ -65,6 +66,7 @@ export class LoginRegisterPage extends Component {
                     </p>
                 </div>
                 <div className="col 12 l6 login-register">
+                    <p className={`registration-complete-msg ${registrationComplete ? "" : "hide"}`}>Registration successfully completed! Please Login</p>
                     <div className="cards">
                         <p className={`login ${login ? "active" : ""}`} onClick={this.onLoginCardHandler}>Login</p>
                         <p className={`register ${login ? "" : "active"}`} onClick={this.onRegisterCardHandler}>Register</p>

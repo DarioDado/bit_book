@@ -1,9 +1,10 @@
 import { requestHeader } from '../shared/constants';
+import { storageService } from './storageService';
 
 
 
 const getHeaders = () => {
-    const loggedInUser = JSON.parse(window.localStorage.getItem('loggedInUser'));
+    const loggedInUser = storageService.getData('loggedInUser');
     return loggedInUser 
         ? {...requestHeader, sessionID: loggedInUser.sessionId}
         : requestHeader;

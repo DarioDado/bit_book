@@ -1,6 +1,7 @@
 import { getData, postData } from "./fetchServices";
 import { endpoints } from "../shared/constants";
 import { User } from "../entities/User";
+import { storageService } from "./storageService";
 
 
 
@@ -8,23 +9,7 @@ import { User } from "../entities/User";
 class UserService {
 
     getLoggedInUser = () => {
-        return JSON.parse(window.localStorage.getItem('loggedInUser'));
-    }
-
-    isUserLoggedIn = () => {
-        return this.getLoggedInUser() ? true : false;
-    }
-
-    login = (data) => {
-        const url = endpoints.login;
-        return postData(url, data)
-            .then(loginData => {
-                if (!loginData.error) {
-                    window.localStorage.setItem('loggedInUser', JSON.stringify(loginData));
-                    return loginData
-                }
-                return loginData;
-            })
+        return new User(storageService.getData('loggedInUser'));
     }
 
     getUsers = () => {
