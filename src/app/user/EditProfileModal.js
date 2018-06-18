@@ -6,51 +6,34 @@ import { AddPhotoModal } from './AddPhotoModal';
 class EditProfileModal extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            hideAddModal: "hide",
+            imageSrc: this.props.photoUrl
         }
     }
-
-    onOpenAddModal = (event) => {
-        event.preventDefault();
-
-        this.setState({
-            hideAddModal: null,
-        })
-    }
-
-    onCloseAddModal = (event) => {
-        event.preventDefault();
-        this.setState({
-            hideAddModal: "hide",
-        })
-    }
-
-    onUploadImg = (event, url) => {
-        this.setState({
-            imgUrl: url
-        })
-    }
-
     onImageUpload = (event) => {
         event.preventDefault();
-        const { photoUrl, onImgFileUpload, inputFileValue} = this.props;
+        const { photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue, onImageInputChange } = this.props;
         if (inputFileValue) {
-            onImgFileUpload()
+            onImgFileUpload(event)
                 .then(photoUrl => {
                     this.setState({
-                        imgUrl: photoUrl
+                        imageSrc: photoUrl
                     })
                 })
         } else {
-            this.onUploadImg(photoUrl);
+            onImageInputChange(event);
+            this.setState({
+                imageSrc: photoUrl
+            })
         }
-        this.onCloseAddModal(event)
+        onCloseAddModal(event)
     }
 
     render() {
-        const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, validationClassAddModal, validationClassEditModal, error, onImgFileChange } = this.props;
-        const { hideAddModal } = this.state;
+        const { onCloseModal, hideModal, hideAddModal, onChangeInputs, nameInputValue,
+            aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, validationClassAddModal,
+            validationClassEditModal, error, onImgFileChange, onOpenAddModal, onCloseAddModal } = this.props;
         return (
             <Fragment>
                 <div className={`overlay ${hideModal}`}>
@@ -63,8 +46,8 @@ class EditProfileModal extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col s4">
-                                            <img src={photoUrl} className="upload-placeholder-img" alt="" />
-                                            <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={this.onOpenAddModal}>Add photo</button>
+                                            <img src={this.state.imageSrc} className="upload-placeholder-img" alt="" />
+                                            <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={onOpenAddModal}>Add photo</button>
                                         </div>
                                         <div className="input-field col s8">
                                             <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name" />
@@ -90,8 +73,8 @@ class EditProfileModal extends Component {
                         </form>
                     </div>
                 </div>
-                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl}
-                    validationClassAddModal={validationClassAddModal} onImgFileChange={onImgFileChange} onImageUpload={this.onImageUpload} error={error}/>
+                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={onCloseAddModal} onOpenAddModal={onOpenAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl}
+                    validationClassAddModal={validationClassAddModal} onImgFileChange={onImgFileChange} onImageUpload={this.onImageUpload} error={error} />
             </Fragment>
         );
     }

@@ -13,6 +13,7 @@ class MyProfilePage extends Component {
             myProfileData: null,
             loading: true,
             hideModal: "hide",
+            hideAddModal: "hide",
             nameInputValue: "",
             aboutInputValue: "",
             photoUrl: "",
@@ -39,6 +40,21 @@ class MyProfilePage extends Component {
     onOpenModal = () => {
         this.setState({
             hideModal: null
+        })
+    }
+
+    onOpenAddModal = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            hideAddModal: null,
+        })
+    }
+
+    onCloseAddModal = (event) => {
+        event.preventDefault();
+        this.setState({
+            hideAddModal: "hide",
         })
     }
 
@@ -82,6 +98,7 @@ class MyProfilePage extends Component {
     }
 
     onImageInputChange = (event) => {
+        event.preventDefault()
         this.setState({
             photoUrl: event.target.value
         })
@@ -103,6 +120,7 @@ class MyProfilePage extends Component {
                 error: validationService.isValidImage(inputValue)
             })
         }
+        console.log(this.state.photoUrl)
     }
 
     onImgFileChange = (event) => {
@@ -138,7 +156,7 @@ class MyProfilePage extends Component {
     }
 
     render() {
-        const { myProfileData, loading, nameInputValue, aboutInputValue, photoUrl, validationClassEditModal, validationClassAddModal, inputFileValue, error } = this.state;
+        const { myProfileData, loading, hideAddModal, hideModal, nameInputValue, aboutInputValue, photoUrl, validationClassEditModal, validationClassAddModal, inputFileValue, error } = this.state;
 
         if (loading) {
             return <div className="loading">Loading</div>
@@ -152,7 +170,8 @@ class MyProfilePage extends Component {
                     <h2 className="profile-name">{myProfileData.name}</h2>
                     <EditProfileModal
                         onCloseModal={this.onCloseModal}
-                        hideModal={this.state.hideModal}
+                        hideModal={hideModal}
+                        hideAddModal={hideAddModal}
                         nameInputValue={nameInputValue}
                         aboutInputValue={aboutInputValue}
                         photoUrl={photoUrl}
@@ -165,7 +184,9 @@ class MyProfilePage extends Component {
                         error={error}
                         onImgFileUpload={this.onImgFileUpload}
                         onImgFileChange={this.onImgFileChange}
-                        inputFileValue={inputFileValue} />
+                        inputFileValue={inputFileValue}
+                        onOpenAddModal={this.onOpenAddModal}
+                        onCloseAddModal={this.onCloseAddModal} />
                     <EditProfileLink onOpenModal={this.onOpenModal} />
                 </div>
                 <div className="col s12 center">
