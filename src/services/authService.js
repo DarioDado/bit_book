@@ -20,6 +20,11 @@ class AuthService {
             })
     }
 
+    register = data => {
+      const url = endpoints.register;
+      return postData(url, data);
+    }
+
 }
 
 export const authService = new AuthService();
