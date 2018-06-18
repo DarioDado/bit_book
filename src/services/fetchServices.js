@@ -33,11 +33,8 @@ export const putData = (url, data) => {
         method: 'PUT',
         mode: 'cors'
     })
-        .then(response => {
-            console.log(response.json())
-            })
+        
 }
-
 
 export const deleteData = (url) => {
     return fetch(url, {

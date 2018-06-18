@@ -29,7 +29,6 @@ export class CommentAuthorDetails extends Component {
         )
     }
 
-
     render() {
         return this.renderUserDetails();
     }

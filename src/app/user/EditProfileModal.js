@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 
 import './EditProfileModal.css'
 import { AddPhotoModal } from './AddPhotoModal';
-import { userService } from '../../services/userService';
-
 
 class EditProfileModal extends Component {
     constructor(props) {
@@ -11,30 +9,25 @@ class EditProfileModal extends Component {
         this.state = {
             hideClass: "show",
             disable: null,
-            photoUrl: "",
+            photoUrl:"",
             hideAddModal: "hide",
-            imgUrl: null,
-            inputFileValue: null
+            imgUrl: this.props.myProfileData.avatarUrl,
         }
     }
 
-    // onAddPhoto = (event) => {
-    //     const photoUrl = this.state.photoUrl;
-
-
-    // }
-
     onOpenAddModal = (event) => {
         event.preventDefault();
+        
         this.setState({
-            hideAddModal: null
+            hideAddModal: null,
         })
     }
 
     onCloseAddModal = (event) => {
-        event.preventDefault()
+        event.preventDefault();
         this.setState({
-            hideAddModal: "hide"
+            hideAddModal: "hide",
+            
         })
     }
 
@@ -44,29 +37,27 @@ class EditProfileModal extends Component {
         })
     }
 
-    onImgFileChange = (event) => {
-        this.setState({
-            inputFileValue: event.target.files[0]
-        })
-    }
-
-    onImgFileUpload = (event) => {
-        const imgFile = this.state.inputFileValue;
-        const formData = new FormData();
-        formData.append('file', imgFile);
-        console.log(formData)
-
-        userService.uploadImage(formData)
-            .then(response => {
+    onImageUpload = (event) => {
+        event.preventDefault();
+        const { photoUrl, onImgFileUpload, inputFileValue } = this.props;
+        if (inputFileValue) {
+            onImgFileUpload(event, photoUrl)
+            .then(photoUrl => {
                 this.setState({
-                    imgUrl: response
+                    imgUrl: photoUrl
                 })
             })
+        } else {
+            this.onUploadImg(event, photoUrl);
+        }
+        this.onCloseAddModal(event)
     }
 
+ 
+
     render() {
-        const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, disable, hideValidationClass } = this.props;
-        const { hideAddModal, imgUrl, inputFileValue } = this.state;
+        const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, disable, hideValidationClass, onImgFileChange } = this.props;
+        const { hideAddModal, imgUrl } = this.state;
         return (
             <Fragment>
                 <div className={`overlay ${hideModal}`}>
@@ -83,20 +74,18 @@ class EditProfileModal extends Component {
                                             <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={this.onOpenAddModal}>Add photo</button>
                                         </div>
                                         <div className="input-field col s8">
-                                            <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} />
-                                            <label htmlFor="name">Name</label>
+                                            <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name"/>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <textarea id="textarea1" className="materialize-textarea" name="aboutInputValue" value={aboutInputValue} onChange={onChangeInputs} ></textarea>
-                                            <label htmlFor="textarea1">Textarea</label>
+                                            <textarea id="textarea1" className="materialize-textarea" name="aboutInputValue" value={aboutInputValue} onChange={onChangeInputs} placeholder="About"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="modal-footer row">
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn close-btn`} onClick={updateMyProfile}>Upload</button>
+                                        <button className={`waves-effect waves-light btn close-btn`} onClick={updateMyProfile}>Update</button>
                                     </div>
                                     <div className="input-field col s2 right">
                                         <button className={`waves-effect waves-light btn`} onClick={onCloseModal}>Close</button>
@@ -107,8 +96,7 @@ class EditProfileModal extends Component {
                     </div>
                 </div>
                 <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl}
-                    hideValidationClass={hideValidationClass} disable={disable} inputFileValue={inputFileValue}
-                    onImgFileChange={this.onImgFileChange} onImgFileUpload={this.onImgFileUpload} onUploadImg={this.onUploadImg} />
+                    hideValidationClass={hideValidationClass} disable={disable} onImgFileChange={onImgFileChange} onImageUpload={this.onImageUpload} />
             </Fragment>
         );
     }

@@ -3,19 +3,9 @@ import "./AddPhotoModal.css"
 
 class AddPhotoModal extends Component {
 
-    onImageUpload = (event) => {
-        event.preventDefault();
-        const { onUploadImg, photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue} = this.props;
-        if (inputFileValue) {
-             onImgFileUpload(event)
-        } else {
-           onUploadImg(event, photoUrl);
-        }
-        onCloseAddModal(event)
-    }
-
+  
     render() {
-        const { hideAddModal, onCloseAddModal, onImageInputChange, hideValidationClass, disable, photoUrl, onImgFileChange } = this.props;
+        const { hideAddModal, onCloseAddModal, onImageInputChange, hideValidationClass, disable, photoUrl, onImgFileChange, onImageUpload } = this.props;
         return (
             <div className={`overlay ${hideAddModal}`}>
                 <div className="modal" style={{ display: 'block' }}>
@@ -35,7 +25,7 @@ class AddPhotoModal extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="col s12">
-                                        <button className={`waves-effect waves-light btn right ${disable}`} onClick={this.onImageUpload}>Upload</button>
+                                        <button className={`waves-effect waves-light btn right ${disable}`} onClick={onImageUpload}>Upload</button>
                                     </div>
                                 </div>
                             </div>
