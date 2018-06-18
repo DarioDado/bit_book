@@ -1,10 +1,20 @@
 import { requestHeader } from '../shared/constants';
 
+
+
+const getHeaders = () => {
+    const loggedInUser = JSON.parse(window.localStorage.getItem('loggedInUser'));
+    return loggedInUser 
+        ? {...requestHeader, sessionID: loggedInUser.sessionId}
+        : requestHeader;
+}
+
+
 export const getData = (url) => {
     return fetch(url, {
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: requestHeader,
+        headers: getHeaders(),
         method: 'GET',
         mode: 'cors'
     })
@@ -17,7 +27,7 @@ export const postData = (url, data) => {
         body: JSON.stringify(data),
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: requestHeader,
+        headers: getHeaders(),
         method: 'POST',
         mode: 'cors'
     })
@@ -29,7 +39,7 @@ export const putData = (url, data) => {
         body: JSON.stringify(data),
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: requestHeader,
+        headers: getHeaders(),
         method: 'PUT',
         mode: 'cors'
     })
@@ -41,7 +51,7 @@ export const deleteData = (url) => {
     return fetch(url, {
         cache: 'no-cache',
         credentials: 'same-origin',
-        headers: requestHeader,
+        headers: getHeaders(),
         method: 'DELETE',
         mode: 'cors'
     })

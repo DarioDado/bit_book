@@ -1,6 +1,6 @@
 
 import React, { Fragment, Component } from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import './App.css';
 import M from 'materialize-css'
 
@@ -11,6 +11,8 @@ import { SinglePostPage } from './SinglePostPage';
 import { MyProfilePage } from './user/MyProfilePage';
 import { PeoplePage } from './PeoplePage';
 import { UserProfilePage } from './UserProfilePage';
+import { LoginRegisterPage } from './LoginRegisterPage';
+import { userService } from '../services/userService';
 
 
 
@@ -29,13 +31,25 @@ class App extends Component {
       <Fragment>
         <Header />
         <main className='container'>
-          <Switch>
-            <Route exact path='/feed' component={FeedPage} />
-            <Route exact path='/users/:id' component={UserProfilePage} />
-            <Route exact path='/people' component={PeoplePage} />
-            <Route exact path='/feed/:type/:id' component={SinglePostPage} />
-            <Route exact path='/profile' component={MyProfilePage} />
-          </Switch>
+          {
+            userService.isUserLoggedIn()
+              ? (
+                <Switch>
+                  <Route exact path='/feed' component={FeedPage} />
+                  <Route exact path='/users/:id' component={UserProfilePage} />
+                  <Route exact path='/people' component={PeoplePage} />
+                  <Route exact path='/feed/:type/:id' component={SinglePostPage} />
+                  <Route exact path='/profile' component={MyProfilePage} />
+                  <Redirect path="/" to="/feed" />
+                </Switch>
+              )
+              : (
+                <Switch>
+                  <Route path='/login' component={LoginRegisterPage} />
+                  <Redirect path="/" to="/login" />
+                </Switch>
+              )
+          }
         </main>
         <Footer />
       </Fragment>
