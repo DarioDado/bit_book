@@ -18,7 +18,8 @@ class MyProfilePage extends Component {
             aboutInputValue: "",
             photoUrl: "",
             validationClassEditModal: {
-                hideClass: "hide",
+                name: "hide",
+                about:"hide",
                 disable: null,
             },
             validationClassAddModal: {
@@ -26,7 +27,11 @@ class MyProfilePage extends Component {
                 disable: null,
             },
             inputFileValue: null,
-            error: null
+            error: {
+                nameError: null,
+                aboutError: null,
+                imageError: null
+            }
         }
     }
 
@@ -39,7 +44,9 @@ class MyProfilePage extends Component {
 
     onOpenModal = () => {
         this.setState({
-            hideModal: null
+            hideModal: null,
+            photoUrl: this.state.myProfileData.avatarUrl
+            
         })
     }
 
@@ -48,6 +55,7 @@ class MyProfilePage extends Component {
 
         this.setState({
             hideAddModal: null,
+            photoUrl:""
         })
     }
 
@@ -55,7 +63,8 @@ class MyProfilePage extends Component {
         event.preventDefault();
         this.setState({
             hideAddModal: "hide",
-        })
+            
+        })        
     }
 
     loadMyProfile = () => {
@@ -74,25 +83,34 @@ class MyProfilePage extends Component {
 
     onChangeInputs = (event) => {
         const inputName = event.target.name;
+        const inputId = event.target.id;
         this.setState({
-            [inputName]: event.target.value
+            [inputName]: event.target.value,
+            [inputId]: event.target.id
         })
+        console.log( event.target.id)
         const inputValue = event.target.value;
+        const inputClassList = event.target.id
         if (validationService.isValidText(inputValue)) {
             this.setState({
                 validationClassEditModal: {
-                    hideClass: "show",
+                    [inputId]: "show",
                     disable: "disabled",
                 },
-                error: validationService.isValidText(inputValue),
+                error:{
+                    [`${[inputId]}Error`]: validationService.isValidText(inputValue),
+
+                }
             })
         } else {
             this.setState({
                 validationClassEditModal: {
-                    hideClass: "hide",
+                    [inputId]: "hide",
                     disable: null,
                 },
-                error: validationService.isValidText(inputValue)
+                error:{
+                    [`${[inputId]}Error`]: validationService.isValidText(inputValue),
+                }
             })
         }
     }
@@ -109,7 +127,9 @@ class MyProfilePage extends Component {
                     hideClass: "show",
                     disable: "disabled",
                 },
-                error: validationService.isValidImage(inputValue),
+                error:{
+                    imageError: validationService.isValidImage(inputValue),
+                }
             })
         } else {
             this.setState({
@@ -117,10 +137,11 @@ class MyProfilePage extends Component {
                     hideClass: "hide",
                     disable: null,
                 },
-                error: validationService.isValidImage(inputValue)
+                error:{
+                    imageError: validationService.isValidImage(inputValue),
+                }
             })
         }
-        console.log(this.state.photoUrl)
     }
 
     onImgFileChange = (event) => {
@@ -148,7 +169,6 @@ class MyProfilePage extends Component {
                 this.loadMyProfile();
                 this.onCloseModal(event);
             })
-
     }
 
     componentDidMount = () => {
@@ -186,7 +206,7 @@ class MyProfilePage extends Component {
                         onImgFileChange={this.onImgFileChange}
                         inputFileValue={inputFileValue}
                         onOpenAddModal={this.onOpenAddModal}
-                        onCloseAddModal={this.onCloseAddModal} />
+                        onCloseAddModal={this.onCloseAddModal}/>
                     <EditProfileLink onOpenModal={this.onOpenModal} />
                 </div>
                 <div className="col s12 center">

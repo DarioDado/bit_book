@@ -11,6 +11,8 @@ class EditProfileModal extends Component {
             imageSrc: this.props.photoUrl
         }
     }
+
+   
     onImageUpload = (event) => {
         event.preventDefault();
         const { photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue, onImageInputChange } = this.props;
@@ -50,14 +52,14 @@ class EditProfileModal extends Component {
                                             <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={onOpenAddModal}>Add photo</button>
                                         </div>
                                         <div className="input-field col s8">
-                                            <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name" />
-                                            {error && <p className={`${validationClassEditModal.hideClass}`}>{error.message}</p>}
+                                            <input id="name" name="nameInputValue"  type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name" />
+                                            {error.nameError && <p className={`${validationClassEditModal.name}`}>{error.nameError.message}</p>}
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <textarea id="textarea1" className="materialize-textarea" name="aboutInputValue" value={aboutInputValue} onChange={onChangeInputs} placeholder="About"></textarea>
-                                            {error && <p className={`${validationClassEditModal.hideClass}`}>{error.message}</p>}
+                                            <textarea id="about" className="materialize-textarea" name="aboutInputValue"  value={aboutInputValue} onChange={onChangeInputs} placeholder="About"></textarea>
+                                            {error.aboutError && <p className={`${validationClassEditModal.about}`}>{error.aboutError.message}</p>}
                                         </div>
                                     </div>
                                 </div>
