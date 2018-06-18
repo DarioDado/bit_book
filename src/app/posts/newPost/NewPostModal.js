@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './NewPostModal.css'
 import { postService } from '../../../services/postService';
+import { validationService } from '../../../services/ValidationService';
 
 class NewPostModal extends Component {
     constructor(props) {
@@ -10,63 +11,71 @@ class NewPostModal extends Component {
             inputValue: "",
             hideClass: "hide",
             disable: null,
+            error: null
         }
     }
 
     onTextInputChange = (event) => {
         this.setState({
-            inputValue: event.target.value
+            inputValue: event.target.value,
         })
         const inputValue = event.target.value;
-        if(inputValue !== ""){
-            this.setState({
-                hideClass: "hide",
-                disable: null,
-            })
-        }else {
+        if (validationService.isValidText(inputValue)) {
             this.setState({
                 hideClass: "show",
                 disable: "disabled",
+                error: validationService.isValidText(inputValue),
             })
+        } else {
+            this.setState({
+                hideClass: "hide",
+                disable: null,
+                error: validationService.isValidText(inputValue)
+            })
+
         }
     }
 
     onImageInputChange = (event) => {
         this.setState({
-            inputValue: event.target.value
+            inputValue: event.target.value,
         })
         const inputValue = event.target.value;
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
-            this.setState({
-                hideClass: "hide",
-                disable: null,
-            })
-        } else {
+        if (validationService.isValidImage(inputValue)) {
             this.setState({
                 hideClass: "show",
                 disable: "disabled",
+                error: validationService.isValidImage(inputValue),
+            })
+        } else {
+            this.setState({
+                hideClass: "hide",
+                disable: null,
+                error: validationService.isValidText(inputValue)
             })
         }
     }
 
     onVideoInputChange = (event) => {
         this.setState({
-            inputValue: event.target.value
+            inputValue: event.target.value,
         })
         const inputValue = event.target.value;
-        if (inputValue.includes("https://") && inputValue.includes("youtube")) {
-            this.setState({
-                hideClass: "hide",
-                disable: null,
-
-            })
-        } else {
+        if (validationService.isValidVideo(inputValue)) {
             this.setState({
                 hideClass: "show",
                 disable: "disabled",
+                error: validationService.isValidVideo(inputValue),
+            })
+        } else {
+            this.setState({
+                hideClass: "hide",
+                disable: null,
+                error: validationService.isValidVideo(inputValue)
             })
         }
     }
+
 
     callChangeHandler(event, modalBtn) {
         if (modalBtn === "text") {
@@ -132,7 +141,7 @@ class NewPostModal extends Component {
 
     render() {
         const { modalBtn, hideModal, onCloseModal } = this.props
-        const { inputValue, disable, hideClass } = this.state;
+        const { inputValue, disable, hideClass, error } = this.state;
         if (!modalBtn) {
             return null;
         }
@@ -152,7 +161,7 @@ class NewPostModal extends Component {
                             <div className="input-field col s12">
                                 <input id="icon_prefix" name="textInputValue" type="text" value={inputValue} onChange={(event) => this.callChangeHandler(event, modalBtn)} />
                             </div>
-                            <h5 className={hideClass}>Wrong input!</h5>
+                            {error && <h5 className={hideClass}>{error.message}</h5>}
                         </div>
                         <div className="modal-footer">
                             <button className={`waves-effect waves-light btn right ${disable}`} onClick={(event) => { this.callSubmitHandler(event, modalBtn) }}>Post</button>
