@@ -132,9 +132,11 @@ class MyProfilePage extends Component {
                     <div className="col s6">
                         <div className="gray-bar right">
                             <div className="blue-circle">
-                                <p>C</p>
+                                <p>P</p>
                             </div>
+
                             <p>{myProfileData.postsCount} posts</p>
+
                         </div>
                     </div>
                     <div className="col s6">
@@ -142,7 +144,9 @@ class MyProfilePage extends Component {
                             <div className="blue-circle">
                                 <p>C</p>
                             </div>
+
                             <p>{myProfileData.commentsCount} comments</p>
+
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,54 @@
+.user-item-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.user-avatar {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.user-avatar img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.user-details {
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.user-details h2 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.user-details a {
+  color: black;
+}
+
+.user-item-wrap p {
+    margin: 0;
+}
+.last-post-info {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.card-panel {
+    border-radius: 10px !important;
+}
