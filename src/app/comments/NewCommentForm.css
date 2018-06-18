@@ -8,3 +8,11 @@
 .comment-form {
     width: 85%;
 }
+
+.hide{
+    display: none;
+}
+.show{
+    color: red;
+    font-size:14px;
+}

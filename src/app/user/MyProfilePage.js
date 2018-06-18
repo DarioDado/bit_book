@@ -115,14 +115,15 @@ class MyProfilePage extends Component {
         return (
             <Fragment>
                 <div className="col s12 center">
-                    <img src={myProfileData.avatarUrl} className="responsive-img circle profile-img" alt="" />
+                    <img src={myProfileData.avatarUrl} className="responsive-img profile-img" alt="" />
                 </div>
                 <div className="col s12 center">
                     <h2 className="profile-name">{myProfileData.name}</h2>
                     <EditProfileModal onCloseModal={this.onCloseModal} hideModal={this.state.hideModal}
                         nameInputValue={nameInputValue} aboutInputValue={aboutInputValue} photoUrl={photoUrl} onChangeInputs={this.onChangeInputs}
                         onImageInputChange={this.onImageInputChange} updateMyProfile={this.updateMyProfile} myProfileData={myProfileData}
-                        hideValidationClass={hideValidationClass} disable={disable} onImgFileUpload={this.onImgFileUpload} onImgFileChange={this.onImgFileChange} inputFileValue={inputFileValue} />
+                        hideValidationClass={hideValidationClass} disable={disable} onImgFileUpload={this.onImgFileUpload} onImgFileChange={this.onImgFileChange} 
+                        inputFileValue={inputFileValue} />
                     <EditProfileLink onOpenModal={this.onOpenModal} />
                 </div>
                 <div className="col s12 center">
