@@ -13,10 +13,6 @@ import { PeoplePage } from './PeoplePage';
 import { UserProfilePage } from './UserProfilePage';
 
 
-
-
-
-
 class App extends Component {
 
   componentDidMount() {
