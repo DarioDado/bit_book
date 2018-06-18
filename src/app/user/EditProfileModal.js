@@ -7,9 +7,7 @@ class EditProfileModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            photoUrl: "",
             hideAddModal: "hide",
-            imgUrl: this.props.myProfileData.avatarUrl,
         }
     }
 
@@ -36,7 +34,7 @@ class EditProfileModal extends Component {
 
     onImageUpload = (event) => {
         event.preventDefault();
-        const { photoUrl, onImgFileUpload, inputFileValue } = this.props;
+        const { photoUrl, onImgFileUpload, inputFileValue} = this.props;
         if (inputFileValue) {
             onImgFileUpload()
                 .then(photoUrl => {
@@ -45,14 +43,14 @@ class EditProfileModal extends Component {
                     })
                 })
         } else {
-            this.onUploadImg(event, photoUrl);
+            this.onUploadImg(photoUrl);
         }
         this.onCloseAddModal(event)
     }
 
     render() {
         const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, validationClassAddModal, validationClassEditModal, error, onImgFileChange } = this.props;
-        const { hideAddModal, imgUrl } = this.state;
+        const { hideAddModal } = this.state;
         return (
             <Fragment>
                 <div className={`overlay ${hideModal}`}>
@@ -65,7 +63,7 @@ class EditProfileModal extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col s4">
-                                            <img src={imgUrl} className="upload-placeholder-img" alt="" />
+                                            <img src={photoUrl} className="upload-placeholder-img" alt="" />
                                             <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={this.onOpenAddModal}>Add photo</button>
                                         </div>
                                         <div className="input-field col s8">

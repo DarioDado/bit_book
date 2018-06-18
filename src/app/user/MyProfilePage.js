@@ -33,8 +33,6 @@ class MyProfilePage extends Component {
         event.preventDefault()
         this.setState({
             hideModal: "hide",
-            nameInputValue: "",
-            aboutInputValue: ""
         })
     }
 
@@ -53,7 +51,6 @@ class MyProfilePage extends Component {
                     nameInputValue: myProfileData.name,
                     aboutInputValue: myProfileData.aboutShort,
                     photoUrl: myProfileData.avatarUrl
-
                 })
 
             })
