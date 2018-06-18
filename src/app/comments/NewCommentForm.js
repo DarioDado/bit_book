@@ -9,8 +9,10 @@ export class NewCommentForm extends Component {
         this.state = {
             inputVal: "",
             error: null,
-            hideClass: "hide",
-            disable: "disabled",
+            validationClass:{
+                hideClass: "hide",
+                disable: "disabled",
+            }
         }
     }
 
@@ -27,14 +29,18 @@ export class NewCommentForm extends Component {
 
         if(validationService.isValidText(inputValue)){
             this.setState({
-                hideClass: "show",
-                disable: "disabled",
+                validationClass:{
+                    hideClass: "show",
+                    disable: "disabled",
+                },
                 error: validationService.isValidText(inputValue),
             })
         }else {
             this.setState({
-                hideClass: "hide",
-                disable: null,
+                validationClass:{
+                    hideClass: "hide",
+                    disable: "disabled",
+                },
                 error: validationService.isValidText(inputValue),
             })
         }
@@ -57,19 +63,19 @@ export class NewCommentForm extends Component {
     }
 
     render() {
-        const {disable, error, hideClass} = this.state;
+        const { error, validationClass} = this.state;
         return (
             <div className="form-wrap">
                 <form onSubmit={this.onFormSubmitHandler} className="comment-form">
                     <div className="input-field">
                         <input id="email" type="text" value={this.state.inputVal} onChange={this.onChangeInputHandler}  />
                         <label htmlFor="email">Add your comment</label>
-                        {error && <p classNAme={`${hideClass}`}>{error.message}</p>}
+                        {error && <p classNAme={`${validationClass.hideClass}`}>{error.message}</p>}
                     </div>
                 </form>
                 <div className="submit-btn">
                     <button 
-                        className={`btn waves-effect waves-light ${disable}`} type="submit" 
+                        className={`btn waves-effect waves-light ${validationClass.disable}`} type="submit" 
                         name="action"
                         onClick={this.oncClickSubmitBtnHandler}>Submit</button>
                 </div>

@@ -7,9 +7,7 @@ class EditProfileModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            hideClass: "show",
-            disable: null,
-            photoUrl:"",
+            photoUrl: "",
             hideAddModal: "hide",
             imgUrl: this.props.myProfileData.avatarUrl,
         }
@@ -17,7 +15,7 @@ class EditProfileModal extends Component {
 
     onOpenAddModal = (event) => {
         event.preventDefault();
-        
+
         this.setState({
             hideAddModal: null,
         })
@@ -27,7 +25,6 @@ class EditProfileModal extends Component {
         event.preventDefault();
         this.setState({
             hideAddModal: "hide",
-            
         })
     }
 
@@ -41,22 +38,20 @@ class EditProfileModal extends Component {
         event.preventDefault();
         const { photoUrl, onImgFileUpload, inputFileValue } = this.props;
         if (inputFileValue) {
-            onImgFileUpload(event, photoUrl)
-            .then(photoUrl => {
-                this.setState({
-                    imgUrl: photoUrl
+            onImgFileUpload()
+                .then(photoUrl => {
+                    this.setState({
+                        imgUrl: photoUrl
+                    })
                 })
-            })
         } else {
             this.onUploadImg(event, photoUrl);
         }
         this.onCloseAddModal(event)
     }
 
- 
-
     render() {
-        const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, disable, hideValidationClass, onImgFileChange } = this.props;
+        const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, validationClassAddModal, validationClassEditModal, error, onImgFileChange } = this.props;
         const { hideAddModal, imgUrl } = this.state;
         return (
             <Fragment>
@@ -74,21 +69,23 @@ class EditProfileModal extends Component {
                                             <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={this.onOpenAddModal}>Add photo</button>
                                         </div>
                                         <div className="input-field col s8">
-                                            <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name"/>
+                                            <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name" />
+                                            {error && <p className={`${validationClassEditModal.hideClass}`}>{error.message}</p>}
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <textarea id="textarea1" className="materialize-textarea" name="aboutInputValue" value={aboutInputValue} onChange={onChangeInputs} placeholder="About"></textarea>
+                                            {error && <p className={`${validationClassEditModal.hideClass}`}>{error.message}</p>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className="modal-footer row">
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn close-btn`} onClick={updateMyProfile}>Update</button>
+                                        <button className={`waves-effect waves-light btn ${validationClassEditModal.disable}`} onClick={updateMyProfile}>Update</button>
                                     </div>
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn`} onClick={onCloseModal}>Close</button>
+                                        <button className="waves-effect waves-light btn" onClick={onCloseModal}>Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +93,7 @@ class EditProfileModal extends Component {
                     </div>
                 </div>
                 <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl}
-                    hideValidationClass={hideValidationClass} disable={disable} onImgFileChange={onImgFileChange} onImageUpload={this.onImageUpload} />
+                    validationClassAddModal={validationClassAddModal} onImgFileChange={onImgFileChange} onImageUpload={this.onImageUpload} error={error}/>
             </Fragment>
         );
     }

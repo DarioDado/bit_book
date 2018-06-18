@@ -4,6 +4,7 @@ import './MyProfilePage.css'
 import { userService } from '../../services/userService';
 import { EditProfileLink } from './EditProfileLink';
 import { EditProfileModal } from './EditProfileModal';
+import { validationService } from '../../services/ValidationService';
 
 class MyProfilePage extends Component {
     constructor(props) {
@@ -15,9 +16,16 @@ class MyProfilePage extends Component {
             nameInputValue: "",
             aboutInputValue: "",
             photoUrl: "",
-            hideValidationClass: "hide",
-            disable: null,
-            inputFileValue: null
+            validationClassEditModal: {
+                hideClass: "hide",
+                disable: null,
+            },
+            validationClassAddModal: {
+                hideClass: "hide",
+                disable: null,
+            },
+            inputFileValue: null,
+            error: null
         }
     }
 
@@ -44,8 +52,10 @@ class MyProfilePage extends Component {
                     loading: false,
                     nameInputValue: myProfileData.name,
                     aboutInputValue: myProfileData.aboutShort,
+                    photoUrl: myProfileData.avatarUrl
 
                 })
+
             })
     }
 
@@ -54,6 +64,24 @@ class MyProfilePage extends Component {
         this.setState({
             [inputName]: event.target.value
         })
+        const inputValue = event.target.value;
+        if (validationService.isValidText(inputValue)) {
+            this.setState({
+                validationClassEditModal: {
+                    hideClass: "show",
+                    disable: "disabled",
+                },
+                error: validationService.isValidText(inputValue),
+            })
+        } else {
+            this.setState({
+                validationClassEditModal: {
+                    hideClass: "hide",
+                    disable: null,
+                },
+                error: validationService.isValidText(inputValue)
+            })
+        }
     }
 
     onImageInputChange = (event) => {
@@ -61,15 +89,21 @@ class MyProfilePage extends Component {
             photoUrl: event.target.value
         })
         const inputValue = event.target.value;
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
+        if (validationService.isValidImage(inputValue)) {
             this.setState({
-                hideValidationClass: "hide",
-                disable: null,
+                validationClassAddModal: {
+                    hideClass: "show",
+                    disable: "disabled",
+                },
+                error: validationService.isValidImage(inputValue),
             })
         } else {
             this.setState({
-                hideValidationClass: "show",
-                disableButton: "disabled",
+                validationClassAddModal: {
+                    hideClass: "hide",
+                    disable: null,
+                },
+                error: validationService.isValidImage(inputValue)
             })
         }
     }
@@ -82,7 +116,7 @@ class MyProfilePage extends Component {
 
     onImgFileUpload = (event) => {
         const imgFile = this.state.inputFileValue;
-       return userService.uploadImage(imgFile)
+        return userService.uploadImage(imgFile)
             .then(response => {
                 this.setState({
                     photoUrl: response
@@ -107,7 +141,7 @@ class MyProfilePage extends Component {
     }
 
     render() {
-        const { myProfileData, loading, nameInputValue, aboutInputValue, photoUrl, hideValidationClass, disable, inputFileValue } = this.state;
+        const { myProfileData, loading, nameInputValue, aboutInputValue, photoUrl, validationClassEditModal, validationClassAddModal, inputFileValue, error } = this.state;
 
         if (loading) {
             return <div className="loading">Loading</div>
@@ -119,10 +153,21 @@ class MyProfilePage extends Component {
                 </div>
                 <div className="col s12 center">
                     <h2 className="profile-name">{myProfileData.name}</h2>
-                    <EditProfileModal onCloseModal={this.onCloseModal} hideModal={this.state.hideModal}
-                        nameInputValue={nameInputValue} aboutInputValue={aboutInputValue} photoUrl={photoUrl} onChangeInputs={this.onChangeInputs}
-                        onImageInputChange={this.onImageInputChange} updateMyProfile={this.updateMyProfile} myProfileData={myProfileData}
-                        hideValidationClass={hideValidationClass} disable={disable} onImgFileUpload={this.onImgFileUpload} onImgFileChange={this.onImgFileChange} 
+                    <EditProfileModal
+                        onCloseModal={this.onCloseModal}
+                        hideModal={this.state.hideModal}
+                        nameInputValue={nameInputValue}
+                        aboutInputValue={aboutInputValue}
+                        photoUrl={photoUrl}
+                        onChangeInputs={this.onChangeInputs}
+                        onImageInputChange={this.onImageInputChange}
+                        updateMyProfile={this.updateMyProfile}
+                        myProfileData={myProfileData}
+                        validationClassEditModal={validationClassEditModal}
+                        validationClassAddModal={validationClassAddModal}
+                        error={error}
+                        onImgFileUpload={this.onImgFileUpload}
+                        onImgFileChange={this.onImgFileChange}
                         inputFileValue={inputFileValue} />
                     <EditProfileLink onOpenModal={this.onOpenModal} />
                 </div>
