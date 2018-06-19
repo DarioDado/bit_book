@@ -11,7 +11,7 @@ class NewPostModal extends Component {
             inputValue: "",
             validationClass: {
                 hideClass: "hide",
-                disable: null,
+                disable: "disabled",
             },
             error: null
         }

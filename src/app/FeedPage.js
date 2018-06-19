@@ -32,7 +32,7 @@ export class FeedPage extends Component {
 
 
     componentDidMount = () => {
-        this.loadData();
+        this.loadInitialData();
         this.countPosts();
     }
 
@@ -52,22 +52,24 @@ export class FeedPage extends Component {
     }
 
     onFilterPosts = (event) => {
-        const allPosts = this.state.posts;
-        if (event.target.value === "all") {
-            this.setState({
-                filteredPosts: null
-            })
-        } else {
+        const chosenOption = event.target.value 
+        postService.getPosts()
+            .then(posts => {
+                if (chosenOption === "all") {
+                    this.setState({
+                        filteredPosts: null
+                    })
+                } else {
+                    const filteredPosts = posts.filter(post => {
+                        return post.type === chosenOption;
+                    })
+                    this.setState({
+                        filteredPosts
+                    })
 
-            const filteredPosts = allPosts.filter(post => {
-                return post.type === event.target.value;
+                }
             })
-            this.setState({
-                filteredPosts
-            })
-        }
     }
-
 
     loadPaginationData = (event) => {
         event.preventDefault();
@@ -83,10 +85,10 @@ export class FeedPage extends Component {
                     loading: false,
                 })
             })
-            window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
     }
 
-    loadData = () => {
+    loadInitialData = () => {
         const top = 10;
         const skip = 0;
         postService.getPostsPagination(top, skip)
@@ -128,7 +130,7 @@ export class FeedPage extends Component {
                     <NewPostButton onClick={this.onNewPostClick} />
                 </div>
                 <div className="row ">
-                    <Pagination loadPaginationData={this.loadPaginationData} postsCount={this.state.postsCount} active={this.state.active} pageNum={this.props.match.params.pageNum}/>
+                    <Pagination loadPaginationData={this.loadPaginationData} postsCount={this.state.postsCount} active={this.state.active} pageNum={this.props.match.params.pageNum} />
                 </div>
             </Fragment>
         )
