@@ -5,12 +5,11 @@ import './UserItem.css';
 
 export const UserItem = props => {
     const {user} = props;
-    console.log(user);
 
     return (
-        <div class="row">
-            <div class="col s12">
-                <div class="card-panel ">
+        <div className="row">
+            <div className="col s12">
+                <div className="card-panel ">
                     <div className="user-item-wrap">
                         <div className="user-avatar">
                             <img src={user.avatarUrl} alt="avatar" />

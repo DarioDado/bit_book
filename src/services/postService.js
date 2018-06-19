@@ -1,5 +1,5 @@
-import { getData, postData } from "./fetchServices";
 import { posts, textPosts, imagePosts, videoPosts, postsCount} from "../shared/constants";
+import { getData, postData, deleteData } from "./fetchServices";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
 
 
@@ -100,9 +100,15 @@ class PostService {
 
     }
 
+
     getPostsCount() {
         const url = postsCount;
         return getData(url)
+
+    deletePost(id) {
+        const url = `${posts}/${id}`;
+        return deleteData(url);
+
     }
 }
 
