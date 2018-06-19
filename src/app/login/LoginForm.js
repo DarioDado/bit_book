@@ -33,7 +33,6 @@ export class LoginForm extends Component {
       authService.login(data)
           .then(data => {
               if (data.error) {
-                  console.log(data)
                   this.setState({error: data.error.message, showError: true})
               } else {
                   history.push('/feed');

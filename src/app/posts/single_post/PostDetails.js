@@ -5,6 +5,7 @@ import { ImagePostBody } from './ImagePostBody';
 import { TextPostBody } from './TextPostBody';
 import { NewCommentForm } from '../../comments/NewCommentForm';
 import { CommentList } from '../../comments/CommentList';
+import { DeletePostButton } from './DeletePostButton';
 
 
 export class PostDetails extends Component {
@@ -57,6 +58,7 @@ export class PostDetails extends Component {
         return (
             <Fragment>
                 {this.renderPostBody()}
+                <DeletePostButton post={post}/>
                 <NewCommentForm postId={post.id} onCreateCommentHandler={this.onCreateCommentHandler} />
                 {this.renderCommentList()}
             </Fragment>
