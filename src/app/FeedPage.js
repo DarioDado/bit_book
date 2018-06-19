@@ -44,6 +44,7 @@ export class FeedPage extends Component {
     }
 
     onCloseModal = (event) => {
+        event.preventDefault();
         this.setState({
             hideModal: "hide"
         })
@@ -85,7 +86,7 @@ export class FeedPage extends Component {
             window.scrollTo(0, 0);
     }
 
-    loadData() {
+    loadData = () => {
         const top = 10;
         const skip = 0;
         postService.getPostsPagination(top, skip)

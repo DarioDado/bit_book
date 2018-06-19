@@ -1,0 +1,21 @@
+.overlayModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0,0,0, 0.5);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    justify-content: center;
+}
+.theater-mode {
+    width: 70%;
+
+}
+
+.theater-mode img {
+    width: 100%;
+}
