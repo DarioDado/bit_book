@@ -45,8 +45,6 @@ class MyProfilePage extends Component {
     onOpenModal = () => {
         this.setState({
             hideModal: null,
-            photoUrl: this.state.myProfileData.avatarUrl
-            
         })
     }
 
@@ -55,7 +53,6 @@ class MyProfilePage extends Component {
 
         this.setState({
             hideAddModal: null,
-            photoUrl:""
         })
     }
 
@@ -63,7 +60,6 @@ class MyProfilePage extends Component {
         event.preventDefault();
         this.setState({
             hideAddModal: "hide",
-            
         })        
     }
 
@@ -88,7 +84,6 @@ class MyProfilePage extends Component {
             [inputName]: event.target.value,
             [inputId]: event.target.id
         })
-        console.log( event.target.id)
         const inputValue = event.target.value;
         const inputClassList = event.target.id
         if (validationService.isValidText(inputValue)) {
@@ -117,10 +112,10 @@ class MyProfilePage extends Component {
 
     onImageInputChange = (event) => {
         event.preventDefault()
-        this.setState({
-            photoUrl: event.target.value
-        })
         const inputValue = event.target.value;
+        this.setState({
+            photoUrl: inputValue
+        })
         if (validationService.isValidImage(inputValue)) {
             this.setState({
                 validationClassAddModal: {
@@ -161,15 +156,16 @@ class MyProfilePage extends Component {
             })
     }
 
-    updateMyProfile = (event) => {
-        event.preventDefault()
-        const { nameInputValue, aboutInputValue, photoUrl } = this.state;
-        userService.updateMyProfile(nameInputValue, aboutInputValue, photoUrl)
-            .then(response => {
-                this.loadMyProfile();
-                this.onCloseModal(event);
-            })
-    }
+    // updateMyProfile = (event) => {
+    //     event.preventDefault()
+    //     const { nameInputValue, aboutInputValue, photoUrl } = this.state;
+    //     console.log(2, photoUrl)
+    //     userService.updateMyProfile(nameInputValue, aboutInputValue, photoUrl)
+    //         .then(response => {
+    //             this.loadMyProfile();
+    //             this.onCloseModal(event);
+    //         })
+    // }
 
     componentDidMount = () => {
         this.loadMyProfile();
@@ -206,7 +202,8 @@ class MyProfilePage extends Component {
                         onImgFileChange={this.onImgFileChange}
                         inputFileValue={inputFileValue}
                         onOpenAddModal={this.onOpenAddModal}
-                        onCloseAddModal={this.onCloseAddModal}/>
+                        onCloseAddModal={this.onCloseAddModal}
+                        loadMyProfile={this.loadMyProfile}/>
                     <EditProfileLink onOpenModal={this.onOpenModal} />
                 </div>
                 <div className="col s12 center">

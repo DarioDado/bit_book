@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import './EditProfileModal.css'
 import { AddPhotoModal } from './AddPhotoModal';
+import { userService } from '../../services/userService';
 
 class EditProfileModal extends Component {
     constructor(props) {
@@ -24,12 +25,23 @@ class EditProfileModal extends Component {
                     })
                 })
         } else {
-            onImageInputChange(event);
+            // onImageInputChange(event);
             this.setState({
                 imageSrc: photoUrl
             })
         }
         onCloseAddModal(event)
+    }
+
+    updateMyProfile = (event) => {
+        event.preventDefault()
+        const { nameInputValue, aboutInputValue, photoUrl, loadMyProfile, onCloseModal } = this.props;
+        console.log(2, photoUrl)
+        userService.updateMyProfile(nameInputValue, aboutInputValue, photoUrl)
+            .then(response => {
+                loadMyProfile();
+                onCloseModal(event);
+            })
     }
 
     render() {
@@ -65,7 +77,7 @@ class EditProfileModal extends Component {
                                 </div>
                                 <div className="modal-footer row">
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn ${validationClassEditModal.disable}`} onClick={updateMyProfile}>Update</button>
+                                        <button className={`waves-effect waves-light btn ${validationClassEditModal.disable}`} onClick={this.updateMyProfile}>Update</button>
                                     </div>
                                     <div className="input-field col s2 right">
                                         <button className="waves-effect waves-light btn" onClick={onCloseModal}>Close</button>
