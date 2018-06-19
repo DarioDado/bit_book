@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import './EditProfileModal.css'
 import { AddPhotoModal } from './AddPhotoModal';
+import { userService } from '../../services/userService';
 
 class EditProfileModal extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class EditProfileModal extends Component {
    
     onImageUpload = (event) => {
         event.preventDefault();
-        const { photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue, onImageInputChange } = this.props;
+        const { photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue } = this.props;
         if (inputFileValue) {
             onImgFileUpload(event)
                 .then(photoUrl => {
@@ -24,7 +25,6 @@ class EditProfileModal extends Component {
                     })
                 })
         } else {
-            onImageInputChange(event);
             this.setState({
                 imageSrc: photoUrl
             })
@@ -32,9 +32,20 @@ class EditProfileModal extends Component {
         onCloseAddModal(event)
     }
 
+    updateMyProfile = (event) => {
+        event.preventDefault()
+        const { nameInputValue, aboutInputValue, photoUrl, loadMyProfile, onCloseModal } = this.props;
+        console.log(2, photoUrl)
+        userService.updateMyProfile(nameInputValue, aboutInputValue, photoUrl)
+            .then(response => {
+                loadMyProfile();
+                onCloseModal(event);
+            })
+    }
+
     render() {
         const { onCloseModal, hideModal, hideAddModal, onChangeInputs, nameInputValue,
-            aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, validationClassAddModal,
+            aboutInputValue, photoUrl, onImageInputChange, validationClassAddModal,
             validationClassEditModal, error, onImgFileChange, onOpenAddModal, onCloseAddModal } = this.props;
         return (
             <Fragment>
@@ -65,7 +76,7 @@ class EditProfileModal extends Component {
                                 </div>
                                 <div className="modal-footer row">
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn ${validationClassEditModal.disable}`} onClick={updateMyProfile}>Update</button>
+                                        <button className={`waves-effect waves-light btn ${validationClassEditModal.disable}`} onClick={this.updateMyProfile}>Update</button>
                                     </div>
                                     <div className="input-field col s2 right">
                                         <button className="waves-effect waves-light btn" onClick={onCloseModal}>Close</button>

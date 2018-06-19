@@ -35,6 +35,7 @@ class App extends Component {
                   <Route exact path='/users/:id' component={UserProfilePage} />
                   <Route exact path='/people' component={PeoplePage} />
                   <Route exact path='/feed/:type/:id' component={SinglePostPage} />
+                  <Route exact path='/feed/:pageNum' component={FeedPage} />
                   <Route exact path='/profile' component={MyProfilePage} />
                   <Redirect path="/" to="/feed" />
                 </Switch>

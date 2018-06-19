@@ -1,6 +1,6 @@
 
-import { getData, postData, putData } from "./fetchServices";
-import { endpoints } from "../shared/constants";
+import { getData, putData } from "./fetchServices";
+import { users, profile, editProfileEndpoint, upload } from "../shared/constants";
 
 import { User } from "../entities/User";
 import { storageService } from "./storageService";
@@ -13,7 +13,7 @@ class UserService {
     }
 
     getUsers = () => {
-        const url = endpoints.users;
+        const url = users;
         return getData(url)
             .then(usersData => {
                 return usersData.map(userData => new User(userData))
@@ -21,13 +21,13 @@ class UserService {
     }
 
     getUser = (id) => {
-        const url = `${endpoints.users}/${id}`;
+        const url = `${users}/${id}`;
         return getData(url)
             .then(userData => new User(userData))
     }
 
     getSearchedUsers = (inputString) => {
-      const url = endpoints.users;
+      const url = users;
       return getData(url)
           .then(usersData => {
             return usersData.map(userData => new User(userData))
@@ -40,33 +40,34 @@ class UserService {
     }
 
     getSingleUser(userId) {
-        const url = `${endpoints.users}/${userId}`;
+        const url = `${users}/${userId}`;
         return getData(url)
             .then(userData => new User(userData));
     }
 
     getMyProfile() {
-        const url = endpoints.profile;
+        const url = profile;
         return getData(url)
             .then(myProfileData => new User(myProfileData))
     }
 
     updateMyProfile(nameInputValue, aboutInputValue, photoUrl){
+        const loggedInUser = userService.getLoggedInUser();
         const data = {
             name: nameInputValue,
-            email: "blabla@bla.com",
-            aboutShort: "Traders and brothers Rodney and Derek Trotter work from the streets of London buying what they can from the auctions and flogging it down it the market",
+            email: loggedInUser.email,
+            aboutShort: aboutInputValue,
             about: aboutInputValue,
             avatarUrl: photoUrl
         }
-        return putData(endpoints.editProfileEndpoint, data)
+        return putData(editProfileEndpoint, data)
     }
 
     uploadImage(imgFile) {
         const formData = new FormData();
         formData.append('file', imgFile);
 
-        return  fetch(endpoints.upload, {
+        return  fetch(upload, {
             body: formData,
             cache: 'no-cache',
             headers: {

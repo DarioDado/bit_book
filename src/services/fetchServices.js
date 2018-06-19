@@ -22,7 +22,6 @@ export const getData = (url) => {
         .then(res => res.json())
 }
 
-
 export const postData = (url, data) => {
     return fetch(url, {
         body: JSON.stringify(data),
@@ -44,7 +43,6 @@ export const putData = (url, data) => {
         method: 'PUT',
         mode: 'cors'
     })
-        
 }
 
 export const deleteData = (url) => {

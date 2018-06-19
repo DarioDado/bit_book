@@ -1,6 +1,6 @@
 import { storageService } from "./storageService";
 import { postData } from "./fetchServices";
-import { endpoints } from "../shared/constants";
+import { login, register } from "../shared/constants";
 
 class AuthService {
 
@@ -9,7 +9,7 @@ class AuthService {
     }
 
     login = (data) => {
-        const url = endpoints.login;
+        const url = login;
         return postData(url, data)
             .then(loginData => {
                 if (!loginData.error) {
@@ -21,8 +21,8 @@ class AuthService {
     }
 
     register = data => {
-      const url = endpoints.register;
-      return postData(url, data);
+        const url = register;
+        return postData(url, data);
     }
 
 }

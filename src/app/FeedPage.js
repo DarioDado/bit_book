@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './FeedPage.css';
 import { PostList } from './posts/PostList';
 import { postService } from '../services/postService';
 import { OptionsSidebar } from './posts/OptionsSidebar';
 import { NewPostButton } from './posts/newPost/NewPostButton';
 import NewPostModal from './posts/newPost/NewPostModal';
+import { Pagination } from './posts/Pagination';
+import { login } from '../shared/constants';
 
 
 export class FeedPage extends Component {
@@ -15,33 +17,23 @@ export class FeedPage extends Component {
             loading: true,
             modalBtn: null,
             hideModal: null,
-            filteredPosts: null
+            filteredPosts: null,
+            postsCount: 0,
+            active: "waves-effect"
         }
     }
 
-    loadData = () => {
-        postService.getPosts()
-            .then(posts => {
-                this.setState({ posts, loading: false })
-            })
-    }
+    // loadData = () => {
+    //     postService.getPosts()
+    //         .then(posts => {
+    //             this.setState({ posts, loading: false })
+    //         })
+    // }
+
 
     componentDidMount = () => {
         this.loadData();
-    }
-
-
-    renderPosts = () => {
-        const { loading, posts, filteredPosts } = this.state;
-        if (loading) {
-            return <div className="loading">Loading</div>
-        }
-        if (filteredPosts) {
-            return <PostList posts={filteredPosts} />
-        } else {
-
-            return <PostList posts={posts} />
-        }
+        this.countPosts();
     }
 
     onNewPostClick = (event) => {
@@ -75,14 +67,69 @@ export class FeedPage extends Component {
         }
     }
 
+
+    loadPaginationData = (event) => {
+        event.preventDefault();
+        const top = 10;
+        const pageNum = event.target.id
+        const skip = (pageNum - 1) * top;
+        console.log(event.target.parentElement);
+
+        postService.getPostsPagination(top, skip)
+            .then(posts => {
+                this.setState({
+                    posts,
+                    loading: false,
+                })
+            })
+            window.scrollTo(0, 0);
+    }
+
+    loadData() {
+        const top = 10;
+        const skip = 0;
+        postService.getPostsPagination(top, skip)
+            .then(posts => {
+                this.setState({ posts, loading: false })
+            })
+    }
+
+    renderPosts = () => {
+        const { loading, posts, filteredPosts } = this.state;
+        if (loading) {
+            return <div className="loading">Loading</div>
+        }
+        if (filteredPosts) {
+            return <PostList posts={filteredPosts} />
+        } else {
+
+            return <PostList posts={posts} />
+        }
+    }
+
+    countPosts = () => {
+        postService.getPostsCount()
+            .then(postsCount =>
+                this.setState({
+                    postsCount
+                })
+            )
+
+    }
+
     render() {
         return (
-            <div className="row">
-                <OptionsSidebar onFilterPosts={this.onFilterPosts} loadData={this.loadData} />
-                {this.renderPosts()}
-                <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData} />
-                <NewPostButton onClick={this.onNewPostClick} />
-            </div>
+            <Fragment>
+                <div className="row">
+                    <OptionsSidebar onFilterPosts={this.onFilterPosts} loadData={this.loadData} />
+                    {this.renderPosts()}
+                    <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData} />
+                    <NewPostButton onClick={this.onNewPostClick} />
+                </div>
+                <div className="row ">
+                    <Pagination loadPaginationData={this.loadPaginationData} postsCount={this.state.postsCount} active={this.state.active} pageNum={this.props.match.params.pageNum}/>
+                </div>
+            </Fragment>
         )
     }
 }

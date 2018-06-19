@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import M from 'materialize-css'
-import { postService } from '../../services/postService';
 
 class FilterForm extends Component {
     constructor(props) {
