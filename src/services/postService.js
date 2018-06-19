@@ -3,17 +3,15 @@ import { endpoints } from "../shared/constants";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
 
 
-
-
 class PostService {
     getPosts() {
         const url = endpoints.posts;
         return getData(url)
             .then(postsData => {
                 return postsData.map(postData => {
-                    if(postData.type === "text") {
+                    if (postData.type === "text") {
                         return new TextPost(postData);
-                    } else if(postData.type === "image") {
+                    } else if (postData.type === "image") {
                         return new ImagePost(postData);
                     } else {
                         return new VideoPost(postData);
@@ -21,15 +19,15 @@ class PostService {
                 });
             });
     }
-
-
     submitTextPosts(textPost) {
         const url = endpoints.textPosts;
         const data = {
             text: textPost,
+            dateCreated: new Date(),
             userId: 747,
             userDisplayName: "Pera Peric",
-            type: "text"
+            type: "text",
+            commentsNum: 0
         }
         return postData(url, data)
     }
@@ -38,9 +36,11 @@ class PostService {
         const url = endpoints.imagePosts;
         const data = {
             imageUrl: imgUrl,
+            dateCreated: new Date(),
             userId: 747,
             userDisplayName: "Pera Peric",
-            type: "image"
+            type: "image",
+            commentsNum: 0
         }
         return postData(url, data)
     }
@@ -49,9 +49,11 @@ class PostService {
         const url = endpoints.videoPosts;
         const data = {
             videoUrl: videoUrl,
+            dateCreated: new Date(),
             userId: 747,
             userDisplayName: "Pera Peric",
-            type: "video"
+            type: "video",
+            commentsNum: 0
         }
         return postData(url, data)
     }

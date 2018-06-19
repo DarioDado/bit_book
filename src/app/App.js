@@ -15,10 +15,6 @@ import { LoginRegisterPage } from './LoginRegisterPage';
 import { authService } from '../services/authService';
 
 
-
-
-
-
 class App extends Component {
 
   componentDidMount() {

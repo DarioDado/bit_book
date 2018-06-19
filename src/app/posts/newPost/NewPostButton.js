@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import M from 'materialize-css';
 
 class NewPostButton extends Component {
-    constructor(props) {
-        super(props);
-
-    }
+    
     floatingBtn = React.createRef();
 
     componentDidMount() {
