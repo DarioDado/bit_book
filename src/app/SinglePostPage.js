@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { PostDetails } from './posts/single_post/PostDetails';
 import { postService } from '../services/postService';
 import './SinglePostPage.css';
+import { Loading } from './partials/Loading';
 
 export class SinglePostPage extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export class SinglePostPage extends Component {
     renderPostDetails = () => {
         const {loading, post} = this.state;
         if (loading) {
-            return <div className="loading">Loading</div>
+            return <Loading />
         }
         return <PostDetails post={post} />
     }

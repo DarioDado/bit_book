@@ -7,6 +7,7 @@ import { NewPostButton } from './posts/newPost/NewPostButton';
 import NewPostModal from './posts/newPost/NewPostModal';
 import { Pagination } from './posts/Pagination';
 import { login } from '../shared/constants';
+import { Loading } from './partials/Loading';
 
 
 export class FeedPage extends Component {
@@ -106,7 +107,7 @@ export class FeedPage extends Component {
     renderPosts = () => {
         const { loading, posts, filteredPosts } = this.state;
         if (loading) {
-            return <div className="loading">Loading</div>
+            return <Loading />
         }
         if (filteredPosts) {
             return <PostList posts={filteredPosts} />

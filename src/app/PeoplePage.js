@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { SearchUsersForm } from './users/SearchUsersForm';
 import { UserList } from './users/UserList';
 import { userService } from '../services/userService';
+import { Loading } from './partials/Loading';
 
 export class PeoplePage extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ export class PeoplePage extends Component {
     renderUserList = () => {
         const { loading, users } = this.state;
         if (loading) {
-            return <div className="loading">Loading</div>
+            return <Loading />
         }
         if (users.length === 0) {
           return this.renderNoResults();
