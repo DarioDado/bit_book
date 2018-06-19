@@ -30,7 +30,7 @@ export class FeedPage extends Component {
     //         })
     // }
 
-    
+
     componentDidMount = () => {
         this.loadData();
         this.countPosts();
@@ -126,7 +126,7 @@ export class FeedPage extends Component {
                     <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData} />
                     <NewPostButton onClick={this.onNewPostClick} />
                 </div>
-                <div className="row">
+                <div className="row ">
                     <Pagination loadPaginationData={this.loadPaginationData} postsCount={this.state.postsCount} active={this.state.active} pageNum={this.props.match.params.pageNum}/>
                 </div>
             </Fragment>

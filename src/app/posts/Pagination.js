@@ -14,7 +14,6 @@ const Pagination = (props) => {
         return pages
     }
 
-
     const renderItem = () => {
         const pages = calculateNumberOfPages();
         return pages.map((page, index) => {
@@ -23,8 +22,8 @@ const Pagination = (props) => {
     }
 
     return (
-        <div className="row">
-            <ul className="pagination">
+        <div className="col s9">
+            <ul className="pagination center">
                 <li className="disabled"><a href="#!"><i className="material-icons">chevron_left</i></a></li>
                 {renderItem()}
                 <li className="waves-effect"><a href="#!"><i className="material-icons">chevron_right</i></a></li>
