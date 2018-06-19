@@ -9,8 +9,10 @@ class NewPostModal extends Component {
         super(props);
         this.state = {
             inputValue: "",
-            hideClass: "hide",
-            disable: null,
+            validationClass: {
+                hideClass: "hide",
+                disable: null,
+            },
             error: null
         }
     }
@@ -22,17 +24,20 @@ class NewPostModal extends Component {
         const inputValue = event.target.value;
         if (validationService.isValidText(inputValue)) {
             this.setState({
-                hideClass: "show",
-                disable: "disabled",
+                validationClass: {
+                    hideClass: "show",
+                    disable: "disabled",
+                },
                 error: validationService.isValidText(inputValue),
             })
         } else {
             this.setState({
-                hideClass: "hide",
-                disable: null,
+                validationClass: {
+                    hideClass: "hide",
+                    disable: null,
+                },
                 error: validationService.isValidText(inputValue)
             })
-
         }
     }
 
@@ -43,14 +48,18 @@ class NewPostModal extends Component {
         const inputValue = event.target.value;
         if (validationService.isValidImage(inputValue)) {
             this.setState({
-                hideClass: "show",
-                disable: "disabled",
+                validationClass: {
+                    hideClass: "show",
+                    disable: "disabled",
+                },
                 error: validationService.isValidImage(inputValue),
             })
         } else {
             this.setState({
-                hideClass: "hide",
-                disable: null,
+                validationClass: {
+                    hideClass: "hide",
+                    disable: null,
+                },
                 error: validationService.isValidText(inputValue)
             })
         }
@@ -63,14 +72,19 @@ class NewPostModal extends Component {
         const inputValue = event.target.value;
         if (validationService.isValidVideo(inputValue)) {
             this.setState({
-                hideClass: "show",
-                disable: "disabled",
+                validationClass: {
+                    hideClass: "show",
+                    disable: "disabled",
+                },
                 error: validationService.isValidVideo(inputValue),
             })
         } else {
             this.setState({
-                hideClass: "hide",
-                disable: null,
+
+                validationClass: {
+                    hideClass: "hide",
+                    disable: null,
+                },
                 error: validationService.isValidVideo(inputValue)
             })
         }
@@ -141,7 +155,7 @@ class NewPostModal extends Component {
 
     render() {
         const { modalBtn, hideModal, onCloseModal } = this.props
-        const { inputValue, disable, hideClass, error } = this.state;
+        const { inputValue, validationClass, error } = this.state;
         if (!modalBtn) {
             return null;
         }
@@ -161,10 +175,10 @@ class NewPostModal extends Component {
                             <div className="input-field col s12">
                                 <input id="icon_prefix" name="textInputValue" type="text" value={inputValue} onChange={(event) => this.callChangeHandler(event, modalBtn)} />
                             </div>
-                            {error && <h5 className={hideClass}>{error.message}</h5>}
+                            {error && <h5 className={validationClass.hideClass}>{error.message}</h5>}
                         </div>
                         <div className="modal-footer">
-                            <button className={`waves-effect waves-light btn right ${disable}`} onClick={(event) => { this.callSubmitHandler(event, modalBtn) }}>Post</button>
+                            <button className={`waves-effect waves-light btn right ${validationClass.disable}`} onClick={(event) => { this.callSubmitHandler(event, modalBtn) }}>Post</button>
                         </div>
                     </form>
                 </div>

@@ -6,58 +6,36 @@ import { AddPhotoModal } from './AddPhotoModal';
 class EditProfileModal extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            hideClass: "show",
-            disable: null,
-            photoUrl:"",
-            hideAddModal: "hide",
-            imgUrl: this.props.myProfileData.avatarUrl,
+            imageSrc: this.props.photoUrl
         }
     }
 
-    onOpenAddModal = (event) => {
-        event.preventDefault();
-        
-        this.setState({
-            hideAddModal: null,
-        })
-    }
-
-    onCloseAddModal = (event) => {
-        event.preventDefault();
-        this.setState({
-            hideAddModal: "hide",
-            
-        })
-    }
-
-    onUploadImg = (event, url) => {
-        this.setState({
-            imgUrl: url
-        })
-    }
-
+   
     onImageUpload = (event) => {
         event.preventDefault();
-        const { photoUrl, onImgFileUpload, inputFileValue } = this.props;
+        const { photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue, onImageInputChange } = this.props;
         if (inputFileValue) {
-            onImgFileUpload(event, photoUrl)
-            .then(photoUrl => {
-                this.setState({
-                    imgUrl: photoUrl
+            onImgFileUpload(event)
+                .then(photoUrl => {
+                    this.setState({
+                        imageSrc: photoUrl
+                    })
                 })
-            })
         } else {
-            this.onUploadImg(event, photoUrl);
+            onImageInputChange(event);
+            this.setState({
+                imageSrc: photoUrl
+            })
         }
-        this.onCloseAddModal(event)
+        onCloseAddModal(event)
     }
 
- 
-
     render() {
-        const { onCloseModal, hideModal, onChangeInputs, nameInputValue, aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, disable, hideValidationClass, onImgFileChange } = this.props;
-        const { hideAddModal, imgUrl } = this.state;
+        const { onCloseModal, hideModal, hideAddModal, onChangeInputs, nameInputValue,
+            aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, validationClassAddModal,
+            validationClassEditModal, error, onImgFileChange, onOpenAddModal, onCloseAddModal } = this.props;
         return (
             <Fragment>
                 <div className={`overlay ${hideModal}`}>
@@ -70,33 +48,35 @@ class EditProfileModal extends Component {
                                     </div>
                                     <div className="row">
                                         <div className="col s4">
-                                            <img src={imgUrl} className="upload-placeholder-img" alt="" />
-                                            <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={this.onOpenAddModal}>Add photo</button>
+                                            <img src={this.state.imageSrc} className="upload-placeholder-img" alt="" />
+                                            <button className="waves-effect waves-light btn left upload-photo-btn modal-trigger" onClick={onOpenAddModal}>Add photo</button>
                                         </div>
                                         <div className="input-field col s8">
-                                            <input id="name" name="nameInputValue" type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name"/>
+                                            <input id="name" name="nameInputValue"  type="text" onChange={onChangeInputs} value={nameInputValue} placeholder="Name" />
+                                            {error.nameError && <p className={`${validationClassEditModal.name}`}>{error.nameError.message}</p>}
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <textarea id="textarea1" className="materialize-textarea" name="aboutInputValue" value={aboutInputValue} onChange={onChangeInputs} placeholder="About"></textarea>
+                                            <textarea id="about" className="materialize-textarea" name="aboutInputValue"  value={aboutInputValue} onChange={onChangeInputs} placeholder="About"></textarea>
+                                            {error.aboutError && <p className={`${validationClassEditModal.about}`}>{error.aboutError.message}</p>}
                                         </div>
                                     </div>
                                 </div>
                                 <div className="modal-footer row">
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn close-btn`} onClick={updateMyProfile}>Update</button>
+                                        <button className={`waves-effect waves-light btn ${validationClassEditModal.disable}`} onClick={updateMyProfile}>Update</button>
                                     </div>
                                     <div className="input-field col s2 right">
-                                        <button className={`waves-effect waves-light btn`} onClick={onCloseModal}>Close</button>
+                                        <button className="waves-effect waves-light btn" onClick={onCloseModal}>Close</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={this.onCloseAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl}
-                    hideValidationClass={hideValidationClass} disable={disable} onImgFileChange={onImgFileChange} onImageUpload={this.onImageUpload} />
+                <AddPhotoModal hideAddModal={hideAddModal} onCloseAddModal={onCloseAddModal} onOpenAddModal={onOpenAddModal} onImageInputChange={onImageInputChange} photoUrl={photoUrl}
+                    validationClassAddModal={validationClassAddModal} onImgFileChange={onImgFileChange} onImageUpload={this.onImageUpload} error={error} />
             </Fragment>
         );
     }

@@ -4,6 +4,7 @@ import './MyProfilePage.css'
 import { userService } from '../../services/userService';
 import { EditProfileLink } from './EditProfileLink';
 import { EditProfileModal } from './EditProfileModal';
+import { validationService } from '../../services/ValidationService';
 
 class MyProfilePage extends Component {
     constructor(props) {
@@ -12,12 +13,25 @@ class MyProfilePage extends Component {
             myProfileData: null,
             loading: true,
             hideModal: "hide",
+            hideAddModal: "hide",
             nameInputValue: "",
             aboutInputValue: "",
             photoUrl: "",
-            hideValidationClass: "hide",
-            disable: null,
-            inputFileValue: null
+            validationClassEditModal: {
+                name: "hide",
+                about:"hide",
+                disable: null,
+            },
+            validationClassAddModal: {
+                hideClass: "hide",
+                disable: null,
+            },
+            inputFileValue: null,
+            error: {
+                nameError: null,
+                aboutError: null,
+                imageError: null
+            }
         }
     }
 
@@ -25,15 +39,32 @@ class MyProfilePage extends Component {
         event.preventDefault()
         this.setState({
             hideModal: "hide",
-            nameInputValue: "",
-            aboutInputValue: ""
         })
     }
 
     onOpenModal = () => {
         this.setState({
-            hideModal: null
+            hideModal: null,
+            photoUrl: this.state.myProfileData.avatarUrl
+            
         })
+    }
+
+    onOpenAddModal = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            hideAddModal: null,
+            photoUrl:""
+        })
+    }
+
+    onCloseAddModal = (event) => {
+        event.preventDefault();
+        this.setState({
+            hideAddModal: "hide",
+            
+        })        
     }
 
     loadMyProfile = () => {
@@ -44,32 +75,71 @@ class MyProfilePage extends Component {
                     loading: false,
                     nameInputValue: myProfileData.name,
                     aboutInputValue: myProfileData.aboutShort,
-
+                    photoUrl: myProfileData.avatarUrl
                 })
+
             })
     }
 
     onChangeInputs = (event) => {
         const inputName = event.target.name;
+        const inputId = event.target.id;
         this.setState({
-            [inputName]: event.target.value
+            [inputName]: event.target.value,
+            [inputId]: event.target.id
         })
+        console.log( event.target.id)
+        const inputValue = event.target.value;
+        const inputClassList = event.target.id
+        if (validationService.isValidText(inputValue)) {
+            this.setState({
+                validationClassEditModal: {
+                    [inputId]: "show",
+                    disable: "disabled",
+                },
+                error:{
+                    [`${[inputId]}Error`]: validationService.isValidText(inputValue),
+
+                }
+            })
+        } else {
+            this.setState({
+                validationClassEditModal: {
+                    [inputId]: "hide",
+                    disable: null,
+                },
+                error:{
+                    [`${[inputId]}Error`]: validationService.isValidText(inputValue),
+                }
+            })
+        }
     }
 
     onImageInputChange = (event) => {
+        event.preventDefault()
         this.setState({
             photoUrl: event.target.value
         })
         const inputValue = event.target.value;
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
+        if (validationService.isValidImage(inputValue)) {
             this.setState({
-                hideValidationClass: "hide",
-                disable: null,
+                validationClassAddModal: {
+                    hideClass: "show",
+                    disable: "disabled",
+                },
+                error:{
+                    imageError: validationService.isValidImage(inputValue),
+                }
             })
         } else {
             this.setState({
-                hideValidationClass: "show",
-                disableButton: "disabled",
+                validationClassAddModal: {
+                    hideClass: "hide",
+                    disable: null,
+                },
+                error:{
+                    imageError: validationService.isValidImage(inputValue),
+                }
             })
         }
     }
@@ -82,7 +152,7 @@ class MyProfilePage extends Component {
 
     onImgFileUpload = (event) => {
         const imgFile = this.state.inputFileValue;
-       return userService.uploadImage(imgFile)
+        return userService.uploadImage(imgFile)
             .then(response => {
                 this.setState({
                     photoUrl: response
@@ -99,7 +169,6 @@ class MyProfilePage extends Component {
                 this.loadMyProfile();
                 this.onCloseModal(event);
             })
-
     }
 
     componentDidMount = () => {
@@ -107,7 +176,7 @@ class MyProfilePage extends Component {
     }
 
     render() {
-        const { myProfileData, loading, nameInputValue, aboutInputValue, photoUrl, hideValidationClass, disable, inputFileValue } = this.state;
+        const { myProfileData, loading, hideAddModal, hideModal, nameInputValue, aboutInputValue, photoUrl, validationClassEditModal, validationClassAddModal, inputFileValue, error } = this.state;
 
         if (loading) {
             return <div className="loading">Loading</div>
@@ -115,14 +184,29 @@ class MyProfilePage extends Component {
         return (
             <Fragment>
                 <div className="col s12 center">
-                    <img src={myProfileData.avatarUrl} className="responsive-img circle profile-img" alt="" />
+                    <img src={myProfileData.avatarUrl} className="responsive-img profile-img" alt="" />
                 </div>
                 <div className="col s12 center">
                     <h2 className="profile-name">{myProfileData.name}</h2>
-                    <EditProfileModal onCloseModal={this.onCloseModal} hideModal={this.state.hideModal}
-                        nameInputValue={nameInputValue} aboutInputValue={aboutInputValue} photoUrl={photoUrl} onChangeInputs={this.onChangeInputs}
-                        onImageInputChange={this.onImageInputChange} updateMyProfile={this.updateMyProfile} myProfileData={myProfileData}
-                        hideValidationClass={hideValidationClass} disable={disable} onImgFileUpload={this.onImgFileUpload} onImgFileChange={this.onImgFileChange} inputFileValue={inputFileValue} />
+                    <EditProfileModal
+                        onCloseModal={this.onCloseModal}
+                        hideModal={hideModal}
+                        hideAddModal={hideAddModal}
+                        nameInputValue={nameInputValue}
+                        aboutInputValue={aboutInputValue}
+                        photoUrl={photoUrl}
+                        onChangeInputs={this.onChangeInputs}
+                        onImageInputChange={this.onImageInputChange}
+                        updateMyProfile={this.updateMyProfile}
+                        myProfileData={myProfileData}
+                        validationClassEditModal={validationClassEditModal}
+                        validationClassAddModal={validationClassAddModal}
+                        error={error}
+                        onImgFileUpload={this.onImgFileUpload}
+                        onImgFileChange={this.onImgFileChange}
+                        inputFileValue={inputFileValue}
+                        onOpenAddModal={this.onOpenAddModal}
+                        onCloseAddModal={this.onCloseAddModal}/>
                     <EditProfileLink onOpenModal={this.onOpenModal} />
                 </div>
                 <div className="col s12 center">

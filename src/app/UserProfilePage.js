@@ -11,8 +11,7 @@ class UserProfilePage extends Component {
             loading: true
         }
     }
-
-
+    
     componentDidMount = () => {
         const { id } = this.props.match.params;
         console.log(id);

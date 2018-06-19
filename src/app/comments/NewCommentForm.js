@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import './NewCommentForm.css';
 import { commentService } from '../../services/commentServces';
+import { validationService } from '../../services/ValidationService';
 
 export class NewCommentForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
             inputVal: "",
-            disableBtn: true
+            error: null,
+            validationClass:{
+                hideClass: "hide",
+                disable: "disabled",
+            }
         }
     }
 
@@ -16,8 +21,29 @@ export class NewCommentForm extends Component {
       }
 
     onChangeInputHandler = e => {
-        const disableBtn = (e.target.value === "") ? true : false
-        this.setState({ inputVal: e.target.value, disableBtn })
+        this.setState({ 
+            inputVal: e.target.value 
+        })
+
+        const inputValue = e.target.value;
+
+        if(validationService.isValidText(inputValue)){
+            this.setState({
+                validationClass:{
+                    hideClass: "show",
+                    disable: "disabled",
+                },
+                error: validationService.isValidText(inputValue),
+            })
+        }else {
+            this.setState({
+                validationClass:{
+                    hideClass: "hide",
+                    disable: "disabled",
+                },
+                error: validationService.isValidText(inputValue),
+            })
+        }
     }
 
     oncClickSubmitBtnHandler = () => {
@@ -37,19 +63,19 @@ export class NewCommentForm extends Component {
     }
 
     render() {
+        const { error, validationClass} = this.state;
         return (
             <div className="form-wrap">
                 <form onSubmit={this.onFormSubmitHandler} className="comment-form">
                     <div className="input-field">
                         <input id="email" type="text" value={this.state.inputVal} onChange={this.onChangeInputHandler}  />
                         <label htmlFor="email">Add your comment</label>
+                        {error && <p classNAme={`${validationClass.hideClass}`}>{error.message}</p>}
                     </div>
                 </form>
                 <div className="submit-btn">
                     <button 
-                        className="btn waves-effect waves-light" 
-                        disabled={this.state.disableBtn} 
-                        type="submit" 
+                        className={`btn waves-effect waves-light ${validationClass.disable}`} type="submit" 
                         name="action"
                         onClick={this.oncClickSubmitBtnHandler}>Submit</button>
                 </div>

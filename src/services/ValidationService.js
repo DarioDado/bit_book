@@ -11,7 +11,7 @@ class ValidationService {
     }
 
     isValidImage(inputValue) {
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
+        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg") || inputValue === "") {
             return null
         } else {
             const error = {
