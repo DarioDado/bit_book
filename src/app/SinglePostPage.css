@@ -11,3 +11,37 @@
 .post-body img {
     width: 100%;
 }
+
+.hide {
+    display: none;
+}
+
+
+.delete-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.delete-modal-body {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 70%;
+    height: 150px;
+    max-width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.delete-msg {
+    width: 100%;
+}

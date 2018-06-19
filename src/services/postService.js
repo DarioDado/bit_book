@@ -1,4 +1,4 @@
-import { getData, postData } from "./fetchServices";
+import { getData, postData, deleteData } from "./fetchServices";
 import { endpoints } from "../shared/constants";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
 
@@ -81,6 +81,11 @@ class PostService {
                 return new TextPost(postData);
             })
 
+    }
+
+    deletePost(id) {
+        const url = `${endpoints.posts}/${id}`;
+        return deleteData(url);
     }
 }
 
