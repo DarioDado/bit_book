@@ -1,24 +1,54 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { TheaterModeImage } from './TheaterModeImage';
 
 
 
 
-export const ImagePost = props => {
+export class ImagePost extends Component {
+    constructor(props) {
+        super(props);
 
-    const {id,imageUrl, commentsNum, type} = props.post
+        this.state = {
+            hideImgTheaterMode: "hide",
+            imageSrc: ""
 
-    return (
-        <div className="col s12 ">
-            <div className="card post-card">
-                <div className="card-content">
-                    <img src={imageUrl} alt="profile" />
-                    <div className="post-details">
-                        <Link to={`/feed/${type}/${id}`} >Image post</Link>
-                        <span>{commentsNum} Comments</span>
+        }
+    }
+
+    onOpenTheaterMode = (event) => {
+        const imageSrc = event.target.src;
+        this.setState({
+            imageSrc,
+            hideImgTheaterMode: null
+        })
+    }
+
+    onCloseTheaterMode = (event) => {
+        if(event.target.tagName !== "IMG"){
+            this.setState({
+                hideImgTheaterMode: "hide"
+            })
+        }
+    }
+
+    render() {
+
+        const { id, imageUrl, commentsNum, type } = this.props.post
+
+        return (
+            <div className="col s12 ">
+                <div className="card post-card">
+                    <div className="card-content">
+                        <img src={imageUrl} alt="profile" onClick={this.onOpenTheaterMode}/>
+                        <div className="post-details">
+                            <Link to={`/feed/${type}/${id}`} >Image post</Link>
+                            <span>{commentsNum} Comments</span>
+                        </div>
                     </div>
                 </div>
+                <TheaterModeImage imageSrc={this.state.imageSrc} hideImgTheaterMode={this.state.hideImgTheaterMode} onCloseTheaterMode={this.onCloseTheaterMode}/>
             </div>
-        </div>
-    )
+        )
+    }
 }
