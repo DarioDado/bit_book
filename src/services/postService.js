@@ -1,11 +1,11 @@
 import { getData, postData } from "./fetchServices";
-import { endpoints } from "../shared/constants";
+import { posts, textPosts, imagePosts, videoPosts, postsCount} from "../shared/constants";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
 
 
 class PostService {
     getPosts() {
-        const url = endpoints.posts;
+        const url = posts;
         return getData(url)
             .then(postsData => {
                 return postsData.map(postData => {
@@ -19,8 +19,25 @@ class PostService {
                 });
             });
     }
+
+    getPostsPagination(top, skip) {
+        const url = posts;
+        return getData(`${url}?$top=${top}&$skip=${skip}`)
+            .then(postsData => {
+                return postsData.map(postData => {
+                    if (postData.type === "text") {
+                        return new TextPost(postData);
+                    } else if (postData.type === "image") {
+                        return new ImagePost(postData);
+                    } else {
+                        return new VideoPost(postData);
+                    }
+                });
+            });
+    }
+
     submitTextPosts(textPost) {
-        const url = endpoints.textPosts;
+        const url = textPosts;
         const data = {
             text: textPost,
             dateCreated: new Date(),
@@ -33,7 +50,7 @@ class PostService {
     }
 
     submitImagePosts(imgUrl) {
-        const url = endpoints.imagePosts;
+        const url = imagePosts;
         const data = {
             imageUrl: imgUrl,
             dateCreated: new Date(),
@@ -46,7 +63,7 @@ class PostService {
     }
 
     submitVideoPosts(videoUrl) {
-        const url = endpoints.videoPosts;
+        const url = videoPosts;
         const data = {
             videoUrl: videoUrl,
             dateCreated: new Date(),
@@ -59,7 +76,7 @@ class PostService {
     }
 
     getVideoPost(id) {
-        const url = `${endpoints.videoPosts}/${id}`;
+        const url = `${videoPosts}/${id}`;
         return getData(url)
             .then(postData => {
                 return new VideoPost(postData);
@@ -67,7 +84,7 @@ class PostService {
     }
 
     getImagePost(id) {
-        const url = `${endpoints.imagePosts}/${id}`;
+        const url = `${imagePosts}/${id}`;
         return getData(url)
             .then(postData => {
                 return new ImagePost(postData);
@@ -75,12 +92,17 @@ class PostService {
     }
 
     getTextPost(id) {
-        const url = `${endpoints.textPosts}/${id}`;
+        const url = `${textPosts}/${id}`;
         return getData(url)
             .then(postData => {
                 return new TextPost(postData);
             })
 
+    }
+
+    getPostsCount() {
+        const url = postsCount;
+        return getData(url)
     }
 }
 

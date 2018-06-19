@@ -39,7 +39,7 @@ export class NewCommentForm extends Component {
             this.setState({
                 validationClass:{
                     hideClass: "hide",
-                    disable: "disabled",
+                    disable: null,
                 },
                 error: validationService.isValidText(inputValue),
             })

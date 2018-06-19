@@ -85,7 +85,6 @@ class MyProfilePage extends Component {
             [inputId]: event.target.id
         })
         const inputValue = event.target.value;
-        const inputClassList = event.target.id
         if (validationService.isValidText(inputValue)) {
             this.setState({
                 validationClassEditModal: {
@@ -156,16 +155,6 @@ class MyProfilePage extends Component {
             })
     }
 
-    // updateMyProfile = (event) => {
-    //     event.preventDefault()
-    //     const { nameInputValue, aboutInputValue, photoUrl } = this.state;
-    //     console.log(2, photoUrl)
-    //     userService.updateMyProfile(nameInputValue, aboutInputValue, photoUrl)
-    //         .then(response => {
-    //             this.loadMyProfile();
-    //             this.onCloseModal(event);
-    //         })
-    // }
 
     componentDidMount = () => {
         this.loadMyProfile();

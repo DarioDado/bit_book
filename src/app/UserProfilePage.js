@@ -34,7 +34,7 @@ class UserProfilePage extends Component {
         return (
             <Fragment>
                 <div className="col s12 center">
-                    <img src={user.avatarUrl} className="responsive-img circle profile-img" />
+                    <img src={user.avatarUrl} className="responsive-img circle profile-img" alt=""/>
                 </div>
                 <div className="col s12 center">
                     <h2 className="profile-name">{user.name}</h2>

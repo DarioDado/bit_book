@@ -16,7 +16,7 @@ class EditProfileModal extends Component {
    
     onImageUpload = (event) => {
         event.preventDefault();
-        const { photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue, onImageInputChange } = this.props;
+        const { photoUrl, onCloseAddModal, onImgFileUpload, inputFileValue } = this.props;
         if (inputFileValue) {
             onImgFileUpload(event)
                 .then(photoUrl => {
@@ -25,7 +25,6 @@ class EditProfileModal extends Component {
                     })
                 })
         } else {
-            // onImageInputChange(event);
             this.setState({
                 imageSrc: photoUrl
             })
@@ -46,7 +45,7 @@ class EditProfileModal extends Component {
 
     render() {
         const { onCloseModal, hideModal, hideAddModal, onChangeInputs, nameInputValue,
-            aboutInputValue, photoUrl, onImageInputChange, updateMyProfile, validationClassAddModal,
+            aboutInputValue, photoUrl, onImageInputChange, validationClassAddModal,
             validationClassEditModal, error, onImgFileChange, onOpenAddModal, onCloseAddModal } = this.props;
         return (
             <Fragment>
