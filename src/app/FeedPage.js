@@ -18,24 +18,48 @@ export class FeedPage extends Component {
             modalBtn: null,
             hideModal: null,
             filteredPosts: null,
-            postsCount: 0,
-            active: "waves-effect"
+            active: "waves-effect",
+            height: window.innerHeight,
+            skipMult: 1
         }
     }
 
-    // loadData = () => {
-    //     postService.getPosts()
-    //         .then(posts => {
-    //             this.setState({ posts, loading: false })
-    //         })
-    // }
+    handleScroll = () => {
+        const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+        const body = document.body;
+        const html = document.documentElement;
+        const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        const windowBottom = windowHeight + window.pageYOffset;
+        if (windowBottom >= docHeight) {
+            const top = 10;
+            const skip = this.state.skipMult * top;
+
+            postService.getPostsPagination(top, skip)
+                .then(posts => {
+                    const newSkipMult = this.state.skipMult + 1;
+                    const copyPosts = this.state.posts.slice();
+                    const newPosts = copyPosts.concat(posts);
+
+                    this.setState({
+                        posts: newPosts,
+                        loading: false,
+                        skipMult: newSkipMult
+
+                    })
+                })
+        }
+    }
 
 
     componentDidMount = () => {
+        window.addEventListener("scroll", this.handleScroll);
         this.loadData();
-        this.countPosts();
+    }
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.handleScroll);
     }
 
+    
     onNewPostClick = (event) => {
         this.setState({
             modalBtn: event.target.parentElement.getAttribute("data-target"),
@@ -44,7 +68,9 @@ export class FeedPage extends Component {
     }
 
     onCloseModal = (event) => {
-        event.preventDefault();
+        if (event) {
+            event.preventDefault();
+        }
         this.setState({
             hideModal: "hide"
         })
@@ -66,24 +92,6 @@ export class FeedPage extends Component {
                 filteredPosts
             })
         }
-    }
-
-
-    loadPaginationData = (event) => {
-        event.preventDefault();
-        const top = 10;
-        const pageNum = event.target.id
-        const skip = (pageNum - 1) * top;
-        console.log(event.target.parentElement);
-
-        postService.getPostsPagination(top, skip)
-            .then(posts => {
-                this.setState({
-                    posts,
-                    loading: false,
-                })
-            })
-            window.scrollTo(0, 0);
     }
 
     loadData = () => {
@@ -108,27 +116,16 @@ export class FeedPage extends Component {
         }
     }
 
-    countPosts = () => {
-        postService.getPostsCount()
-            .then(postsCount =>
-                this.setState({
-                    postsCount
-                })
-            )
-
-    }
+    
 
     render() {
         return (
             <Fragment>
-                <div className="row">
+                <div className="row" >
                     <OptionsSidebar onFilterPosts={this.onFilterPosts} loadData={this.loadData} />
                     {this.renderPosts()}
                     <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData} />
                     <NewPostButton onClick={this.onNewPostClick} />
-                </div>
-                <div className="row ">
-                    <Pagination loadPaginationData={this.loadPaginationData} postsCount={this.state.postsCount} active={this.state.active} pageNum={this.props.match.params.pageNum}/>
                 </div>
             </Fragment>
         )
