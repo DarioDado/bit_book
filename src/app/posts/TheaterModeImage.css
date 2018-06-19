@@ -1,3 +1,4 @@
+
 .overlayModal {
     display: flex;
     flex-direction: column;
@@ -10,6 +11,7 @@
     left: 0;
     z-index: 2;
     justify-content: center;
+ 
 }
 .theater-mode {
     width: 70%;
@@ -18,4 +20,8 @@
 
 .theater-mode img {
     width: 100%;
+}
+
+.scroll-off {
+    overflow-y: hidden;
 }

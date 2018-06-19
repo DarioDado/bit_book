@@ -22,6 +22,8 @@ export class ImagePost extends Component {
             imageSrc,
             hideImgTheaterMode: null
         })
+        window.scrollTo(0,0);
+        document.querySelector("body").classList.add("scroll-off");
     }
 
     onCloseTheaterMode = (event) => {
@@ -30,6 +32,8 @@ export class ImagePost extends Component {
                 hideImgTheaterMode: "hide"
             })
         }
+        document.querySelector("body").classList.remove("scroll-off");
+        
     }
 
     render() {

@@ -41,6 +41,7 @@ export class FeedPage extends Component {
             modalBtn: event.target.parentElement.getAttribute("data-target"),
             hideModal: null
         })
+        document.querySelector("body").classList.add("scroll-off");
     }
 
     onCloseModal = (event) => {
@@ -48,7 +49,7 @@ export class FeedPage extends Component {
         this.setState({
             hideModal: "hide"
         })
-
+        document.querySelector("body").classList.remove("scroll-off");
     }
 
     onFilterPosts = (event) => {
