@@ -1,0 +1,79 @@
+.login-register {
+    width: 100%;
+    margin-top:20px;
+}
+
+.login-register .row {
+    margin-bottom: 0;
+}
+
+.login-title {
+    margin-top: 0;
+}
+
+.form-wrap {
+    position: relative;
+}
+
+.login-form, .register-form {
+    background-color: #ad8fec;
+}
+
+.login-form form label,
+.register-form form label {
+    color: white;
+}
+
+.login-form form input,
+.register-form form input {
+    border-bottom: 1px solid white !important;
+    color: white;
+}
+
+.login-form form input:focus+label,
+.register-form form input:focus+label {
+    color: white !important;
+}
+
+
+
+.login-form, .register-form {
+    width: 100%;
+    color: white;
+    border-radius: 0 0 10px 10px;
+    padding: 10px;
+}
+
+.login-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.register-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.cards {
+    display: flex;
+}
+
+.cards p {
+    width: 50%;
+    background-color: #6D52A7;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px 10px 0 0;
+    margin: 0;
+}
+
+.cards .active {
+    background-color: #ad8fec;
+}

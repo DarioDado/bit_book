@@ -1,9 +1,16 @@
-import { getData, putData } from "./fetchServices";
-import { endpoints, requestHeader } from "../shared/constants";
+
+import { getData, postData, putData } from "./fetchServices";
+import { endpoints } from "../shared/constants";
+
 import { User } from "../entities/User";
+import { storageService } from "./storageService";
 
 
 class UserService {
+
+    getLoggedInUser = () => {
+        return new User(storageService.getData('loggedInUser'));
+    }
 
     getUsers = () => {
         const url = endpoints.users;
