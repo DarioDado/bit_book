@@ -104,6 +104,7 @@ class PostService {
     getPostsCount() {
         const url = postsCount;
         return getData(url)
+    }
 
     deletePost(id) {
         const url = `${posts}/${id}`;
