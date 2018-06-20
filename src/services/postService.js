@@ -20,8 +20,6 @@ class PostService {
             });
     }
 
-    // Posts?$orderby=DateCreated desc&$top=${top}&$skip=${skip}
-
     getPostsPagination(top, skip) {
         const url = posts;
         return getData(`${url}?$orderby=DateCreated desc&$top=${top}&$skip=${skip}`)
