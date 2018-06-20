@@ -52,7 +52,7 @@ class UserService {
     }
 
     updateMyProfile(nameInputValue, aboutInputValue, photoUrl){
-        const loggedInUser = userService.getLoggedInUser();
+        const loggedInUser = this.getLoggedInUser();
         const data = {
             name: nameInputValue,
             email: loggedInUser.email,

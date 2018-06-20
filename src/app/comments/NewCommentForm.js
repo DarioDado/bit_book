@@ -9,45 +9,40 @@ export class NewCommentForm extends Component {
         this.state = {
             inputVal: "",
             error: null,
-            validationClass:{
-                hideClass: "hide",
-                disable: "disabled",
-            }
+            hideClass: "hide",
+            disable: "disabled",
+
         }
     }
 
     onFormSubmitHandler = e => {
         e.preventDefault();
-      }
+    }
 
     onChangeInputHandler = e => {
-        this.setState({ 
-            inputVal: e.target.value 
+        this.setState({
+            inputVal: e.target.value
         })
 
         const inputValue = e.target.value;
 
-        if(validationService.isValidText(inputValue)){
+        if (validationService.isNotValidText(inputValue)) {
             this.setState({
-                validationClass:{
-                    hideClass: "show",
-                    disable: "disabled",
-                },
-                error: validationService.isValidText(inputValue),
+                hideClass: "show",
+                disable: "disabled",
+                error: validationService.isNotValidText(inputValue),
             })
-        }else {
+        } else {
             this.setState({
-                validationClass:{
-                    hideClass: "hide",
-                    disable: null,
-                },
-                error: validationService.isValidText(inputValue),
+                hideClass: "hide",
+                disable: null,
+                error: validationService.isNotValidText(inputValue),
             })
         }
     }
 
     oncClickSubmitBtnHandler = () => {
-        const {postId, onCreateCommentHandler} = this.props;
+        const { postId, onCreateCommentHandler } = this.props;
         const data = {
             body: this.state.inputVal,
             postId: postId,
@@ -56,26 +51,26 @@ export class NewCommentForm extends Component {
         commentService.postComment(data)
             .then(status => {
                 if (status) {
-                    this.setState({inputVal: ""});
+                    this.setState({ inputVal: "", disable: "disabled" });
                     onCreateCommentHandler();
                 }
             });
     }
 
     render() {
-        const { error, validationClass} = this.state;
+        const { error, disable, hideClass } = this.state;
         return (
             <div className="form-wrap">
                 <form onSubmit={this.onFormSubmitHandler} className="comment-form">
                     <div className="input-field">
-                        <input id="email" type="text" value={this.state.inputVal} onChange={this.onChangeInputHandler}  />
+                        <input id="email" type="text" value={this.state.inputVal} onChange={this.onChangeInputHandler} />
                         <label htmlFor="email">Add your comment</label>
-                        {error && <p classNAme={`${validationClass.hideClass}`}>{error.message}</p>}
+                        {error && <p classNAme={`${hideClass}`}>{error.message}</p>}
                     </div>
                 </form>
                 <div className="submit-btn">
-                    <button 
-                        className={`btn waves-effect waves-light ${validationClass.disable}`} type="submit" 
+                    <button
+                        className={`btn waves-effect waves-light ${disable}`} type="submit"
                         name="action"
                         onClick={this.oncClickSubmitBtnHandler}>Submit</button>
                 </div>

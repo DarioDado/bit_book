@@ -1,17 +1,19 @@
 class ValidationService {
-    isValidText(inputValue) {
-        if (inputValue !== "") {
-            return null
-        } else {
+    isNotValidText(inputValue) {
+        if (inputValue === "") {
             const error = {
                 message: "Insert some text!"
             };
             return error;
+        } else {
+            return null
         }
     }
 
-    isValidImage(inputValue) {
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg") || inputValue === "") {
+    isNotValidImage(inputValue) {
+        const re = /^((http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg))$/;
+        
+        if (re.test(String(inputValue).toLowerCase())) {
             return null
         } else {
             const error = {
@@ -21,8 +23,9 @@ class ValidationService {
         }
     }
 
-    isValidVideo(inputValue) {
-        if (inputValue.includes("https://") && inputValue.includes("youtube")) {
+    isNotValidVideo(inputValue) {
+        const re = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+        if (re.test(String(inputValue).toLowerCase())) {
             return null
         } else {
             const error = {
