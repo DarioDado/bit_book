@@ -3,10 +3,9 @@ import './FeedPage.css';
 import { PostList } from './posts/PostList';
 import { postService } from '../services/postService';
 import { OptionsSidebar } from './posts/OptionsSidebar';
-import { NewPostButton } from './posts/newPost/NewPostButton';
-import NewPostModal from './posts/newPost/NewPostModal';
 import { Pagination } from './posts/Pagination';
 import { login } from '../shared/constants';
+import { NewPost } from './posts/newPost/NewPost';
 
 
 export class FeedPage extends Component {
@@ -15,8 +14,6 @@ export class FeedPage extends Component {
         this.state = {
             posts: null,
             loading: true,
-            modalBtn: null,
-            hideModal: null,
             filteredPosts: null,
             postsCount: 0,
             active: "waves-effect"
@@ -36,22 +33,7 @@ export class FeedPage extends Component {
         this.countPosts();
     }
 
-    onNewPostClick = (event) => {
-        this.setState({
-            modalBtn: event.target.parentElement.getAttribute("data-target"),
-            hideModal: null
-        })
-        document.querySelector("body").classList.add("scroll-off");
-    }
-
-    onCloseModal = (event) => {
-        event.preventDefault();
-        this.setState({
-            hideModal: "hide"
-        })
-        document.querySelector("body").classList.remove("scroll-off");
-    }
-
+    
     onFilterPosts = (event) => {
         const chosenOption = event.target.value 
         postService.getPosts()
@@ -127,8 +109,7 @@ export class FeedPage extends Component {
                 <div className="row">
                     <OptionsSidebar onFilterPosts={this.onFilterPosts} loadData={this.loadData} />
                     {this.renderPosts()}
-                    <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData} />
-                    <NewPostButton onClick={this.onNewPostClick} />
+                    <NewPost />
                 </div>
                 <div className="row ">
                     <Pagination loadPaginationData={this.loadPaginationData} postsCount={this.state.postsCount} active={this.state.active} pageNum={this.props.match.params.pageNum} />
