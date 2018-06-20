@@ -106,7 +106,7 @@ export class FeedPage extends Component {
                 <div className="row" >
                     <OptionsSidebar onFilterPosts={this.onFilterPosts} loadData={this.loadData} />
                     {this.renderPosts()}
-                    <NewPost />
+                    <NewPost loadData={this.loadData}/>
                 </div>
         )
     }

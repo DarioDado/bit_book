@@ -116,7 +116,7 @@ class NewPost extends Component {
     }
 
     onPostSubmit = () => {
-        const { onCloseModal, loadData } = this.props;
+        const { loadData } = this.props;
         const textPost = this.state.inputValue;
         postService.submitTextPosts(textPost)
             .then((response) => {
@@ -124,12 +124,12 @@ class NewPost extends Component {
                     inputValue: ""
                 });
                 loadData();
-                onCloseModal();
+                this.onCloseModal();
             })
     }
 
     onImageSubmit = () => {
-        const { onCloseModal, loadData } = this.props;
+        const { loadData } = this.props;
         const imgUrl = this.state.inputValue;
         postService.submitImagePosts(imgUrl)
             .then((response) => {
@@ -137,12 +137,12 @@ class NewPost extends Component {
                     inputValue: ""
                 });
                 loadData();
-                onCloseModal();
+                this.onCloseModal();
             })
     }
 
     onVideoSubmit = () => {
-        const { onCloseModal, loadData } = this.props;
+        const {loadData } = this.props;
         const videoUrl = this.state.inputValue;
         postService.submitVideoPosts(videoUrl)
             .then((response) => {
@@ -150,7 +150,7 @@ class NewPost extends Component {
                     inputValue: ""
                 });
                 loadData();
-                onCloseModal();
+                this.onCloseModal();
             })
     }
 
