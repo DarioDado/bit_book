@@ -22,7 +22,7 @@ class NewPost extends Component {
     onNewPostClick = (event) => {
         this.setState({
             modalBtn: event.target.parentElement.getAttribute("data-target"),
-            hideModal: null
+            hideModal: null,
         })
         document.querySelector("body").classList.add("scroll-off");
     }
@@ -33,7 +33,11 @@ class NewPost extends Component {
         }
         this.setState({
             hideModal: "hide",
-            inputValue: ""
+            inputValue: "",
+            validationClass: {
+                hideClass: "hide",
+                disable: "disabled"
+            }
         })
         document.querySelector("body").classList.remove("scroll-off");
     }
@@ -43,13 +47,13 @@ class NewPost extends Component {
             inputValue: event.target.value,
         })
         const inputValue = event.target.value;
-        if (validationService.isValidText(inputValue)) {
+        if (validationService.isNotValidText(inputValue)) {
             this.setState({
                 validationClass: {
                     hideClass: "show",
                     disable: "disabled",
                 },
-                error: validationService.isValidText(inputValue),
+                error: validationService.isNotValidText(inputValue),
             })
         } else {
             this.setState({
@@ -57,7 +61,7 @@ class NewPost extends Component {
                     hideClass: "hide",
                     disable: null,
                 },
-                error: validationService.isValidText(inputValue)
+                error: validationService.isNotValidText(inputValue)
             })
         }
     }
@@ -67,13 +71,13 @@ class NewPost extends Component {
             inputValue: event.target.value,
         })
         const inputValue = event.target.value;
-        if (validationService.isValidImage(inputValue)) {
+        if (validationService.isNotValidImage(inputValue)) {
             this.setState({
                 validationClass: {
                     hideClass: "show",
                     disable: "disabled",
                 },
-                error: validationService.isValidImage(inputValue),
+                error: validationService.isNotValidImage(inputValue),
             })
         } else {
             this.setState({
@@ -81,7 +85,7 @@ class NewPost extends Component {
                     hideClass: "hide",
                     disable: null,
                 },
-                error: validationService.isValidText(inputValue)
+                error: validationService.isNotValidText(inputValue)
             })
         }
     }
@@ -91,13 +95,13 @@ class NewPost extends Component {
             inputValue: event.target.value,
         })
         const inputValue = event.target.value;
-        if (validationService.isValidVideo(inputValue)) {
+        if (validationService.isNotValidVideo(inputValue)) {
             this.setState({
                 validationClass: {
                     hideClass: "show",
                     disable: "disabled",
                 },
-                error: validationService.isValidVideo(inputValue),
+                error: validationService.isNotValidVideo(inputValue),
             })
         } else {
             this.setState({
@@ -106,7 +110,7 @@ class NewPost extends Component {
                     hideClass: "hide",
                     disable: null,
                 },
-                error: validationService.isValidVideo(inputValue)
+                error: validationService.isNotValidVideo(inputValue)
             })
         }
     }

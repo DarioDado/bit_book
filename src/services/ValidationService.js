@@ -1,17 +1,17 @@
 class ValidationService {
-    isValidText(inputValue) {
-        if (inputValue !== "") {
-            return null
-        } else {
+    isNotValidText(inputValue) {
+        if (inputValue === "") {
             const error = {
                 message: "Insert some text!"
             };
             return error;
+        } else {
+            return null
         }
     }
 
-    isValidImage(inputValue) {
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg") || inputValue === "") {
+    isNotValidImage(inputValue) {
+        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
             return null
         } else {
             const error = {
@@ -21,7 +21,7 @@ class ValidationService {
         }
     }
 
-    isValidVideo(inputValue) {
+    isNotValidVideo(inputValue) {
         if (inputValue.includes("https://") && inputValue.includes("youtube")) {
             return null
         } else {
