@@ -56,9 +56,6 @@ export class FeedPage extends Component {
         window.removeEventListener("scroll", this.handleScroll);
     }
 
-    
-
-
     onFilterPosts = (event) => {
         const chosenOption = event.target.value 
         postService.getPosts()
