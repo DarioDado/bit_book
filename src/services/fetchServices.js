@@ -3,12 +3,13 @@ import { storageService } from './storageService';
 
 
 
-const getHeaders = () => {
+export const getHeaders = () => {
     const loggedInUser = storageService.getData('loggedInUser');
     return loggedInUser 
         ? {...requestHeader, sessionID: loggedInUser.sessionId}
         : requestHeader;
 }
+
 
 
 export const getData = (url) => {

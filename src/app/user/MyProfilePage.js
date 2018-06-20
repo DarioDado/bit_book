@@ -14,10 +14,9 @@ class MyProfilePage extends Component {
         this.state = {
             user: null,
             loading: true,
-            isOpen: true
+            isOpen: false
         }
     }
-
 
     loadMyProfile = () => {
         userService.getMyProfile()
@@ -40,8 +39,19 @@ class MyProfilePage extends Component {
         })
     }
 
+    onCancelClick = (event) => {
+        event.preventDefault();
+        this.setState({
+            isOpen:false
+        })
+    }
 
-
+    onSubmitClick = (nameInput, aboutInput, imgUrl) => {
+        userService.updateMyProfile(nameInput, aboutInput, imgUrl)
+            .then(data => {
+                this.loadMyProfile()
+            })
+    }
 
     componentDidMount = () => {
         this.loadMyProfile();
@@ -87,7 +97,7 @@ class MyProfilePage extends Component {
                     </div>
                 </div>
                 <EditProfileModal isOpen={isOpen} >
-                    <EditProfileForm user={user} />
+                    <EditProfileForm user={user} onCancelClick={this.onCancelClick} onSubmitClick={this.onSubmitClick}/>
 
                 </EditProfileModal>
             </Fragment >

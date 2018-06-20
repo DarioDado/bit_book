@@ -63,6 +63,10 @@
     width: 20%;
 }
 
+.profile-img img {
+    width: 100%;
+}
+
 .switch-form {
     width: 60%;
 }
@@ -77,4 +81,8 @@
 
 .submit {
     margin-right: 20px;
+}
+
+.switch {
+    margin-bottom: 20px;
 }
