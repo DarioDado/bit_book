@@ -33,7 +33,7 @@ export class RegisterForm extends Component {
       this.setState({ [e.target.name]: e.target.value })
       if (e.target.name === "password") {
         if (e.target.value.length < 6 && e.target.value !== "") {
-          this.setState({passErr: "Password has to be at least 6 charachters long", showPassErr: true})
+          this.setState({passErr: "Password has to be at least 6 characters long", showPassErr: true})
         } else {
           this.setState({showPassErr: false})
         }
@@ -46,8 +46,7 @@ export class RegisterForm extends Component {
         }
       }
   }
-
-
+  
   onRegisterSubmit = () => {
       const {onRegisterHandler} = this.props;
       const { username, password, name, email} = this.state;

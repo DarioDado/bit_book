@@ -25,7 +25,7 @@ class MyProfilePage extends Component {
             },
             validationClassAddModal: {
                 hideClass: "hide",
-                disable: null,
+                disable: "disabled",
             },
             inputFileValue: null,
             error: {
@@ -54,6 +54,7 @@ class MyProfilePage extends Component {
 
         this.setState({
             hideAddModal: null,
+            photoUrl: ""
         })
     }
 

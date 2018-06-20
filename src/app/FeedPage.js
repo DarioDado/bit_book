@@ -3,11 +3,9 @@ import './FeedPage.css';
 import { PostList } from './posts/PostList';
 import { postService } from '../services/postService';
 import { OptionsSidebar } from './posts/OptionsSidebar';
-import { NewPostButton } from './posts/newPost/NewPostButton';
-import NewPostModal from './posts/newPost/NewPostModal';
-import { Pagination } from './posts/Pagination';
-import { login } from '../shared/constants';
 import { Loading } from './partials/Loading';
+import { NewPost } from './posts/newPost/NewPost';
+
 
 
 export class FeedPage extends Component {
@@ -16,8 +14,6 @@ export class FeedPage extends Component {
         this.state = {
             posts: null,
             loading: true,
-            modalBtn: null,
-            hideModal: null,
             filteredPosts: null,
             active: "waves-effect",
             height: window.innerHeight,
@@ -61,39 +57,28 @@ export class FeedPage extends Component {
     }
 
     
-    onNewPostClick = (event) => {
-        this.setState({
-            modalBtn: event.target.parentElement.getAttribute("data-target"),
-            hideModal: null
-        })
-    }
 
-    onCloseModal = (event) => {
-        if (event) {
-            event.preventDefault();
-        }
-        this.setState({
-            hideModal: "hide"
-        })
-
-    }
 
     onFilterPosts = (event) => {
-        const allPosts = this.state.posts;
-        if (event.target.value === "all") {
-            this.setState({
-                filteredPosts: null
-            })
-        } else {
+        const chosenOption = event.target.value 
+        postService.getPosts()
+            .then(posts => {
+                if (chosenOption === "all") {
+                    this.setState({
+                        filteredPosts: null
+                    })
+                } else {
+                    const filteredPosts = posts.filter(post => {
+                        return post.type === chosenOption;
+                    })
+                    this.setState({
+                        filteredPosts
+                    })
 
-            const filteredPosts = allPosts.filter(post => {
-                return post.type === event.target.value;
+                }
             })
-            this.setState({
-                filteredPosts
-            })
-        }
     }
+
 
     loadData = () => {
         const top = 10;
@@ -121,14 +106,11 @@ export class FeedPage extends Component {
 
     render() {
         return (
-            <Fragment>
                 <div className="row" >
                     <OptionsSidebar onFilterPosts={this.onFilterPosts} loadData={this.loadData} />
                     {this.renderPosts()}
-                    <NewPostModal modalBtn={this.state.modalBtn} onCloseModal={this.onCloseModal} hideModal={this.state.hideModal} loadData={this.loadData} />
-                    <NewPostButton onClick={this.onNewPostClick} />
+                    <NewPost />
                 </div>
-            </Fragment>
         )
     }
 }
