@@ -12,8 +12,8 @@ class NewPostButton extends Component {
         
         const onClick = this.props.onClick;
         return (
-            <div className="fixed-action-btn" ref={this.floatingBtn}>
-                <a className="btn-floating btn-large red">
+            <div className="fixed-action-btn btn-z-index" ref={this.floatingBtn}>
+                <a className="btn-floating btn-large red ">
                     <i className="large material-icons">mode_edit</i>
                 </a>
                 <ul>

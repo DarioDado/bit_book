@@ -123,12 +123,12 @@ class EditProfileForm extends Component {
                             File upload
                         </label>
                     </div>
-                    <input placeholder="Image url" classNameName={`${this.state.showUrl ? "" : "hide"}`} name="imgUrlInput" value={imgUrlInput} id="img-url" type="text" onChange={this.onUrlChange} />
+                    <input placeholder="Image url" className={`${this.state.showUrl ? "" : "hide"}`} name="imgUrlInput" value={imgUrlInput} id="img-url" type="text" onChange={this.onUrlChange} />
                     <p className={`error-msg ${showImgUrl ? "" : "hide"}`}>{inputImgUrlErr}</p>
-                    <input type="file" classNameName={`${this.state.showUrl ? "hide" : ""}`} onChange={this.onChangeInputFile} />
+                    <input type="file" className={`${this.state.showUrl ? "hide" : ""}`} onChange={this.onChangeInputFile} />
                 </form>
 
-                <form classNameName="details-form" onSubmit={this.onFormSubmitHandler}>
+                <form className="details-form" onSubmit={this.onFormSubmitHandler}>
                     <input placeholder="Name" id="name" value={nameInputValue} name="nameInputValue" type="text" onChange={this.onNameChange} />
                     <p className={`error-msg ${showNameErr ? "" : "hide"}`}>{inputNameErr}</p>
                     <textarea placeholder="About" id="about" value={aboutInputValue} name="aboutInputValue" className="materialize-textarea" onChange={this.onAboutChange} ></textarea>

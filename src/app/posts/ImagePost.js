@@ -12,7 +12,6 @@ export class ImagePost extends Component {
         this.state = {
             hideImgTheaterMode: "hide",
             imageSrc: ""
-
         }
     }
 

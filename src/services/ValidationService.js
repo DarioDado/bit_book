@@ -11,7 +11,9 @@ class ValidationService {
     }
 
     isNotValidImage(inputValue) {
-        if (inputValue.includes(".jpg") || inputValue.includes(".jpeg") || inputValue.includes(".png") || inputValue.includes(".svg")) {
+        const re = /^((http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg))$/;
+        
+        if (re.test(String(inputValue).toLowerCase())) {
             return null
         } else {
             const error = {
@@ -22,7 +24,8 @@ class ValidationService {
     }
 
     isNotValidVideo(inputValue) {
-        if (inputValue.includes("https://") && inputValue.includes("youtube")) {
+        const re = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/;
+        if (re.test(String(inputValue).toLowerCase())) {
             return null
         } else {
             const error = {
