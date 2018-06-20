@@ -21,10 +21,12 @@ export class DeletePostButton extends Component {
 
     onDeleteBtnHandler = () => {
         this.setState({showModal: true});
+        document.querySelector("body").classList.add("scroll-off");
     }
 
     onCancelBtnHandler = () => {
         this.setState({showModal: false});
+        document.querySelector("body").classList.remove("scroll-off");
     }
 
     onConfirmDeleteBtnHandler = () => {
@@ -33,6 +35,7 @@ export class DeletePostButton extends Component {
         postService.deletePost(post.id)
             .then(data => {
                 history.push('/feed');
+                document.querySelector("body").classList.remove("scroll-off");
             })
     }
 

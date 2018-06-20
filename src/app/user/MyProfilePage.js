@@ -5,6 +5,7 @@ import { userService } from '../../services/userService';
 import { EditProfileLink } from './EditProfileLink';
 import { EditProfileModal } from './EditProfileModal';
 import { validationService } from '../../services/ValidationService';
+import { Loading } from '../partials/Loading';
 
 class MyProfilePage extends Component {
     constructor(props) {
@@ -165,7 +166,7 @@ class MyProfilePage extends Component {
         const { myProfileData, loading, hideAddModal, hideModal, nameInputValue, aboutInputValue, photoUrl, validationClassEditModal, validationClassAddModal, inputFileValue, error } = this.state;
 
         if (loading) {
-            return <div className="loading">Loading</div>
+            return <Loading />
         }
         return (
             <Fragment>

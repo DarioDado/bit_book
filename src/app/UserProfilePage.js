@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 
 import './user/MyProfilePage.css'
 import { userService } from '../services/userService';
+import { Loading } from './partials/Loading';
 
 class UserProfilePage extends Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class UserProfilePage extends Component {
         const { user, loading } = this.state;
 
         if (loading) {
-            return <div className="loading">Loading</div>
+            return <Loading />
         }
         return (
             <Fragment>
