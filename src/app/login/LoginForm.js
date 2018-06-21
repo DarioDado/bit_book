@@ -23,21 +23,19 @@ export class LoginForm extends Component {
       this.setState({ [e.target.name]: e.target.value })
     }
 
-  onLoginSubmit = () => {
-      const { username, password} = this.state;
-      const history = createHashHistory();
-      const data = {
-          username: username,
-          password: password
-      }
-      authService.login(data)
-          .then(data => {
-              if (data.error) {
-                  this.setState({error: data.error.message, showError: true})
-              } else {
-                  history.push('/feed');
-              }
-          })
+  onLoginSubmit = async () => {
+    const { username, password} = this.state;
+    const history = createHashHistory();
+    const data = {
+        username: username,
+        password: password
+    }
+    const resData = await authService.login(data)
+    if (resData.error) {
+        this.setState({error: resData.error.message, showError: true})
+    } else {
+        history.push('/feed');
+    }
   }
 
 

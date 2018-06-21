@@ -47,19 +47,18 @@ export class RegisterForm extends Component {
       }
   }
   
-  onRegisterSubmit = () => {
-      const {onRegisterHandler} = this.props;
-      const { username, password, name, email} = this.state;
-      const data = {username, password, name, email}
-      authService.register(data)
-          .then(data => {
-              if (data.error) {
-                  console.log(data)
-                  this.setState({err: data.error.message, showErr: true})
-              } else {
-                onRegisterHandler();
-              }
-          })
+  onRegisterSubmit = async () => {
+        const {onRegisterHandler} = this.props;
+        const { username, password, name, email} = this.state;
+        const data = {username, password, name, email}
+        const resData = await authService.register(data)
+
+        if (resData.error) {
+            console.log(resData)
+            this.setState({err: resData.error.message, showErr: true})
+        } else {
+        onRegisterHandler();
+        }
   }
 
 

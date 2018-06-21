@@ -14,9 +14,9 @@ export class DeletePostButton extends Component {
         }
     }
 
-    componentDidMount = () => {
-        userService.getMyProfile()
-         .then(user => this.setState({user, loading: false}))
+    componentDidMount = async () => {
+        const user = await userService.getMyProfile()
+        this.setState({user, loading: false})
     }
 
     onDeleteBtnHandler = () => {
@@ -29,14 +29,12 @@ export class DeletePostButton extends Component {
         document.querySelector("body").classList.remove("scroll-off");
     }
 
-    onConfirmDeleteBtnHandler = () => {
+    onConfirmDeleteBtnHandler = async () => {
         const history = createHashHistory();
         const {post} = this.props;
-        postService.deletePost(post.id)
-            .then(data => {
-                history.push('/feed');
-                document.querySelector("body").classList.remove("scroll-off");
-            })
+        await postService.deletePost(post.id)
+        history.push('/feed');
+        document.querySelector("body").classList.remove("scroll-off");
     }
 
     renderDeleteButton = () => {

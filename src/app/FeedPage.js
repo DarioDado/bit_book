@@ -21,7 +21,7 @@ export class FeedPage extends Component {
         }
     }
 
-    handleScroll = () => {
+    handleScroll = async () => {
         const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
         const body = document.body;
         const html = document.documentElement;
@@ -31,19 +31,17 @@ export class FeedPage extends Component {
             const top = 10;
             const skip = this.state.skipMult * top;
 
-            postService.getPostsLimitNum(top, skip)
-                .then(posts => {
-                    const newSkipMult = this.state.skipMult + 1;
-                    const copyPosts = this.state.posts.slice();
-                    const newPosts = copyPosts.concat(posts);
+            const posts = await postService.getPostsLimitNum(top, skip)
+            const newSkipMult = this.state.skipMult + 1;
+            const copyPosts = this.state.posts.slice();
+            const newPosts = copyPosts.concat(posts);
 
-                    this.setState({
-                        posts: newPosts,
-                        loading: false,
-                        skipMult: newSkipMult
+            this.setState({
+                posts: newPosts,
+                loading: false,
+                skipMult: newSkipMult
 
-                    })
-                })
+            })
         }
     }
 
@@ -56,34 +54,30 @@ export class FeedPage extends Component {
         window.removeEventListener("scroll", this.handleScroll);
     }
 
-    onFilterPosts = (event) => {
+    onFilterPosts = async (event) => {
         const chosenOption = event.target.value 
-        postService.getPosts()
-            .then(posts => {
-                if (chosenOption === "all") {
-                    this.setState({
-                        filteredPosts: null
-                    })
-                } else {
-                    const filteredPosts = posts.filter(post => {
-                        return post.type === chosenOption;
-                    })
-                    this.setState({
-                        filteredPosts
-                    })
-
-                }
+        const posts = await postService.getPosts()
+        if (chosenOption === "all") {
+            this.setState({
+                filteredPosts: null
             })
+        } else {
+            const filteredPosts = posts.filter(post => {
+                return post.type === chosenOption;
+            })
+            this.setState({
+                filteredPosts
+            })
+
+        }
     }
 
 
-    loadData = () => {
+    loadData = async () => {
         const top = 10;
         const skip = 0;
-        postService.getPostsLimitNum(top, skip)
-            .then(posts => {
-                this.setState({ posts, loading: false })
-            })
+        const posts = await postService.getPostsLimitNum(top, skip)
+        this.setState({ posts, loading: false })
     }
 
     renderPosts = () => {

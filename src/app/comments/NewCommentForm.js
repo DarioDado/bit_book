@@ -41,20 +41,18 @@ export class NewCommentForm extends Component {
         }
     }
 
-    oncClickSubmitBtnHandler = () => {
+    oncClickSubmitBtnHandler = async () => {
         const { postId, onCreateCommentHandler } = this.props;
         const data = {
             body: this.state.inputVal,
             postId: postId,
             authorId: 746
         }
-        commentService.postComment(data)
-            .then(status => {
-                if (status) {
-                    this.setState({ inputVal: "", disable: "disabled" });
-                    onCreateCommentHandler();
-                }
-            });
+        const status = await commentService.postComment(data);
+        if (status) {
+            this.setState({ inputVal: "", disable: "disabled" });
+            onCreateCommentHandler();
+        }
     }
 
     render() {

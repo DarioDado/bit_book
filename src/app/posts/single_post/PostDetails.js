@@ -17,12 +17,10 @@ export class PostDetails extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         const { post } = this.props;
-        commentService.getSinglePostComments(post.id)
-            .then(comments => {
-                this.setState({ comments, loading: false })
-            })
+        const comments = await commentService.getSinglePostComments(post.id)
+        this.setState({ comments, loading: false });
     }
 
     renderCommentList = () => {
@@ -44,12 +42,10 @@ export class PostDetails extends Component {
         }
     }
 
-    onCreateCommentHandler = () => {
+    onCreateCommentHandler = async () => {
         const { post } = this.props;
-        commentService.getSinglePostComments(post.id)
-            .then(comments => {
-                this.setState({ comments, loading: false })
-            })
+        const comments = await commentService.getSinglePostComments(post.id)
+        this.setState({ comments, loading: false })
 
     }
 

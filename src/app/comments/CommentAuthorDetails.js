@@ -10,10 +10,10 @@ export class CommentAuthorDetails extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         const {authorId} = this.props;
-        userService.getSingleUser(authorId)
-            .then(user => this.setState({user, loading: false}))
+        const user = await userService.getUser(authorId);
+        this.setState({user, loading: false});
     }
 
     renderUserDetails = () => {

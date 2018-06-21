@@ -96,14 +96,10 @@ class EditProfileForm extends Component {
     }
 
 
-    onChangeInputFile = (event) => {
+    onChangeInputFile = async (event) => {
         const fileInput = event.target.files[0]
-        userService.uploadImage(fileInput)
-            .then(imgUrlInput => {
-                this.setState({
-                    imgUrlInput
-                })
-            })
+        const imgUrlInput = await userService.uploadImage(fileInput)
+        this.setState({ imgUrlInput })
     }
 
     render() {

@@ -13,23 +13,17 @@ export class SinglePostPage extends Component {
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         const {id, type} = this.props.match.params;
         if (type === 'video') {
-            postService.getVideoPost(id)
-                .then(post => {
-                    this.setState({post, loading: false});
-                })
+            const post = await postService.getVideoPost(id)
+            this.setState({post, loading: false});
         } else if (type === 'image') {
-            postService.getImagePost(id)
-                .then(post => {
-                    this.setState({post, loading: false});
-                })
+            const post = await postService.getImagePost(id)
+            this.setState({post, loading: false});
         } else {
-            postService.getTextPost(id)
-                .then(post => {
-                    this.setState({post, loading: false});
-                })
+            const post = await postService.getTextPost(id)
+            this.setState({post, loading: false});
         }
         
     }

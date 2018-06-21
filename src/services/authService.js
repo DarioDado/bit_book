@@ -11,6 +11,7 @@ class AuthService {
     login = async (data) => {
         const url = login;
         const loginData = await postData(url, data)
+        console.log(loginData);
         if (!loginData.error) {
             storageService.saveData('loggedInUser', loginData);
             return loginData

@@ -12,43 +12,31 @@ class UserService {
         return new User(storageService.getData('loggedInUser'));
     }
 
-    getUsers = () => {
+    getUsers = async () => {
         const url = users;
-        return getData(url)
-            .then(usersData => {
-                return usersData.map(userData => new User(userData))
-            })
+        const usersData = await getData(url);
+        return usersData.map(userData => new User(userData));
     }
 
-    getUser = (id) => {
+    getUser = async id => {
         const url = `${users}/${id}`;
-        return getData(url)
-            .then(userData => new User(userData))
+        const userData = await getData(url)
+        return new User(userData);
     }
 
-    getSearchedUsers = (inputString) => {
+    getSearchedUsers = async inputString => {
         const url = users;
-        return getData(url)
-            .then(usersData => {
-                return usersData.map(userData => new User(userData))
-            })
-            .then(users => {
-                return users.filter(user => {
-                    return user.name.toLowerCase().includes(inputString.toLowerCase());
-                })
-            })
+        const usersData = await getData(url)
+        const allUsers = usersData.map(userData => new User(userData));
+        return allUsers.filter(user => {
+            return user.name.toLowerCase().includes(inputString.toLowerCase());
+        })
     }
 
-    getSingleUser(userId) {
-        const url = `${users}/${userId}`;
-        return getData(url)
-            .then(userData => new User(userData));
-    }
-
-    getMyProfile() {
+    getMyProfile = async () => {
         const url = profile;
-        return getData(url)
-            .then(myProfileData => new User(myProfileData))
+        const myProfileData = await getData(url);
+        return new User(myProfileData);
     }
 
     updateMyProfile(nameInputValue, aboutInputValue, photoUrl) {

@@ -13,14 +13,14 @@ export class PeoplePage extends Component {
         }
     }
 
-    componentDidMount = () => {
-        userService.getUsers()
-            .then(users => this.setState({users, loading: false}))
+    componentDidMount = async () => {
+        const users = await userService.getUsers()
+        this.setState({users, loading: false})
     }
 
-    onSearchInputChangeHandler = (inputVal) => {
-      userService.getSearchedUsers(inputVal)
-        .then(users => this.setState({users, loading:false}));
+    onSearchInputChangeHandler = async (inputVal) => {
+        const users = await userService.getSearchedUsers(inputVal)
+        this.setState({users, loading:false});
     }
 
     renderNoResults = () => (

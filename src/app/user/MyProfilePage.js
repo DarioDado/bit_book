@@ -18,19 +18,16 @@ class MyProfilePage extends Component {
         }
     }
 
-    loadMyProfile = () => {
-        userService.getMyProfile()
-            .then(user => {
-                this.setState({
-                    user,
-                    loading: false,
-                    nameInputValue: user.name,
-                    aboutInputValue: user.aboutShort,
-                    photoUrl: user.avatarUrl
-                })
-
-            })
-    }
+    loadMyProfile = async () => {
+        const user = await userService.getMyProfile()
+        this.setState({
+            user,
+            loading: false,
+            nameInputValue: user.name,
+            aboutInputValue: user.aboutShort,
+            photoUrl: user.avatarUrl
+        })
+}
 
     onEditClick = (event) => {
         event.preventDefault();
@@ -46,11 +43,9 @@ class MyProfilePage extends Component {
         })
     }
 
-    onSubmitClick = (nameInput, aboutInput, imgUrl) => {
-        userService.updateMyProfile(nameInput, aboutInput, imgUrl)
-            .then(data => {
-                this.loadMyProfile()
-            })
+    onSubmitClick = async (nameInput, aboutInput, imgUrl) => {
+        await userService.updateMyProfile(nameInput, aboutInput, imgUrl)
+        this.loadMyProfile()
     }
 
     componentDidMount = () => {

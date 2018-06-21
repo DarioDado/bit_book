@@ -115,43 +115,38 @@ class NewPost extends Component {
         }
     }
 
-    onPostSubmit = () => {
+    onPostSubmit = async () => {
         const { loadData } = this.props;
         const textPost = this.state.inputValue;
-        postService.submitTextPosts(textPost)
-            .then((response) => {
-                this.setState({
-                    inputValue: ""
-                });
-                loadData();
-                this.onCloseModal();
-            })
+        await postService.submitTextPosts(textPost)
+        this.setState({
+            inputValue: ""
+        });
+        loadData();
+        this.onCloseModal();
     }
 
-    onImageSubmit = () => {
+    onImageSubmit = async () => {
         const { loadData } = this.props;
         const imgUrl = this.state.inputValue;
-        postService.submitImagePosts(imgUrl)
-            .then((response) => {
-                this.setState({
-                    inputValue: ""
-                });
-                loadData();
-                this.onCloseModal();
-            })
-    }
+        await postService.submitImagePosts(imgUrl)
+        this.setState({
+            inputValue: ""
+        });
+        loadData();
+        this.onCloseModal();
+}
 
-    onVideoSubmit = () => {
+
+    onVideoSubmit = async () => {
         const {loadData } = this.props;
         const videoUrl = this.state.inputValue;
-        postService.submitVideoPosts(videoUrl)
-            .then((response) => {
-                this.setState({
-                    inputValue: ""
-                });
-                loadData();
-                this.onCloseModal();
-            })
+        await postService.submitVideoPosts(videoUrl)
+        this.setState({
+            inputValue: ""
+        });
+        loadData();
+        this.onCloseModal();
     }
 
     callChangeHandler = (event, modalBtn) => {
