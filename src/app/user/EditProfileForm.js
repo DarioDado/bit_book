@@ -111,7 +111,7 @@ class EditProfileForm extends Component {
         const { nameInputValue, aboutInputValue, imgUrlInput, inputNameErr, showNameErr, showAboutErr, inputAboutErr, showImgUrl, inputImgUrlErr, disableBtn } = this.state;
         return (
             <Fragment>
-                <div className="profile-img">
+                <div className="profile-img-edit">
                     <img src={imgUrlInput} alt="" />
                 </div>
                 <form className="switch-form" onSubmit={this.onFormSubmitHandler}>

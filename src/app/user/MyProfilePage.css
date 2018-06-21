@@ -28,8 +28,9 @@
 }
 
 .profile-img{
-    max-height: 300px;
     border-radius: 50%;
+    width: 280px;
+    height: 280px;
 }
 
 .profile-name {
@@ -59,11 +60,11 @@
     justify-content: space-around;
 }
 
-.profile-img {
+.profile-img-edit {
     width: 20%;
 }
 
-.profile-img img {
+.profile-img-edit img {
     width: 100%;
 }
 
@@ -87,3 +88,32 @@
     margin-bottom: 20px;
 }
 
+@media screen and (max-width: 700px) and (min-width:431px){
+    .edit-modal {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .edit-modal {
+        width: 100%;
+    }
+
+    .profile-img-edit {
+        width: 100%;
+        text-align: center;
+    }
+
+    .profile-img-edit img {
+        width: 30%;
+    }
+
+    .switch {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .switch-form {
+        width: 90%;
+    }
+}

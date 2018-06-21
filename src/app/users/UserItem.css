@@ -52,3 +52,23 @@
 .card-panel {
     border-radius: 10px !important;
 }
+
+@media  screen and (max-width: 570px) {
+    .user-item-wrap {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .user-details h2 {
+        font-size: 20px;
+        margin: 15px 0;
+    }
+
+    .user-details, .user-avatar, .last-post-info {
+        width: 100%;
+    }
+
+    .user-avatar img {
+        width: 30%;
+    }
+} 
