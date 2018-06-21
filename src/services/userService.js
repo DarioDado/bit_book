@@ -1,5 +1,5 @@
 
-import { getData, putData } from "./fetchServices";
+import { getData, putData, uploadImage } from "./fetchServices";
 import { users, profile, editProfileEndpoint, upload } from "../shared/constants";
 
 import { User } from "../entities/User";
@@ -27,16 +27,16 @@ class UserService {
     }
 
     getSearchedUsers = (inputString) => {
-      const url = users;
-      return getData(url)
-          .then(usersData => {
-            return usersData.map(userData => new User(userData))
-          })
-          .then(users => {
-            return users.filter(user => {
-              return user.name.toLowerCase().includes(inputString.toLowerCase());
+        const url = users;
+        return getData(url)
+            .then(usersData => {
+                return usersData.map(userData => new User(userData))
             })
-          })
+            .then(users => {
+                return users.filter(user => {
+                    return user.name.toLowerCase().includes(inputString.toLowerCase());
+                })
+            })
     }
 
     getSingleUser(userId) {
@@ -51,7 +51,7 @@ class UserService {
             .then(myProfileData => new User(myProfileData))
     }
 
-    updateMyProfile(nameInputValue, aboutInputValue, photoUrl){
+    updateMyProfile(nameInputValue, aboutInputValue, photoUrl) {
         const loggedInUser = this.getLoggedInUser();
         const data = {
             name: nameInputValue,
@@ -67,16 +67,7 @@ class UserService {
         const formData = new FormData();
         formData.append('file', imgFile);
 
-        return  fetch(upload, {
-            body: formData,
-            cache: 'no-cache',
-            headers: {
-                "Key": "bitbookdev",
-                "SessionId": "2990B489-DB94-4AC1-ACDE-CDC9CC3EAEAE"
-            },
-            method: 'POST',
-        })
-            .then(response => response.json())
+        return uploadImage(upload, formData)
     }
 }
 
