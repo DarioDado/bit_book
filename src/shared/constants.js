@@ -1,15 +1,15 @@
-const login = "http://bitbookapi.azurewebsites.net/api/login";
-const register = "http://bitbookapi.azurewebsites.net/api/register";
-const comments = "http://bitbookapi.azurewebsites.net/api/Comments";
-const imagePosts = "http://bitbookapi.azurewebsites.net/api/ImagePosts";
-const postsCount = "http://bitbookapi.azurewebsites.net/api/posts/count";
-const posts = "http://bitbookapi.azurewebsites.net/api/Posts";
-const profile = "http://bitbookapi.azurewebsites.net/api/profile";
-const editProfileEndpoint = "http://bitbookapi.azurewebsites.net/api/Profiles";
-const users = "http://bitbookapi.azurewebsites.net/api/users";
-const textPosts = "http://bitbookapi.azurewebsites.net/api/TextPosts";
-const upload = "http://bitbookapi.azurewebsites.net/api/upload";
-const videoPosts = "http://bitbookapi.azurewebsites.net/api/VideoPosts";
+const login = "https://bitbookapi.azurewebsites.net/api/login";
+const register = "https://bitbookapi.azurewebsites.net/api/register";
+const comments = "https://bitbookapi.azurewebsites.net/api/Comments";
+const imagePosts = "https://bitbookapi.azurewebsites.net/api/ImagePosts";
+const postsCount = "https://bitbookapi.azurewebsites.net/api/posts/count";
+const posts = "https://bitbookapi.azurewebsites.net/api/Posts";
+const profile = "https://bitbookapi.azurewebsites.net/api/profile";
+const editProfileEndpoint = "https://bitbookapi.azurewebsites.net/api/Profiles";
+const users = "https://bitbookapi.azurewebsites.net/api/users";
+const textPosts = "https://bitbookapi.azurewebsites.net/api/TextPosts";
+const upload = "https://bitbookapi.azurewebsites.net/api/upload";
+const videoPosts = "https://bitbookapi.azurewebsites.net/api/VideoPosts";
 
 
 export const requestHeader = {
