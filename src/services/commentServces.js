@@ -7,18 +7,16 @@ import { Comment } from "../entities/Comment";
 
 class CommentService {
 
-    getSinglePostComments(postId) {
+    async getSinglePostComments(postId) {
         const url = `${comments}?postId=${postId}`;
-        return getData(url)
-            .then(commentsData => {
-                return commentsData.map(commentData => new Comment(commentData));
-            });
+        const commentsData = await getData(url);
+        return commentsData.map(commentData => new Comment(commentData));
     }
 
-    postComment(data) {
+    async postComment(data) {
         const url = comments;
-        return postData(url,data)
-            .then(commentData => new Comment(commentData));
+        const commentData = await postData(url,data)
+        return new Comment(commentData);
     }
     
 

@@ -13,52 +13,52 @@ export const getHeaders = () => {
 
 
 
-export const getData = (url) => {
-    return axios({
+export const getData = async (url) => {
+    const res = await axios({
         url,
         cache: 'no-cache',
         headers: getHeaders(),
         method: "GET",
         json: true
     })
-        .then(res => res.data);
-        
+    return res.data;
 }
 
-export const postData = (url, data) => {
-    return axios({
+export const postData = async (url, data) => {
+    const res = await axios({
         url,
         data: JSON.stringify(data),
         cache: 'no-cache',
         headers: getHeaders(),
         method: 'POST'
     })
-        .then(response => response.data)
+    return res.data;
 }
 
-export const putData = (url, data) => {
-    return axios({
+export const putData = async (url, data) => {
+    const res = await axios({
         url, 
         data: JSON.stringify(data),
         cache: 'no-cache',
         headers: getHeaders(),
         method: 'PUT'
     })
+    return res;
 }
 
-export const deleteData = (url) => {
-    return axios({
+export const deleteData = async (url) => {
+    const res = await axios({
         url, 
         cache: 'no-cache',
         headers: getHeaders(),
         method: 'DELETE'
     })
-        .then(response => response.data)
+    return res.data;
 }
 
 
-export const uploadImage = (url, formData) => {
-    return axios({
+export const uploadImage = async (url, formData) => {
+    const res = await axios({
         url, 
         data: formData,
         cache: 'no-cache',
@@ -68,5 +68,5 @@ export const uploadImage = (url, formData) => {
         },
         method: 'POST',
     })
-        .then(response => response.data)
+    return res.data;
 }

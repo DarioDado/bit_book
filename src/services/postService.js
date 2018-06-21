@@ -5,69 +5,62 @@ import { validationService } from "./ValidationService";
 
 
 class PostService {
-    getPosts() {
+
+    async getPosts() {
         const url = posts;
-        return getData(url)
-            .then(postsData => {
-                return postsData.map(postData => {
-                    if (postData.type === "text") {
-                        return new TextPost(postData);
-                    } else if (postData.type === "image") {
-                        return new ImagePost(postData);
-                    } else {
-                        return new VideoPost(postData);
-                    }
-                });
-            })
-            .then(posts => {
-                return posts.filter(post => {
-                    if (post.type === "video") {
-                        if (!validationService.isNotValidVideo(post.videoUrl)) {
-                            return post;
-                        }
-                    } else {
-                        return post;
-                    }
-                })
-            })
+        const postsData = await getData(url)
+
+        const allPosts = postsData.map(postData => {
+            if (postData.type === "text") {
+                return new TextPost(postData);
+            } else if (postData.type === "image") {
+                return new ImagePost(postData);
+            } else {
+                return new VideoPost(postData);
+            }
+        });
+
+        return allPosts.filter(post => {
+            if (post.type === "video") {
+                if (!validationService.isNotValidVideo(post.videoUrl)) {
+                    return post;
+                }
+            } else {
+                return post;
+            }
+        })
     }
 
-    getPostsLimitNum(top, skip) {
+    async getPostsLimitNum(top, skip) {
         const url = posts;
-        return getData(`${url}?$orderby=DateCreated desc&$top=${top}&$skip=${skip}`)
-            .then(postsData => {
-                return postsData.map(postData => {
-                    if (postData.type === "text") {
-                        return new TextPost(postData);
-                    } else if (postData.type === "image") {
-                        return new ImagePost(postData);
-                    } else {
-                        return new VideoPost(postData);
-                    }
-                });
-            })
-            .then(posts => {
-                return posts.filter(post => {
-                    if (post.type === "video") {
-                        if (!validationService.isNotValidVideo(post.videoUrl)) {
-                            return post;
-                        }
-                    } else {
-                        return post;
-                    }
-                })
-            })
+        const postsData = await getData(`${url}?$orderby=DateCreated desc&$top=${top}&$skip=${skip}`)
+
+        const allPosts = postsData.map(postData => {
+            if (postData.type === "text") {
+                return new TextPost(postData);
+            } else if (postData.type === "image") {
+                return new ImagePost(postData);
+            } else {
+                return new VideoPost(postData);
+            }
+        });
+
+        return allPosts.filter(post => {
+            if (post.type === "video") {
+                if (!validationService.isNotValidVideo(post.videoUrl)) {
+                    return post;
+                }
+            } else {
+                return post;
+            }
+        })
     }
 
     submitTextPosts(textPost) {
         const url = textPosts;
         const data = {
             text: textPost,
-            dateCreated: new Date(),
-            userId: 747,
-            userDisplayName: "Pera Peric",
-            type: "text",
-            commentsNum: 0
+            type: "text"
         }
         return postData(url, data)
     }
@@ -76,11 +69,7 @@ class PostService {
         const url = imagePosts;
         const data = {
             imageUrl: imgUrl,
-            dateCreated: new Date(),
-            userId: 747,
-            userDisplayName: "Pera Peric",
-            type: "image",
-            commentsNum: 0
+            type: "image"
         }
         return postData(url, data)
     }
@@ -89,38 +78,27 @@ class PostService {
         const url = videoPosts;
         const data = {
             videoUrl: videoUrl,
-            dateCreated: new Date(),
-            userId: 747,
-            userDisplayName: "Pera Peric",
-            type: "video",
-            commentsNum: 0
+            type: "video"
         }
         return postData(url, data)
     }
 
-    getVideoPost(id) {
+    async getVideoPost(id) {
         const url = `${videoPosts}/${id}`;
-        return getData(url)
-            .then(postData => {
-                return new VideoPost(postData);
-            })
+        const postData = await getData(url)
+        return new VideoPost(postData);
     }
 
-    getImagePost(id) {
+    async getImagePost(id) {
         const url = `${imagePosts}/${id}`;
-        return getData(url)
-            .then(postData => {
-                return new ImagePost(postData);
-            })
+        const postData = await  getData(url);
+        return new ImagePost(postData);
     }
 
-    getTextPost(id) {
+    async getTextPost(id) {
         const url = `${textPosts}/${id}`;
-        return getData(url)
-            .then(postData => {
-                return new TextPost(postData);
-            })
-
+        const postData = await getData(url)
+        return new TextPost(postData);
     }
 
 

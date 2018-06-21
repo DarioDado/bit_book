@@ -8,21 +8,20 @@ class AuthService {
         return storageService.getData('loggedInUser') ? true : false;
     }
 
-    login = (data) => {
+    login = async (data) => {
         const url = login;
-        return postData(url, data)
-            .then(loginData => {
-                if (!loginData.error) {
-                    storageService.saveData('loggedInUser', loginData);
-                    return loginData
-                }
-                return loginData;
-            })
+        const loginData = await postData(url, data)
+        if (!loginData.error) {
+            storageService.saveData('loggedInUser', loginData);
+            return loginData
+        }
+        return loginData;
     }
 
-    register = data => {
+    register = async data => {
         const url = register;
-        return postData(url, data);
+        const res = await postData(url, data);
+        return res;
     }
 
 }
