@@ -15,10 +15,8 @@ export const getHeaders = () => {
 export const getData = (url) => {
     return fetch(url, {
         cache: 'no-cache',
-        credentials: 'same-origin',
         headers: getHeaders(),
-        method: 'GET',
-        mode: 'cors'
+        method: 'GET'
     })
         .then(res => res.json())
 }
@@ -27,10 +25,8 @@ export const postData = (url, data) => {
     return fetch(url, {
         body: JSON.stringify(data),
         cache: 'no-cache',
-        credentials: 'same-origin',
         headers: getHeaders(),
-        method: 'POST',
-        mode: 'cors'
+        method: 'POST'
     })
         .then(response => response.json())
 }
@@ -39,20 +35,16 @@ export const putData = (url, data) => {
     return fetch(url, {
         body: JSON.stringify(data),
         cache: 'no-cache',
-        credentials: 'same-origin',
         headers: getHeaders(),
-        method: 'PUT',
-        mode: 'cors'
+        method: 'PUT'
     })
 }
 
 export const deleteData = (url) => {
     return fetch(url, {
         cache: 'no-cache',
-        credentials: 'same-origin',
         headers: getHeaders(),
-        method: 'DELETE',
-        mode: 'cors'
+        method: 'DELETE'
     })
         .then(response => response.json())
 }
