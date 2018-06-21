@@ -24,6 +24,19 @@ const Header = (props) => {
             </ul>
             : null
     }
+
+    const renderMenuButtonsMobile = () => {
+        return authService.isUserLoggedIn()
+            ? <ul className="sidenav" id="mobile-demo">
+                <li><Link to="/feed">Feed</Link></li>
+                <li><Link to="/people">People</Link></li>
+                <li><Link to="/profile">Profile</Link></li>
+                <li><a href="/#" onClick={onLogoutHandler}>Logout</a></li>
+            </ul>
+            : <ul className="sidenav" id="mobile-demo">
+            <li><a href="/#" onClick={onLogoutHandler}>Login / Register</a></li>
+            </ul>
+    }
     return (
         <Fragment>
             <nav>
@@ -34,12 +47,7 @@ const Header = (props) => {
                     
                 </div>
             </nav>
-
-            <ul className="sidenav" id="mobile-demo">
-                <li><Link to="/feed">Feed</Link></li>
-                <li><Link to="/people">People</Link></li>
-                <li><Link to="/profile">Profile</Link></li>
-            </ul>
+            {renderMenuButtonsMobile()}
         </Fragment>
     )
 };
