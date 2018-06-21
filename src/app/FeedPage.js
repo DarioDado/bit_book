@@ -31,7 +31,7 @@ export class FeedPage extends Component {
             const top = 10;
             const skip = this.state.skipMult * top;
 
-            postService.getPostsPagination(top, skip)
+            postService.getPostsLimitNum(top, skip)
                 .then(posts => {
                     const newSkipMult = this.state.skipMult + 1;
                     const copyPosts = this.state.posts.slice();
@@ -80,7 +80,7 @@ export class FeedPage extends Component {
     loadData = () => {
         const top = 10;
         const skip = 0;
-        postService.getPostsPagination(top, skip)
+        postService.getPostsLimitNum(top, skip)
             .then(posts => {
                 this.setState({ posts, loading: false })
             })
