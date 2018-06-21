@@ -21,8 +21,34 @@
 
 .comment-text {
     width: 85%;
+    font-style: italic;
+    font-size: 16px;
+    margin-left: 20px;
 }
 
 .card-panel {
     border-radius: 10px !important;
+}
+
+@media screen and (max-width: 580px) {
+    .comment-wrap {
+        flex-direction: column;
+    }
+
+    .author-details {
+        flex-direction: row;
+        width: 100%;
+    }
+    .author-details img {
+        width: 50px;
+    }
+    .author-name {
+        margin: 0 20px;
+        font-size: 18px;
+    }
+
+    .comment-text {
+        font-style: italic;
+        font-size: 16px;
+    }
 }

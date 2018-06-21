@@ -21,5 +21,16 @@
     font-size:14px;
 }
 
+@media screen and (max-width: 400px) {
+    .modal-content h3 {
+        font-size: 25px;
+    }
+
+    .modal {
+        margin: 0 !important;
+        width: 100% !important;
+    }
+}
+
 
 

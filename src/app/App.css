@@ -21,3 +21,10 @@ main {
   color: #696969;
   margin-top: 100px;
 }
+
+
+@media screen and (max-width: 400px) {
+  .sidenav {
+    width: 150px !important;
+  }
+}

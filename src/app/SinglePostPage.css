@@ -49,3 +49,7 @@
 .scroll-off {
     overflow-y: hidden;
 }
+
+.post-body p {
+    font-size: 20px;
+}

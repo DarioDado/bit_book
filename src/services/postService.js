@@ -1,6 +1,7 @@
 import { posts, textPosts, imagePosts, videoPosts, postsCount } from "../shared/constants";
 import { getData, postData, deleteData } from "./fetchServices";
 import { TextPost, ImagePost, VideoPost } from "../entities/Post";
+import { validationService } from "./ValidationService";
 
 
 class PostService {
@@ -17,10 +18,21 @@ class PostService {
                         return new VideoPost(postData);
                     }
                 });
-            });
+            })
+            .then(posts => {
+                return posts.filter(post => {
+                    if (post.type === "video") {
+                        if (!validationService.isNotValidVideo(post.videoUrl)) {
+                            return post;
+                        }
+                    } else {
+                        return post;
+                    }
+                })
+            })
     }
 
-    getPostsPagination(top, skip) {
+    getPostsLimitNum(top, skip) {
         const url = posts;
         return getData(`${url}?$orderby=DateCreated desc&$top=${top}&$skip=${skip}`)
             .then(postsData => {
@@ -33,7 +45,18 @@ class PostService {
                         return new VideoPost(postData);
                     }
                 });
-            });
+            })
+            .then(posts => {
+                return posts.filter(post => {
+                    if (post.type === "video") {
+                        if (!validationService.isNotValidVideo(post.videoUrl)) {
+                            return post;
+                        }
+                    } else {
+                        return post;
+                    }
+                })
+            })
     }
 
     submitTextPosts(textPost) {

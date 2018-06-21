@@ -1,3 +1,7 @@
 .btn-z-index {
     z-index: 1 !important;
 }
+
+.card-content p {
+    font-size: 20px;
+}
