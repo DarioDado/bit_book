@@ -13,9 +13,13 @@ export class PeoplePage extends Component {
         }
     }
 
-    componentDidMount = async () => {
+    loadUsers = async () => {
         const users = await userService.getUsers()
         this.setState({users, loading: false})
+    }
+
+    componentDidMount = () => {
+        this.loadUsers();
     }
 
     onSearchInputChangeHandler = async (inputVal) => {

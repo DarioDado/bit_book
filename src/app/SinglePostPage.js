@@ -13,7 +13,7 @@ export class SinglePostPage extends Component {
         }
     }
 
-    componentDidMount = async () => {
+    loadPost = async () => {
         const {id, type} = this.props.match.params;
         if (type === 'video') {
             const post = await postService.getVideoPost(id)
@@ -25,6 +25,11 @@ export class SinglePostPage extends Component {
             const post = await postService.getTextPost(id)
             this.setState({post, loading: false});
         }
+        
+    }
+
+    componentDidMount = () => {
+        this.loadPost();
         
     }
 

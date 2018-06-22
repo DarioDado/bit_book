@@ -12,15 +12,18 @@ class UserProfilePage extends Component {
             loading: true
         }
     }
-    
-    componentDidMount = async () => {
+
+    loadUser = async () => {
         const { id } = this.props.match.params;
-        console.log(id);
         const user = await userService.getUser(id)
         this.setState({
             user,
             loading: false
         })
+    }
+    
+    componentDidMount = () => {
+        this.loadUser();
     }
 
 
